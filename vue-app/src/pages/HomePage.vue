@@ -4,7 +4,7 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat
       magna sit amet nibh ornare, vitae efficitur lorem molestie. Duis sagittis
       mi risus, ut gravida mi placerat aliquet. Maecenas in pellentesque augue,
-      elementum bibendum risus. 
+      elementum bibendum risus.
     </p>
     <div class="gradient"></div>
   </div>
@@ -12,7 +12,7 @@
 
 <style scoped>
 div.main-container {
-    display:inherit;
+  display: inherit;
   margin: 10em auto;
   width: 60%;
 }
@@ -22,7 +22,7 @@ p {
 }
 .gradient {
   margin-top: -50px;
-  margin-left:-5%;
+  margin-left: -5%;
   height: 100px;
   width: 110%;
   position: relative;

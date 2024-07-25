@@ -1,15 +1,31 @@
 <template>
-    <h1>Page was not found. To get back to the home page click <router-link to="/">here</router-link>.</h1>
+  <main>
+    <h1>Not Found</h1>
+    <p>
+      Page was not found, go to <router-link to="/">home page</router-link>.
+    </p>
+  </main>
 </template>
 
 <style scoped>
-    h1{
-        margin-top:1em;
-        width: 100%;
-        text-align: center;
-    }
-    a{
-        color:#41b783;
-        text-decoration: none;
-    }
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100% - 4em);
+  width: 100%;
+  margin-top: 4em;
+}
+h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 2.6em;
+}
+p {
+  font-size: 1.7em;
+}
+a {
+  text-decoration: none;
+  color: #41b783;
+}
 </style>

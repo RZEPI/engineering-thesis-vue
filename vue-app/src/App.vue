@@ -5,10 +5,8 @@
 </template>
 
 <script setup>
-import TheHeader from './components/UI/TheHeader.vue'
-import BaseSidebar from './components/UI/BaseSidebar.vue'
-
+import TheHeader from "./components/UI/TheHeader.vue";
+import BaseSidebar from "./components/UI/BaseSidebar.vue";
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,5 +1,5 @@
-export type SidebarLinkProps ={
-    imageSrc?: string,
-    label:string,
-    link:string
-}
+export type SidebarLinkProps = {
+  imageSrc?: string;
+  label: string;
+  link: string;
+};
