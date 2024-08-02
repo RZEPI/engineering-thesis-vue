@@ -8,7 +8,7 @@
 }
 
 body {
-  color: white;
+  color: var(--main-text-color);
   margin: 0;
   background-color: var(--main-background-color);
   font-family: "Quicksand", "Sans Sheriff", "Arial";

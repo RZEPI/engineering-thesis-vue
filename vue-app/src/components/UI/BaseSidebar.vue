@@ -88,7 +88,7 @@ header {
   cursor: pointer;
 }
 .burger-button span {
-  background-color: #34495e;
+  background-color: var(--main-background-color);
   width: 2.5em;
   height: 0.4em;
 }
