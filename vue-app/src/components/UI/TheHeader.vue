@@ -4,7 +4,7 @@
 
 <style scoped>
 header {
-  background-color: rgb(65, 183, 131);
+  background-color: var(--main-color);
   height: 4.5vh;
   margin: 0;
 }

@@ -1,5 +1,5 @@
 <template>
-  <header :class="{'border-shadow': isExpanded}">
+  <header :class="{ 'border-shadow': isExpanded }">
     <div class="burger-button" :class="btnClass" @click="toggleExpand">
       <span></span>
       <span></span>
@@ -58,9 +58,9 @@ function toggleExpand() {
 }
 
 nav {
-  background-color: rgb(65, 183, 131);
+  background-color: var(--main-color);
   height: 100vh;
-  width: 35vw;
+  width: var(--sidebar-width);
   position: fixed;
   z-index: 10;
   float: left;
@@ -71,7 +71,7 @@ ul {
   padding: 0;
 }
 header {
-  width: 35vw;
+  width: var(--sidebar-width);
   position: fixed;
   z-index: 10;
   top: 0;
@@ -94,7 +94,7 @@ header {
 }
 
 .expanded {
-  transform: translateX(calc(35vw - 6em));
+  transform: translateX(calc(var(--sidebar-width) - 6em));
   transition-delay: 0.04s;
 }
 
@@ -110,7 +110,7 @@ header {
   z-index: 5;
 }
 
-.border-shadow{
+.border-shadow {
   transition: box-shadow 0.4s;
   box-shadow: 4px 0 4px 3px rgba(0, 0, 0, 0.5);
 }

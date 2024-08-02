@@ -26,6 +26,6 @@ p {
 }
 a {
   text-decoration: none;
-  color: #41b783;
+  color: var(--main-color);
 }
 </style>

@@ -18,7 +18,7 @@ const props = defineProps<SidebarLinkProps>();
 <style scoped>
 a {
   text-decoration: none;
-  color: #34495e;
+  color: var(--main-background-color);
   font-weight: 600;
   width: 100%;
   font-size: 2em;
@@ -32,11 +32,11 @@ li {
 }
 a:active,
 a.active {
-  background-color: rgba(52, 73, 94, 0.5);
-  color: white;
+  background-color: var(--active-element-color);
+  color: var(--main-text-color);
 }
 li:hover {
-  background-color: #2f8761;
+  background-color: var(--hover-element-color);
   box-sizing: border-box;
 }
 </style>
