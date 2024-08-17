@@ -19,4 +19,8 @@ function onClick() {
 .table-row.active {
   background-color: yellow;
 }
+
+.table-row:hover {
+  background-color: var(--hover-element-color);
+}
 </style>

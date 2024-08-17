@@ -36,9 +36,9 @@ import { onBeforeMount, ref } from "vue";
 import { NamesTable } from "../static/RandomDataTables";
 import { NumberTable } from "../static/RandomDataTables";
 import TableRow from "../components/UI/TableRow.vue";
-import { DefineProps } from "vue";
+import { ArrayRow } from "../models/PerfTestArrayRow";
 
-const tuples = ref<[number, string, number][]>([]);
+const tuples = ref<ArrayRow[]>([]);
 
 let key: number = 0;
 
@@ -48,7 +48,7 @@ function addNRecords(n) {
   let NameIndex: number;
   let LevelIndex: number;
 
-  const TmpArray: [number, string, number][] = [];
+  const TmpArray: ArrayRow[] = [];
 
   for (let i = 0; i < n; i++) {
     NameIndex = Math.floor(Math.random() * NamesTable.length);
@@ -80,9 +80,8 @@ function updateNthRow(n) {
   }
 }
 
-
 function swapRows() {
-  let tmpRow: [number, string, number];
+  let tmpRow: ArrayRow;
 
   const Index1 = Math.floor(Math.random() * tuples.value.length);
   const Index2 = Math.floor(Math.random() * tuples.value.length);
@@ -101,7 +100,7 @@ function clearRows() {
 }
 
 function generateArray() {
-  const generatedArray: [number, string, number][] = []; //Todo: change this to type in ../models/
+  const generatedArray: ArrayRow[] = [];
 
   for (let i = 0; i < 20; i++) {
     const NameIndex: number = Math.floor(Math.random() * NamesTable.length);
@@ -117,7 +116,7 @@ function generateArray() {
 }
 </script>
 
-<style>
+<style scoped>
 .page-wrapper {
   box-sizing: border-box;
   width: 100%;
@@ -145,7 +144,7 @@ function generateArray() {
 
 button:hover {
   transition: all 0.3s;
-  background-color: rgb(201, 201, 201);
+  background-color: var(--hover-element-color);
 }
 button:active {
   background-color: var(--active-element-color);
@@ -176,13 +175,14 @@ button:active {
   font-size: 1.2em;
   font-weight: bold;
 }
-.table-row {
+
+:deep(.table-row) {
   background-color: var(--main-color);
   width: 100%;
   display: grid;
   grid-template-columns: [id] 20% [name] 40% [level] 40%;
 }
-.table-cell {
+:deep(.table-cell) {
   height: 1em;
   padding: 0.3em 0.3em 0.3em 0.75em;
   border: 1px solid var(--hover-element-color);
