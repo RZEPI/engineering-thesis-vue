@@ -44,7 +44,7 @@ let key: number = 0;
 
 onBeforeMount(generateArray);
 
-function addNRecords(n) {
+function addNRecords(n: number) {
   let NameIndex: number;
   let LevelIndex: number;
 
@@ -74,7 +74,7 @@ function replaceAllRows() {
   }
 }
 
-function updateNthRow(n) {
+function updateNthRow(n: number) {
   for (let i = 0; i < tuples.value.length; i += n) {
     tuples.value[i][1] = "Changed Name " + i;
   }
@@ -92,7 +92,7 @@ function swapRows() {
 }
 
 function clearRows() {
-  tuples.value.forEach((element) => {
+  tuples.value.forEach((element: ArrayRow) => {
     element[0] = 0;
     element[1] = "";
     element[2] = 0;
@@ -144,7 +144,7 @@ function generateArray() {
 
 button:hover {
   transition: all 0.3s;
-  background-color: var(--hover-element-color);
+  background-color:var(--hover-element-color);
 }
 button:active {
   background-color: var(--active-element-color);
