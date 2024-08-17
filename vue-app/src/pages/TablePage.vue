@@ -2,10 +2,13 @@
   <div class="page-wrapper">
     <div class="page-content">
       <div class="v-btn-cont">
-        <button @click="addRecord">Add</button>
+        <button @click="addNRecords(5)">Add</button>
         <button @click="deleteRecord">Delete</button>
         <button @click="deleteEveryNthRecord(2)">Delete Nth</button>
-        <button @click="printLog">Log</button>
+        <button @click="updateNthRow(2)">Update Nth</button>
+        <button @click="replaceAllRows">Replace all</button>
+        <button @click="swapRows">Swap rows</button>
+        <button @click="clearRows">Clear rows</button>
       </div>
 
       <div class="table-container">
@@ -41,10 +44,18 @@ let key: number = 0;
 
 onBeforeMount(generateArray);
 
-function addRecord() {
-  const NameIndex: number = Math.floor(Math.random() * NamesTable.length);
-  const LevelIndex: number = Math.floor(Math.random() * NumberTable.length);
-  tuples.value.unshift([key++, NamesTable[NameIndex], NumberTable[LevelIndex]]);
+function addNRecords(n) {
+  let NameIndex: number;
+  let LevelIndex: number;
+
+  const TmpArray: [number, string, number][] = [];
+
+  for (let i = 0; i < n; i++) {
+    NameIndex = Math.floor(Math.random() * NamesTable.length);
+    LevelIndex = Math.floor(Math.random() * NumberTable.length);
+    TmpArray.unshift([key++, NamesTable[NameIndex], NumberTable[LevelIndex]]);
+  }
+  tuples.value.unshift(...TmpArray);
 }
 
 function deleteRecord() {
@@ -55,6 +66,38 @@ function deleteEveryNthRecord(n: number) {
   for (let i = 0; i < tuples.value.length; i += n) {
     tuples.value.splice(i--, 1);
   }
+}
+
+function replaceAllRows() {
+  for (let i = 0; i < tuples.value.length; i++) {
+    tuples.value[i] = [i, "Replaced " + i, 1];
+  }
+}
+
+function updateNthRow(n) {
+  for (let i = 0; i < tuples.value.length; i += n) {
+    tuples.value[i][1] = "Changed Name " + i;
+  }
+}
+
+
+function swapRows() {
+  let tmpRow: [number, string, number];
+
+  const Index1 = Math.floor(Math.random() * tuples.value.length);
+  const Index2 = Math.floor(Math.random() * tuples.value.length);
+
+  tmpRow = tuples.value[Index1];
+  tuples.value[Index1] = tuples.value[Index2];
+  tuples.value[Index2] = tmpRow;
+}
+
+function clearRows() {
+  tuples.value.forEach((element) => {
+    element[0] = 0;
+    element[1] = "";
+    element[2] = 0;
+  });
 }
 
 function generateArray() {
@@ -71,10 +114,6 @@ function generateArray() {
   }
 
   tuples.value.unshift(...generatedArray);
-}
-
-function printLog() {
-  console.log(tuples.value);
 }
 </script>
 

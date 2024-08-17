@@ -1,15 +1,22 @@
 <template>
-  <div class="table-row">
-    <div class="table-cell">
-      <v-if:editMode input type="number" v-model="tuple[0]" />
-      <v-else span>{{ tuple[0] }}</v-else>
-    </div>
+  <div class="table-row" :class="{ active: focus }" @click="onClick()">
+    <div class="table-cell">{{ tuple[0] }}</div>
     <div class="table-cell">{{ tuple[1] }}</div>
     <div class="table-cell">{{ tuple[2] }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 const props = defineProps(["tuple"]);
-const editMode: boolean = false;
+const focus = ref(false);
+
+function onClick() {
+  focus.value = !focus.value;
+}
 </script>
+<style scoped>
+.table-row.active {
+  background-color: yellow;
+}
+</style>
