@@ -36,9 +36,9 @@ import { onBeforeMount, ref } from "vue";
 import { NamesTable } from "../static/RandomDataTables";
 import { NumberTable } from "../static/RandomDataTables";
 import TableRow from "../components/UI/TableRow.vue";
-import { ArrayRow } from "../models/PerfTestArrayRow";
+import { TableRowData } from "../models/PerfTestArrayRow";
 
-const tuples = ref<ArrayRow[]>([]);
+const tuples = ref<TableRowData[]>([]);
 
 let key: number = 0;
 
@@ -48,12 +48,17 @@ function addNRecords(n: number) {
   let NameIndex: number;
   let LevelIndex: number;
 
-  const TmpArray: ArrayRow[] = [];
+  const TmpArray: TableRowData[] = [];
 
   for (let i = 0; i < n; i++) {
     NameIndex = Math.floor(Math.random() * NamesTable.length);
     LevelIndex = Math.floor(Math.random() * NumberTable.length);
-    TmpArray.unshift([key++, NamesTable[NameIndex], NumberTable[LevelIndex]]);
+
+    TmpArray.unshift({
+        Id : key++,
+        Name : NamesTable[NameIndex],
+        Level : NumberTable[LevelIndex]
+      } );
   }
   tuples.value.unshift(...TmpArray);
 }
@@ -68,20 +73,20 @@ function deleteEveryNthRecord(n: number) {
   }
 }
 
-function replaceAllRows() {
-  for (let i = 0; i < tuples.value.length; i++) {
-    tuples.value[i] = [i, "Replaced " + i, 1];
+function updateNthRow(n: number) {
+  for (let i = 0; i < tuples.value.length; i += n) {
+    tuples.value[i].Name = "Changed name " + i;
   }
 }
 
-function updateNthRow(n: number) {
-  for (let i = 0; i < tuples.value.length; i += n) {
-    tuples.value[i][1] = "Changed Name " + i;
+function replaceAllRows() {
+  for (let i = 0; i < tuples.value.length; i++) {
+    tuples.value[i] = {Id : i, Name : "Replaced " + i, Level : 1};
   }
 }
 
 function swapRows() {
-  let tmpRow: ArrayRow;
+  let tmpRow: TableRowData;
 
   const Index1 = Math.floor(Math.random() * tuples.value.length);
   const Index2 = Math.floor(Math.random() * tuples.value.length);
@@ -92,24 +97,24 @@ function swapRows() {
 }
 
 function clearRows() {
-  tuples.value.forEach((element: ArrayRow) => {
-    element[0] = 0;
-    element[1] = "";
-    element[2] = 0;
+  tuples.value.forEach((element: TableRowData) => {
+    element.Id = 0;
+    element.Name = "";
+    element.Level = 0;
   });
 }
 
 function generateArray() {
-  const generatedArray: ArrayRow[] = [];
+  const generatedArray: TableRowData[] = [];
 
   for (let i = 0; i < 20; i++) {
     const NameIndex: number = Math.floor(Math.random() * NamesTable.length);
     const LevelIndex: number = Math.floor(Math.random() * NumberTable.length);
-    generatedArray.unshift([
-      key++,
-      NamesTable[NameIndex],
-      NumberTable[LevelIndex],
-    ]);
+    generatedArray.unshift({
+      Id:key++,
+      Name:NamesTable[NameIndex],
+      Level:NumberTable[LevelIndex],
+  });
   }
 
   tuples.value.unshift(...generatedArray);
