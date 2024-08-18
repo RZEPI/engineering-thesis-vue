@@ -1,6 +1,5 @@
-export type TableRowData =
-{
-  Id: number,
-  Name: string,
-  Level: number
-}
+export type TableRowData = {
+  id: number;
+  name: string;
+  level: number;
+};

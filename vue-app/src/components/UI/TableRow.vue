@@ -1,8 +1,8 @@
 <template>
   <div class="table-row" :class="{ active: focus }" @click="onClick()">
-    <div class="table-cell">{{ tuple.Id }}</div>
-    <div class="table-cell">{{ tuple.Name }}</div>
-    <div class="table-cell">{{ tuple.Level }}</div>
+    <div class="table-cell">{{ tuple.id }}</div>
+    <div class="table-cell">{{ tuple.name }}</div>
+    <div class="table-cell">{{ tuple.level }}</div>
   </div>
 </template>
 

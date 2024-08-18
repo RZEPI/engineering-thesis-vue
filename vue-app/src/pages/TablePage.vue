@@ -21,7 +21,7 @@
           <table-row
             class="table-row"
             :key="tuple"
-            v-for="tuple in tuples"
+            v-for="tuple in TableContent"
             :tuple="tuple"
           >
           </table-row>
@@ -38,7 +38,7 @@ import { NumberTable } from "../static/RandomDataTables";
 import TableRow from "../components/UI/TableRow.vue";
 import { TableRowData } from "../models/PerfTestArrayRow";
 
-const tuples = ref<TableRowData[]>([]);
+const TableContent = ref<TableRowData[]>([]);
 
 let key: number = 0;
 
@@ -55,52 +55,52 @@ function addNRecords(n: number) {
     LevelIndex = Math.floor(Math.random() * NumberTable.length);
 
     TmpArray.unshift({
-        Id : key++,
-        Name : NamesTable[NameIndex],
-        Level : NumberTable[LevelIndex]
-      } );
+      id: key++,
+      name: NamesTable[NameIndex],
+      level: NumberTable[LevelIndex],
+    });
   }
-  tuples.value.unshift(...TmpArray);
+  TableContent.value.unshift(...TmpArray);
 }
 
 function deleteRecord() {
-  tuples.value.splice(0, 1);
+  TableContent.value.splice(0, 1);
 }
 
 function deleteEveryNthRecord(n: number) {
-  for (let i = 0; i < tuples.value.length; i += n) {
-    tuples.value.splice(i--, 1);
+  for (let i = 0; i < TableContent.value.length; i += n) {
+    TableContent.value.splice(i--, 1);
   }
 }
 
 function updateNthRow(n: number) {
-  for (let i = 0; i < tuples.value.length; i += n) {
-    tuples.value[i].Name = "Changed name " + i;
+  for (let i = 0; i < TableContent.value.length; i += n) {
+    TableContent.value[i].name = "Changed name " + i;
   }
 }
 
 function replaceAllRows() {
-  for (let i = 0; i < tuples.value.length; i++) {
-    tuples.value[i] = {Id : i, Name : "Replaced " + i, Level : 1};
+  for (let i = 0; i < TableContent.value.length; i++) {
+    TableContent.value[i] = { id: i, name: "Replaced " + i, level: 1 };
   }
 }
 
 function swapRows() {
   let tmpRow: TableRowData;
 
-  const Index1 = Math.floor(Math.random() * tuples.value.length);
-  const Index2 = Math.floor(Math.random() * tuples.value.length);
+  const Index1 = Math.floor(Math.random() * TableContent.value.length);
+  const Index2 = Math.floor(Math.random() * TableContent.value.length);
 
-  tmpRow = tuples.value[Index1];
-  tuples.value[Index1] = tuples.value[Index2];
-  tuples.value[Index2] = tmpRow;
+  tmpRow = TableContent.value[Index1];
+  TableContent.value[Index1] = TableContent.value[Index2];
+  TableContent.value[Index2] = tmpRow;
 }
 
 function clearRows() {
-  tuples.value.forEach((element: TableRowData) => {
-    element.Id = 0;
-    element.Name = "";
-    element.Level = 0;
+  TableContent.value.forEach((element: TableRowData) => {
+    element.id = 0;
+    element.name = "";
+    element.level = 0;
   });
 }
 
@@ -111,13 +111,13 @@ function generateArray() {
     const NameIndex: number = Math.floor(Math.random() * NamesTable.length);
     const LevelIndex: number = Math.floor(Math.random() * NumberTable.length);
     generatedArray.unshift({
-      Id:key++,
-      Name:NamesTable[NameIndex],
-      Level:NumberTable[LevelIndex],
-  });
+      id: key++,
+      name: NamesTable[NameIndex],
+      level: NumberTable[LevelIndex],
+    });
   }
 
-  tuples.value.unshift(...generatedArray);
+  TableContent.value.unshift(...generatedArray);
 }
 </script>
 
@@ -149,7 +149,7 @@ function generateArray() {
 
 button:hover {
   transition: all 0.3s;
-  background-color:var(--hover-element-color);
+  background-color: var(--hover-element-color);
 }
 button:active {
   background-color: var(--active-element-color);
