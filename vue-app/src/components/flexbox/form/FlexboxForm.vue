@@ -31,15 +31,15 @@ function selectJustifyContentHandler(chosenOption: string)
 <style scoped>
 .configuration-form
 {
+    --label-font-size: 1.3em;
     grid-area: form;
     display: flex;
     flex-direction: column;
     align-items: center;
 
 }
-.configuration-form > div
+.configuration-form div
 {   
-    font-size: 1em;
-    margin: 1em
+    width: 75%;
 }
 </style>
