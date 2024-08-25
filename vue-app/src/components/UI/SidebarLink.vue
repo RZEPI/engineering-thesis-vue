@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import type { SidebarLinkProps } from "../../models/SidebarLink.ts";
 
-const props = defineProps<SidebarLinkProps>();
+defineProps<SidebarLinkProps>();
 </script>
 
 <style scoped>
