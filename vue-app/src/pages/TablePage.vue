@@ -2,13 +2,22 @@
   <div class="page-wrapper">
     <div class="page-content">
       <div class="v-btn-cont">
-        <button @click="addNRecords(5)">Add</button>
-        <button @click="deleteRecord">Delete</button>
-        <button @click="deleteEveryNthRecord(2)">Delete Nth</button>
-        <button @click="updateNthRow(2)">Update Nth</button>
+        <button @click="addNRecords(RECORDS_TO_CREATE)">
+          Add {{ RECORDS_TO_CREATE }}
+        </button>
+        <button @click="deleteNRecords(RECORDS_TO_DELETE)">
+          Delete {{ RECORDS_TO_DELETE }}
+        </button>
+        <button @click="deleteEveryNthRecord(NTH_TO_DELETE)">
+          Delete {{ NTH_TO_DELETE }}th
+        </button>
+        <button @click="updateNthRow(NTH_TO_UPDATE)">
+          Update {{ NTH_TO_UPDATE }}th
+        </button>
         <button @click="replaceAllRows">Replace all</button>
-        <button @click="swapRows">Swap rows</button>
-        <button @click="clearRows">Clear rows</button>
+        <button @click="swapRows">Swap</button>
+        <button @click="clearRows">Clear all</button>
+        <span>rows: {{ rowCount }}</span>
       </div>
 
       <div class="table-container">
@@ -32,13 +41,21 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
+import { computed, ComputedRef, onBeforeMount, ref } from "vue";
 import { namesTable } from "../static/RandomDataTables";
 import { numberTable } from "../static/RandomDataTables";
 import TableRow from "../components/UI/TableRow.vue";
 import { TableRowData } from "../models/PerfTestArrayRow";
 
+const RECORDS_TO_CREATE: number = 3000;
+const RECORDS_TO_DELETE: number = 1000;
+const NTH_TO_DELETE: number = 2;
+const NTH_TO_UPDATE: number = 2;
+
 const tableContent = ref<TableRowData[]>([]);
+const rowCount: ComputedRef<number> = computed(() => {
+  return tableContent.value.length;
+});
 
 let key: number = 0;
 
@@ -60,55 +77,81 @@ function addNRecords(n: number) {
       level: numberTable[levelIndex],
     });
   }
+
   tableContent.value.unshift(...tmpArray);
 }
 
-function deleteRecord() {
-  tableContent.value.splice(0, 1);
+function deleteNRecords(n: number) {
+  tableContent.value.splice(0, n);
 }
 
 function deleteEveryNthRecord(n: number) {
-  for (let i = 0; i < tableContent.value.length; i += n) {
-    tableContent.value.splice(i--, 1);
+  const tmpArray: TableRowData[] = [...tableContent.value];
+
+  for (let i = 0; i < tmpArray.length; i += n) {
+    tmpArray.splice(i--, 1);
   }
+
+  tableContent.value = tmpArray;
 }
 
 function updateNthRow(n: number) {
+  const tmpArray: TableRowData[] = [...tableContent.value];
+
   for (let i = 0; i < tableContent.value.length; i += n) {
-    tableContent.value[i].name = "Changed name " + i;
+    tmpArray[i] = {
+      ...tableContent.value[i],
+      name: "Changed Name " + i,
+    };
   }
+
+  tableContent.value = tmpArray;
 }
 
 function replaceAllRows() {
+  const tmpArray: TableRowData[] = [];
+
   for (let i = 0; i < tableContent.value.length; i++) {
-    tableContent.value[i] = { id: i, name: "Replaced " + i, level: 1 };
+    tmpArray.push({
+      id: key++,
+      name: "Replaced " + i,
+      level: 1,
+    });
   }
+
+  tableContent.value = tmpArray;
 }
 
 function swapRows() {
-  let tmpRow: TableRowData;
-
   const Index1 = Math.floor(Math.random() * tableContent.value.length);
   const Index2 = Math.floor(Math.random() * tableContent.value.length);
 
-  tmpRow = tableContent.value[Index1];
+  const tmpRow: TableRowData = tableContent.value[Index1];
   tableContent.value[Index1] = tableContent.value[Index2];
   tableContent.value[Index2] = tmpRow;
 }
 
 function clearRows() {
-  tableContent.value.forEach((element: TableRowData) => {
-    element.name = "";
-    element.level = 0;
-  });
+  const tmpArray: TableRowData[] = [];
+
+  for (let i = 0; i < tableContent.value.length; i++) {
+    tmpArray.push({
+      id: tableContent.value[i].id,
+      name: "",
+      level: 0,
+    });
+  }
+
+  tableContent.value = tmpArray;
 }
 
 function generateArray() {
   const generatedArray: TableRowData[] = [];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 5; i++) {
     const nameIndex: number = Math.floor(Math.random() * namesTable.length);
     const levelIndex: number = Math.floor(Math.random() * numberTable.length);
+
     generatedArray.unshift({
       id: key++,
       name: namesTable[nameIndex],
@@ -126,6 +169,7 @@ function generateArray() {
   width: 100%;
   display: flex;
   justify-content: center;
+  height: 80vh;
 }
 .page-content {
   width: 80%;
@@ -156,14 +200,16 @@ button:active {
 
 .table-container {
   padding: 2em 1em 2em 1em;
+  max-height: 80vh;
 }
 
 .table {
+  max-height: 100%;
   box-sizing: content-box;
   border: 10px solid var(--hover-element-color);
   border-radius: 20px;
   overflow: hidden;
-  background-color: pink;
+  overflow-y: scroll;
 }
 
 .table-header {
