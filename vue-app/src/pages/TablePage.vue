@@ -20,7 +20,7 @@
           </div>
           <table-row
             class="table-row"
-            :key="tuple"
+            :key="tuple.id"
             v-for="tuple in tableContent"
             :tuple="tuple"
           >
@@ -98,7 +98,6 @@ function swapRows() {
 
 function clearRows() {
   tableContent.value.forEach((element: TableRowData) => {
-    element.id = 0;
     element.name = "";
     element.level = 0;
   });

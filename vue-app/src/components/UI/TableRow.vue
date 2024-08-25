@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { TableRowData } from "../../models/PerfTestArrayRow";
-const props = defineProps<{
-  tuple: TableRowData
+defineProps<{
+  tuple: TableRowData;
 }>();
 const focus = ref<boolean>(false);
 
