@@ -8,8 +8,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-const props = defineProps(["tuple"]);
-const focus = ref(false);
+import { TableRowData } from "../../models/PerfTestArrayRow";
+const props = defineProps<{
+  tuple: TableRowData
+}>();
+const focus = ref<boolean>(false);
 
 function onClick() {
   focus.value = !focus.value;
