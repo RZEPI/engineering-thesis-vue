@@ -21,7 +21,7 @@
           <table-row
             class="table-row"
             :key="tuple"
-            v-for="tuple in TableContent"
+            v-for="tuple in tableContent"
             :tuple="tuple"
           >
           </table-row>
@@ -33,71 +33,71 @@
 
 <script setup lang="ts">
 import { onBeforeMount, ref } from "vue";
-import { NamesTable } from "../static/RandomDataTables";
-import { NumberTable } from "../static/RandomDataTables";
+import { namesTable } from "../static/RandomDataTables";
+import { numberTable } from "../static/RandomDataTables";
 import TableRow from "../components/UI/TableRow.vue";
 import { TableRowData } from "../models/PerfTestArrayRow";
 
-const TableContent = ref<TableRowData[]>([]);
+const tableContent = ref<TableRowData[]>([]);
 
 let key: number = 0;
 
 onBeforeMount(generateArray);
 
 function addNRecords(n: number) {
-  let NameIndex: number;
-  let LevelIndex: number;
+  let nameIndex: number;
+  let levelIndex: number;
 
-  const TmpArray: TableRowData[] = [];
+  const tmpArray: TableRowData[] = [];
 
   for (let i = 0; i < n; i++) {
-    NameIndex = Math.floor(Math.random() * NamesTable.length);
-    LevelIndex = Math.floor(Math.random() * NumberTable.length);
+    nameIndex = Math.floor(Math.random() * namesTable.length);
+    levelIndex = Math.floor(Math.random() * numberTable.length);
 
-    TmpArray.unshift({
+    tmpArray.unshift({
       id: key++,
-      name: NamesTable[NameIndex],
-      level: NumberTable[LevelIndex],
+      name: namesTable[nameIndex],
+      level: numberTable[levelIndex],
     });
   }
-  TableContent.value.unshift(...TmpArray);
+  tableContent.value.unshift(...tmpArray);
 }
 
 function deleteRecord() {
-  TableContent.value.splice(0, 1);
+  tableContent.value.splice(0, 1);
 }
 
 function deleteEveryNthRecord(n: number) {
-  for (let i = 0; i < TableContent.value.length; i += n) {
-    TableContent.value.splice(i--, 1);
+  for (let i = 0; i < tableContent.value.length; i += n) {
+    tableContent.value.splice(i--, 1);
   }
 }
 
 function updateNthRow(n: number) {
-  for (let i = 0; i < TableContent.value.length; i += n) {
-    TableContent.value[i].name = "Changed name " + i;
+  for (let i = 0; i < tableContent.value.length; i += n) {
+    tableContent.value[i].name = "Changed name " + i;
   }
 }
 
 function replaceAllRows() {
-  for (let i = 0; i < TableContent.value.length; i++) {
-    TableContent.value[i] = { id: i, name: "Replaced " + i, level: 1 };
+  for (let i = 0; i < tableContent.value.length; i++) {
+    tableContent.value[i] = { id: i, name: "Replaced " + i, level: 1 };
   }
 }
 
 function swapRows() {
   let tmpRow: TableRowData;
 
-  const Index1 = Math.floor(Math.random() * TableContent.value.length);
-  const Index2 = Math.floor(Math.random() * TableContent.value.length);
+  const Index1 = Math.floor(Math.random() * tableContent.value.length);
+  const Index2 = Math.floor(Math.random() * tableContent.value.length);
 
-  tmpRow = TableContent.value[Index1];
-  TableContent.value[Index1] = TableContent.value[Index2];
-  TableContent.value[Index2] = tmpRow;
+  tmpRow = tableContent.value[Index1];
+  tableContent.value[Index1] = tableContent.value[Index2];
+  tableContent.value[Index2] = tmpRow;
 }
 
 function clearRows() {
-  TableContent.value.forEach((element: TableRowData) => {
+  tableContent.value.forEach((element: TableRowData) => {
     element.id = 0;
     element.name = "";
     element.level = 0;
@@ -108,16 +108,16 @@ function generateArray() {
   const generatedArray: TableRowData[] = [];
 
   for (let i = 0; i < 20; i++) {
-    const NameIndex: number = Math.floor(Math.random() * NamesTable.length);
-    const LevelIndex: number = Math.floor(Math.random() * NumberTable.length);
+    const nameIndex: number = Math.floor(Math.random() * namesTable.length);
+    const levelIndex: number = Math.floor(Math.random() * numberTable.length);
     generatedArray.unshift({
       id: key++,
-      name: NamesTable[NameIndex],
-      level: NumberTable[LevelIndex],
+      name: namesTable[nameIndex],
+      level: numberTable[levelIndex],
     });
   }
 
-  TableContent.value.unshift(...generatedArray);
+  tableContent.value.unshift(...generatedArray);
 }
 </script>
 
