@@ -1,12 +1,19 @@
 <template>
-    <div class="preview">
+    <div class="preview" :style="flexClasses.getStyleObject()">
+        <div></div>
+        <div></div>
         <div></div>
         <div></div>
         <div></div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import {inject} from 'vue';
+
+import { FlexClasses } from '../../models/flexbox-generator/FlexClasses';
+
+const flexClasses = inject<FlexClasses>('flexClasses')!;
 </script>
 
 <style scoped>
@@ -14,8 +21,8 @@
 {
     grid-area: preview;
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 40vw;
+    max-height: 40vh;
     border: 1px solid black;
     border-radius: 1em;
     padding: 1em;

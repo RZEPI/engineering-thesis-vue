@@ -1,7 +1,7 @@
 export enum AlignItemsOptions {
-    "center",
-    "flex-start",
-    "flex-end",
-    "stretch",
-    "baseline",
+    CENTER = "center",
+    FLEX_START = "flex-start",
+    FLEX_END = "flex-end",
+    STRETCH = "stretch",
+    BASELINE = "baseline",
 }

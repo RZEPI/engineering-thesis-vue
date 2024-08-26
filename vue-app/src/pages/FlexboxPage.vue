@@ -8,9 +8,16 @@
 </template>
 
 <script setup lang="ts">
+import {reactive, provide} from 'vue';
+
 import BaseLayout from '../components/UI/BaseLayout.vue';
 import FlexboxPreview from '../components/flexbox/FlexboxPreview.vue';
 import FlexboxForm from '../components/flexbox/form/FlexboxForm.vue';
+
+import { FlexClasses } from '../models/flexbox-generator/FlexClasses';
+
+const flexClasses = reactive<FlexClasses>(new FlexClasses());
+provide('flexClasses', flexClasses);
 </script>
 
 <style scoped>
