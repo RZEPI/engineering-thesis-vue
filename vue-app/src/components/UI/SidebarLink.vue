@@ -39,4 +39,7 @@ li:hover {
   background-color: var(--hover-element-color);
   box-sizing: border-box;
 }
+span {
+  min-width: 20vw;
+}
 </style>

@@ -7,40 +7,41 @@
     </form>
 </template>
 <script setup lang="ts">
-import {inject} from 'vue';
+import { useStore as useFlexboxStore } from '../../../store/flexbox';
+import { ActionTypes } from '../../../store/flexbox/actions';
 import ToggleInput from './ToggleInput.vue';
 import TheSelect from './TheSelect.vue';
-import { FlexClasses } from '../../../models/flexbox-generator/FlexClasses';
 import { JustifyContentOptions } from '../../../models/flexbox-generator/JustifyContentOptions';
 import { AlignItemsOptions } from '../../../models/flexbox-generator/AlignItemsOptions';
 
 const justifyContentOptionsList = Object.values(JustifyContentOptions).filter((value) => isNaN(Number(value)));
 const alignItemsOptionsList = Object.values(AlignItemsOptions).filter((key)=> isNaN(Number(key)));
-const flexData = inject<FlexClasses>('flexClasses')!;
+
+const store = useFlexboxStore();
 
 function toggleDirection():void
 {
-    flexData.toggleDirection()
+    store.dispatch(ActionTypes.TOGGLE_OPTION, "direction")
 }
 
 function toggleWrapping() : void
 {
-    flexData.toggleWrapping();
+    store.dispatch(ActionTypes.TOGGLE_OPTION, "wrap")
 }
 
-function selectHanlder<T>(chosenOption:string, optionsList: T[]):T
+function selectHanlder<T>(chosenOption:string, actionType:ActionTypes,  optionsList: T[]) : void
 {
     const parsedOption = optionsList.find(value => value === chosenOption);
-    return parsedOption || optionsList[0];
+    store.dispatch(actionType, parsedOption);
 }
 
 function selectAlignItemsHandler(chosenOption:string)
 {
-    flexData.alignItems = selectHanlder<AlignItemsOptions>(chosenOption, alignItemsOptionsList);
+   selectHanlder<AlignItemsOptions>(chosenOption, ActionTypes.SET_ALIGN_ITEMS, alignItemsOptionsList);
 }
 function selectJustifyContentHandler(chosenOption: string)
 {
-    flexData.justifyContent = selectHanlder<JustifyContentOptions>(chosenOption, justifyContentOptionsList);
+    selectHanlder<JustifyContentOptions>(chosenOption, ActionTypes.SET_JUSTIFY_CONTENT, justifyContentOptionsList);
 }
 </script>
 <style scoped>

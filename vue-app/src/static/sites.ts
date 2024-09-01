@@ -8,5 +8,5 @@ export const sites: Array<SidebarLinkProps> = [
   {
     label: "Flexbox",
     link: "/flexbox",
-  }
+  },
 ];

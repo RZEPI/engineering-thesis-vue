@@ -1,5 +1,5 @@
 <template>
-    <div class="preview" :style="flexClasses.getStyleObject()">
+    <div class="preview" :style="flexClasses">
         <div></div>
         <div></div>
         <div></div>
@@ -9,11 +9,12 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from 'vue';
+import { CSSProperties, computed } from 'vue';
+import { useStore as useFlexboxStore } from '../../store/flexbox';
 
-import { FlexClasses } from '../../models/flexbox-generator/FlexClasses';
+const store = useFlexboxStore();
+const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
 
-const flexClasses = inject<FlexClasses>('flexClasses')!;
 </script>
 
 <style scoped>
