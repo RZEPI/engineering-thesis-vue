@@ -1,8 +1,10 @@
 import {State} from ".";
 import { CSSProperties } from "vue";
+import { FlexboxElement } from "../../models/flexbox-generator/FlexboxElement";
 
 export type Getters = {
-    getStyleObject(state:State): CSSProperties
+    getStyleObject(state: State) : CSSProperties
+    getContentList(state: State) : FlexboxElement[]
 }
 
 export const getters: Getters = {
@@ -14,5 +16,9 @@ export const getters: Getters = {
             'justify-content': state.justifyContent  as string,
             'align-items': state.alignItems as string
         }
+    },
+    getContentList(state)
+    {
+        return state.content;
     }
 }

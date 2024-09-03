@@ -4,7 +4,9 @@
         <toggle-input input-header="Wrapping" :choices="['Nowrap', 'Wrap']" @toggle-func="toggleWrapping"></toggle-input>
         <the-select select-header="Justify content" select-name="justify-content" :option-list="justifyContentOptionsList" @on-change="selectJustifyContentHandler"></the-select>
         <the-select select-header="Align items" select-name="align-items" :option-list="alignItemsOptionsList" @on-change="selectAlignItemsHandler"></the-select>
+        <button type="button" @click="addContainer">Add container</button>
     </form>
+
 </template>
 <script setup lang="ts">
 import { useStore as useFlexboxStore } from '../../../store/flexbox';
@@ -43,6 +45,9 @@ function selectJustifyContentHandler(chosenOption: string)
 {
     selectHanlder<JustifyContentOptions>(chosenOption, ActionTypes.SET_JUSTIFY_CONTENT, justifyContentOptionsList);
 }
+function addContainer(){
+    store.dispatch(ActionTypes.ADD_ELEMENT);
+}
 </script>
 <style scoped>
 .configuration-form
@@ -57,5 +62,14 @@ function selectJustifyContentHandler(chosenOption: string)
 .configuration-form div
 {
     width: 75%;
+}
+button
+{
+    width: 80%;
+    margin: 3em;
+    background-color: var(--main-color);
+    font-size: var(--label-font-size);
+    border-radius: 1em;
+    padding: 0.8em;
 }
 </style>

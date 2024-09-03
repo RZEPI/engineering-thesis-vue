@@ -7,7 +7,9 @@ import { JustifyContentOptions } from "../../models/flexbox-generator/JustifyCon
 export enum ActionTypes {
     TOGGLE_OPTION = 'toggleOption',
     SET_ALIGN_ITEMS = 'setAlignItems',
-    SET_JUSTIFY_CONTENT = 'setJustifyContent'
+    SET_JUSTIFY_CONTENT = 'setJustifyContent',
+    ADD_ELEMENT = 'addElement',
+    REMOVE_ELEMENT = 'removeElement'
 }
 
 type AugmentedActionContex = {
@@ -30,6 +32,13 @@ export interface Actions {
         { commit }: AugmentedActionContex,
         payload: JustifyContentOptions
     ): void
+    [ActionTypes.ADD_ELEMENT](
+        { commit }: AugmentedActionContex
+    ): void
+    [ActionTypes.REMOVE_ELEMENT](
+        { commit }: AugmentedActionContex,
+        payload: number
+    ): void
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -46,6 +55,14 @@ export const actions: ActionTree<State, State> & Actions = {
     [ActionTypes.SET_ALIGN_ITEMS]({commit}, payload)
     {
         commit(MutationTypes.SET_ALIGN_ITEMS, payload)
+    },
+    [ActionTypes.ADD_ELEMENT]({commit})
+    {
+        commit(MutationTypes.ADD_ELEMENT, undefined);
+    },
+    [ActionTypes.REMOVE_ELEMENT]({commit}, payload)
+    {
+        commit(MutationTypes.REMOVE_ELEMENT, payload);
     }
 
 }

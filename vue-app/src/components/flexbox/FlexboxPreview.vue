@@ -1,25 +1,31 @@
 <template>
     <div class="preview" :style="flexClasses">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div v-for="element in content" :key="element.id" @click="removeElement(element.id)">
+            <p>{{ element.id }}</p>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { CSSProperties, computed } from 'vue';
 import { useStore as useFlexboxStore } from '../../store/flexbox';
+import { FlexboxElement } from '../../models/flexbox-generator/FlexboxElement';
+import { ActionTypes } from '../../store/flexbox/actions';
 
 const store = useFlexboxStore();
+const content = computed<FlexboxElement[]>(()=> store.getters.getContentList);
 const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
+
+function removeElement(elementId: number){
+    store.dispatch(ActionTypes.REMOVE_ELEMENT, elementId);
+}
 
 </script>
 
 <style scoped>
 .preview
 {
+    overflow: scroll;
     grid-area: preview;
     display: flex;
     width: 40vw;
@@ -30,11 +36,42 @@ const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
     background-color: var(--main-background-color-lighter);
     box-sizing: border-box;
 }
-.preview *
-{
-    width: 6vw;
-    height: 6vh;
+
+.preview::-webkit-scrollbar{
+    width: 12px;
+    height: 20px;
+}
+
+.preview::-webkit-scrollbar-track{
+    margin: 1em;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.preview::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
     background-color: var(--main-color);
-    margin: 1em
+}
+
+.preview::-webkit-scrollbar-corner
+{
+    background-color: transparent;
+}
+
+.preview div
+{
+    display: flex;
+    width: 6em;
+    height: 6em;
+    background-color: var(--main-color);
+    margin: 1em;
+    justify-content:center;
+    align-items: center;
+}
+.preview div > p
+{
+    font-size: 2.5em;
+    font-weight: 700;
 }
 </style>
