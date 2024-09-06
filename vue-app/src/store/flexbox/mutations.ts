@@ -40,10 +40,11 @@ export const mutations: MutationTree<State> & Mutations = {
 
         if(content.length !== 0)
             lastElementId = content[content.length-1].id;
+
         content.push({id: lastElementId+1});
     },
     [MutationTypes.REMOVE_ELEMENT](state, payload){
         const content = state.content;
-        state.content = content.filter((element) => element.id != payload)
+        state.content = content.filter((element) => element.id !== payload);
     }
 }

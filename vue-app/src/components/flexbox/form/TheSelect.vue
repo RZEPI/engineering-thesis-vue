@@ -10,7 +10,8 @@
 import { defineProps } from 'vue';
 import { TheSelectProps } from '../../../models/flexbox-generator/TheSelectProps';
 
-defineProps<TheSelectProps>();
+const props = defineProps<TheSelectProps>();
+const selectName = props.selectHeader.toLowerCase().replace(" ", "-");
 const emit = defineEmits<{
     onChange: [chosenOption:string],
     }>();

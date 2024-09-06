@@ -16,6 +16,7 @@ import FlexboxForm from '../components/flexbox/form/FlexboxForm.vue';
 <style scoped>
 .main-container
 {
+    --flex-element-size: 6em;
     display: grid;
     grid-template-areas: "preview preview form"
                          "preview preview form"

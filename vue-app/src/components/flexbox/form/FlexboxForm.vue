@@ -2,8 +2,8 @@
     <form class="configuration-form">
         <toggle-input input-header="Direction" :choices="['Row', 'Column']" @toggle-func="toggleDirection"></toggle-input>
         <toggle-input input-header="Wrapping" :choices="['Nowrap', 'Wrap']" @toggle-func="toggleWrapping"></toggle-input>
-        <the-select select-header="Justify content" select-name="justify-content" :option-list="justifyContentOptionsList" @on-change="selectJustifyContentHandler"></the-select>
-        <the-select select-header="Align items" select-name="align-items" :option-list="alignItemsOptionsList" @on-change="selectAlignItemsHandler"></the-select>
+        <the-select select-header="Justify content" :option-list="justifyContentOptionsList" @on-change="selectJustifyContentHandler"></the-select>
+        <the-select select-header="Align items" :option-list="alignItemsOptionsList" @on-change="selectAlignItemsHandler"></the-select>
         <button type="button" @click="addContainer">Add container</button>
     </form>
 
@@ -17,7 +17,7 @@ import { JustifyContentOptions } from '../../../models/flexbox-generator/Justify
 import { AlignItemsOptions } from '../../../models/flexbox-generator/AlignItemsOptions';
 
 const justifyContentOptionsList = Object.values(JustifyContentOptions).filter((value) => isNaN(Number(value)));
-const alignItemsOptionsList = Object.values(AlignItemsOptions).filter((key)=> isNaN(Number(key)));
+const alignItemsOptionsList = Object.values(AlignItemsOptions).filter((value)=> isNaN(Number(value)));
 
 const store = useFlexboxStore();
 

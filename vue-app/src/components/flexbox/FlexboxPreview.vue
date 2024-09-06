@@ -62,8 +62,10 @@ function removeElement(elementId: number){
 .preview div
 {
     display: flex;
-    width: 6em;
-    height: 6em;
+    min-width: var(--flex-element-size);
+    min-height: var(--flex-element-size);
+    max-width: var(--flex-element-size);
+    max-height: var(--flex-element-size);
     background-color: var(--main-color);
     margin: 1em;
     justify-content:center;
