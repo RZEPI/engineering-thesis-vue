@@ -2,11 +2,12 @@ import { ActionTree, ActionContext } from "vuex"
 import { State } from "."
 import { Mutations, MutationTypes } from "./mutations"
 import { AlignItemsOptions } from "../../models/flexbox-generator/AlignItemsOptions"
-import { JustifyContentOptions } from "../../models/flexbox-generator/JustifyContentOptions"
+import { ContentOptions } from "../../models/flexbox-generator/ContentOptions"
 
 export enum ActionTypes {
     TOGGLE_OPTION = 'toggleOption',
     SET_ALIGN_ITEMS = 'setAlignItems',
+    SET_ALIGN_CONTENT = 'setAlignContent',
     SET_JUSTIFY_CONTENT = 'setJustifyContent',
     ADD_ELEMENT = 'addElement',
     REMOVE_ELEMENT = 'removeElement'
@@ -30,7 +31,11 @@ export interface Actions {
     ): void
     [ActionTypes.SET_JUSTIFY_CONTENT](
         { commit }: AugmentedActionContex,
-        payload: JustifyContentOptions
+        payload: ContentOptions
+    ): void
+    [ActionTypes.SET_ALIGN_CONTENT](
+        { commit }: AugmentedActionContex,
+        payload: ContentOptions
     ): void
     [ActionTypes.ADD_ELEMENT](
         { commit }: AugmentedActionContex
@@ -55,6 +60,10 @@ export const actions: ActionTree<State, State> & Actions = {
     [ActionTypes.SET_ALIGN_ITEMS]({commit}, payload)
     {
         commit(MutationTypes.SET_ALIGN_ITEMS, payload)
+    },
+    [ActionTypes.SET_ALIGN_CONTENT]({commit}, payload)
+    {
+        commit(MutationTypes.SET_ALIGN_CONTENT, payload)
     },
     [ActionTypes.ADD_ELEMENT]({commit})
     {

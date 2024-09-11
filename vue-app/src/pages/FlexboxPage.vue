@@ -1,9 +1,10 @@
 <template>
     <base-layout title="Flexbox Testing">
-    <div class="main-container">
-        <flexbox-preview></flexbox-preview>
-        <flexbox-form></flexbox-form>
-    </div>
+        <div class="main-container">
+            <flexbox-preview></flexbox-preview>
+            <flexbox-form></flexbox-form>
+        </div>
+        <code-listing></code-listing>
     </base-layout>
 </template>
 
@@ -11,17 +12,18 @@
 import BaseLayout from '../components/UI/BaseLayout.vue';
 import FlexboxPreview from '../components/flexbox/FlexboxPreview.vue';
 import FlexboxForm from '../components/flexbox/form/FlexboxForm.vue';
+import CodeListing from '../components/flexbox/CodeListing.vue';
 </script>
 
 <style scoped>
-.main-container
-{
+.main-container {
     --flex-element-size: 6em;
     display: grid;
-    grid-template-areas: "preview preview form"
-                         "preview preview form"
-                         "preview preview form"
-                         "listing listing listing";
+    grid-template-areas:
+        "preview preview form"
+        "preview preview form"
+        "preview preview form"
+        "listing listing listing";
     margin: 1em;
     width: 60vw;
     height: 50vh;

@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
 import { ToggleSwitchProps } from '../../models/ToggleSwtichProps';
 defineProps<ToggleSwitchProps>();
 const emit = defineEmits(['toggleFunc']);

@@ -7,7 +7,6 @@
     </div>
 </template>
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import { TheSelectProps } from '../../../models/flexbox-generator/TheSelectProps';
 
 const props = defineProps<TheSelectProps>();

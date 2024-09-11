@@ -4,6 +4,7 @@
         <toggle-input input-header="Wrapping" :choices="['Nowrap', 'Wrap']" @toggle-func="toggleWrapping"></toggle-input>
         <the-select select-header="Justify content" :option-list="justifyContentOptionsList" @on-change="selectJustifyContentHandler"></the-select>
         <the-select select-header="Align items" :option-list="alignItemsOptionsList" @on-change="selectAlignItemsHandler"></the-select>
+        <the-select v-if="wrapping" select-header="Align content" :option-list="alignContentOptionsList" @on-change="selectAlignContentHandler"></the-select>
         <button type="button" @click="addContainer">Add container</button>
     </form>
 
@@ -13,13 +14,15 @@ import { useStore as useFlexboxStore } from '../../../store/flexbox';
 import { ActionTypes } from '../../../store/flexbox/actions';
 import ToggleInput from './ToggleInput.vue';
 import TheSelect from './TheSelect.vue';
-import { JustifyContentOptions } from '../../../models/flexbox-generator/JustifyContentOptions';
+import { ContentOptions } from '../../../models/flexbox-generator/ContentOptions';
 import { AlignItemsOptions } from '../../../models/flexbox-generator/AlignItemsOptions';
+import { computed } from 'vue';
 
-const justifyContentOptionsList = Object.values(JustifyContentOptions).filter((value) => isNaN(Number(value)));
+const justifyContentOptionsList = Object.values(ContentOptions).filter((value) => isNaN(Number(value)));
 const alignItemsOptionsList = Object.values(AlignItemsOptions).filter((value)=> isNaN(Number(value)));
-
+const alignContentOptionsList = justifyContentOptionsList;
 const store = useFlexboxStore();
+const wrapping = computed<boolean>(() => store.getters.getWrapping);
 
 function toggleDirection():void
 {
@@ -31,7 +34,7 @@ function toggleWrapping() : void
     store.dispatch(ActionTypes.TOGGLE_OPTION, "wrap")
 }
 
-function selectHanlder<T>(chosenOption:string, actionType:ActionTypes,  optionsList: T[]) : void
+function selectHandler<T>(chosenOption:string, actionType:ActionTypes,  optionsList: T[]) : void
 {
     const parsedOption = optionsList.find(value => value === chosenOption);
     store.dispatch(actionType, parsedOption);
@@ -39,11 +42,15 @@ function selectHanlder<T>(chosenOption:string, actionType:ActionTypes,  optionsL
 
 function selectAlignItemsHandler(chosenOption:string)
 {
-   selectHanlder<AlignItemsOptions>(chosenOption, ActionTypes.SET_ALIGN_ITEMS, alignItemsOptionsList);
+   selectHandler<AlignItemsOptions>(chosenOption, ActionTypes.SET_ALIGN_ITEMS, alignItemsOptionsList);
+}
+function selectAlignContentHandler(chosenOption:string)
+{
+    selectHandler<ContentOptions>(chosenOption, ActionTypes.SET_ALIGN_CONTENT, alignContentOptionsList);
 }
 function selectJustifyContentHandler(chosenOption: string)
 {
-    selectHanlder<JustifyContentOptions>(chosenOption, ActionTypes.SET_JUSTIFY_CONTENT, justifyContentOptionsList);
+    selectHandler<ContentOptions>(chosenOption, ActionTypes.SET_JUSTIFY_CONTENT, justifyContentOptionsList);
 }
 function addContainer(){
     store.dispatch(ActionTypes.ADD_ELEMENT);

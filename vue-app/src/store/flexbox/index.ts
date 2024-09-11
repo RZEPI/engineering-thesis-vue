@@ -5,23 +5,27 @@ import { mutations } from "./mutations";
 import { actions } from "./actions";
 import { getters } from "./getters";
 import { AlignItemsOptions } from "../../models/flexbox-generator/AlignItemsOptions";
-import { JustifyContentOptions } from "../../models/flexbox-generator/JustifyContentOptions";
+import { ContentOptions } from "../../models/flexbox-generator/ContentOptions";
 import { FlexboxElement } from "../../models/flexbox-generator/FlexboxElement";
 
 export interface State {
     wrapping: boolean;
     direction: boolean;
-    justifyContent: JustifyContentOptions
-    alignItems: AlignItemsOptions
-    content: FlexboxElement[]
+    justifyContent: ContentOptions;
+    alignItems: AlignItemsOptions;
+    alignContent: ContentOptions;
+    content: FlexboxElement[];
 };
+
+const DefaultContent: FlexboxElement[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
 export const state: State = {
     wrapping: false,
     direction: false,
-    justifyContent: JustifyContentOptions.CENTER,
+    justifyContent: ContentOptions.CENTER,
     alignItems: AlignItemsOptions.CENTER,
-    content: [{ id: 1 }, { id: 2 }, { id: 3 }],
+    alignContent: ContentOptions.CENTER,
+    content: DefaultContent,
 }
 
 export const key: InjectionKey<VuexStore<State>> = Symbol();

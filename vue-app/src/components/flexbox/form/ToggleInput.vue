@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
 import ToggleSwitch from '../../UI/ToggleSwitch.vue';
 import { ToggleInputProps } from '../../../models/flexbox-generator/ToggleInputProps';
 
