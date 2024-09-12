@@ -1,4 +1,4 @@
 export type TheSelectProps = {
-    selectHeader: string,
-    optionList: string[]
-}
+  selectHeader: string;
+  optionList: string[];
+};

@@ -1,3 +1,3 @@
 export type ToggleSwitchProps = {
-    inputName: string,
-} 
+  inputName: string;
+};

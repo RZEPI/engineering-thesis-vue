@@ -1,17 +1,16 @@
 <template>
   <label class="switch">
-    <input type="checkbox" :name="inputName" @change="handleChange">
+    <input type="checkbox" :name="inputName" @change="handleChange" />
     <span class="slider round"></span>
   </label>
 </template>
 
 <script setup lang="ts">
-import { ToggleSwitchProps } from '../../models/ToggleSwtichProps';
+import { ToggleSwitchProps } from "../../models/ToggleSwtichProps";
 defineProps<ToggleSwitchProps>();
-const emit = defineEmits(['toggleFunc']);
-function handleChange()
-{
-  emit('toggleFunc');
+const emit = defineEmits(["toggleFunc"]);
+function handleChange() {
+  emit("toggleFunc");
 }
 </script>
 
@@ -37,8 +36,8 @@ function handleChange()
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -49,20 +48,19 @@ function handleChange()
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: var(--main-color);
 }
 
-input:focus+.slider {
+input:focus + .slider {
   box-shadow: 0 0 1px var(--main-color);
-  ;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);

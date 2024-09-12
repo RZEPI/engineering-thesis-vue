@@ -16,4 +16,3 @@ to format code, pass this before pushing:
 
 source:  
 https://prettier.io/docs/en/cli.html
-

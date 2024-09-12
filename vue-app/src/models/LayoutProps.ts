@@ -1,4 +1,3 @@
 export type LayoutProps = {
-    title: string,
-
-}
+  title: string;
+};

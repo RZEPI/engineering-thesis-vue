@@ -7,7 +7,7 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: HomePage },
-    { path: "/flexbox", component: FlexboxPage},
+    { path: "/flexbox", component: FlexboxPage },
     { path: "/:notFound(.*)", component: NotFound },
   ],
   linkActiveClass: "active",
