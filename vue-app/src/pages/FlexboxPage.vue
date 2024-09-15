@@ -1,5 +1,5 @@
 <template>
-  <base-layout title="Flexbox Testing">
+  <base-layout title="Flexbox Generator">
     <div class="main-container">
       <flexbox-preview></flexbox-preview>
       <flexbox-form></flexbox-form>
