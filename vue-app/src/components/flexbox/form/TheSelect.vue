@@ -43,4 +43,10 @@ select {
   border-color: var(--main-text-color);
   border-radius: 0.6em;
 }
+
+@media (max-height: 1300px) {
+  .select {
+    margin-top: 0.7em;
+  }
+}
 </style>

@@ -109,4 +109,10 @@ button {
   border-radius: 1em;
   padding: 0.8em;
 }
+
+@media (max-height: 1300px){
+  button{
+    margin: 1em
+  }
+}
 </style>

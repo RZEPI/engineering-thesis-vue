@@ -39,4 +39,10 @@ div {
   justify-items: center;
   margin: 1em;
 }
+
+@media (max-height: 1300px) {
+   h3 {
+    margin-top: 0;
+  }
+}
 </style>

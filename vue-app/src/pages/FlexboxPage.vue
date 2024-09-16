@@ -28,4 +28,11 @@ import CodeListing from "../components/flexbox/CodeListing.vue";
   width: 60vw;
   height: 50vh;
 }
+
+@media (max-height: 1300px) {
+  .main-container {
+    height: 70vh;
+  }
+}
+
 </style>
