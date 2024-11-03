@@ -15,12 +15,15 @@
 <script setup lang="ts">
 import { StringFilterInputProps } from '../../models/table/StringFilterInputProps';
 
-const {className, filterValue, handleChange} = defineProps<StringFilterInputProps>();
+const {className, filterValue,} = defineProps<StringFilterInputProps>();
+const emit = defineEmits(['updateFilter']);
 
 function handleNameCheckboxChange(e: Event)
 {
-    handleChange(e);
+    emit('updateFilter', e);
 }
+
+
 </script>
 
 <style scoped>

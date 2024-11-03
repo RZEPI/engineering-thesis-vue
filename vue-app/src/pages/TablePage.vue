@@ -1,9 +1,9 @@
 <template>
-  <table-filter-modal :filter="filter" ref="dialog" />
+  <table-filter-modal v-model:filter="filter" ref="dialog" @update-filter="changeFilter" />
   <div class="page-wrapper">
     <div class="page-content">
-      <table-actions :action-functions="actionFunctions" :table-content="tableContent"></table-actions>
-      <table-content :open-filter-dialog="openFilterDialog" :table-content="tableContent" :table-fields="tableFields" ></table-content>
+      <table-actions :action-functions="actionFunctions" :table-content="filteredTableContent"></table-actions>
+      <table-content :open-filter-dialog="openFilterDialog" :table-content="filteredTableContent" :table-fields="tableFields" ></table-content>
     </div>
   </div>
 </template>
@@ -186,8 +186,11 @@ function checkIfValueInRangeClosed(
       undefined
     );
   }
+  function changeFilter(newFilter: TableFilter) {
+    filter.value = newFilter;
+  }
 
-  watch(filter, (newFilter) => {
+  watch(filter.value, (newFilter) => {
     filteredTableContent.value = tableContent.value.filter((row) => {
     if (!checkIfValueIsInFilterRange(row.id, newFilter.id)) return false;
 

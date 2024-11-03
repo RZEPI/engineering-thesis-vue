@@ -8,10 +8,11 @@
 <script setup lang="ts">
 import { NumericFilterInputProps } from '../../models/table/NumericFilterInputProps';
 
-const {className, value, handleChange} = defineProps<NumericFilterInputProps>();
+const {className, value} = defineProps<NumericFilterInputProps>();
+const emit = defineEmits(['updateFilter']);
 function handleNumberInputChange(e: Event)
 {
-    handleChange(e)
+    emit('updateFilter', e);
 }
 
 const label = `${className.charAt(0).toUpperCase()}${className.substring(1)}:`;
