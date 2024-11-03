@@ -3,7 +3,7 @@
   <div class="page-wrapper">
     <div class="page-content">
       <table-actions :action-functions="actionFunctions" :table-content="filteredTableContent"></table-actions>
-      <table-content :open-filter-dialog="openFilterDialog" :table-content="filteredTableContent" :table-fields="tableFields" ></table-content>
+      <table-content :open-filter-dialog="openFilterDialog" :table-content="filteredTableContent " :table-fields="tableFields" ></table-content>
     </div>
   </div>
 </template>
@@ -26,7 +26,6 @@ const defaultFilter:TableFilter = {
     name: namesTable.map((name) => ({ value: name, isChecked: true })),
     level: { min: undefined, max: undefined, isOpen: false },
 };
-
 
 const tableContent = ref<TableRowData[]>([]);
 const filteredTableContent = ref<TableRowData[]>(tableContent.value);
@@ -153,15 +152,15 @@ function checkIfValueInRangeClosed(
     value: number,
     filter: IntFilter,
   ): boolean {
-    if (filter.min !== undefined && filter.min >= value) return false;
-    if (filter.max !== undefined && filter.max <= value) return false;
+    if (filter.min !== undefined && filter.min > value) return false;
+    if (filter.max !== undefined && filter.max < value) return false;
 
     return true;
   }
 
   function checkIfValueInRangeOpen(value: number, filter: IntFilter): boolean {
-    if (filter.min !== undefined && filter.min > value) return false;
-    if (filter.max !== undefined && filter.max < value) return false;
+    if (filter.min !== undefined && filter.min >= value) return false;
+    if (filter.max !== undefined && filter.max <= value) return false;
 
     return true;
   }
