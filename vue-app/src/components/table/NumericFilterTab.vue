@@ -3,13 +3,13 @@
           <numeric-filter-input
             className="min"
             :value="currentFilter.min"
-            :handleChange="handleNumericInputChange"
+            @updateFilter="handleNumericInputChange"
             :key="`min_${activeTab}`"
           ></numeric-filter-input>
           <numeric-filter-input
             className="max"
             :value="currentFilter.max"
-            :handleChange="handleNumericInputChange"
+            @updateFilter="handleNumericInputChange"
             :key="`max_${activeTab}`"
           ></numeric-filter-input>
           <li :key="`interval_${activeTab}`">
@@ -28,6 +28,7 @@
 import NumericFilterInput from './NumericFilterInput.vue';
 import { NumericFilterTabProps } from '../../models/table/NumericFilterTabProps';
 const {currentFilter, activeTab} = defineProps<NumericFilterTabProps>();
+
 const emit = defineEmits(['updateFilter', 'updateFilterInterval']);
 
 function handleNumericInputChange(e: Event)
