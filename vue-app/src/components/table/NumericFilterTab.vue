@@ -27,8 +27,17 @@
 <script setup lang="ts">
 import NumericFilterInput from './NumericFilterInput.vue';
 import { NumericFilterTabProps } from '../../models/table/NumericFilterTabProps';
-const {currentFilter, activeTab, handleNumericInputChange, handleIsOpenChange} = defineProps<NumericFilterTabProps>();
+const {currentFilter, activeTab} = defineProps<NumericFilterTabProps>();
+const emit = defineEmits(['updateFilter', 'updateFilterInterval']);
 
+function handleNumericInputChange(e: Event)
+{
+    emit('updateFilter', e);
+}
+function handleIsOpenChange(e: Event)
+{
+    emit('updateFilterInterval', e);
+}
 const headerLabel = activeTab.charAt(0).toUpperCase() + activeTab.slice(1) + " range";
 </script>
 <style scoped>

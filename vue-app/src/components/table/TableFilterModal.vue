@@ -9,10 +9,10 @@
             <ul class="filter-form">
                 <string-filter-input v-if="activeTab === 'name'" v-for="nameFilter in filter.name" :key="nameFilter.value"
                     :className="nameFilter.value" :filterValue="nameFilter"
-                    :handleChange="handleNameCheckboxChange"></string-filter-input>
+                    @update-filter="handleNameCheckboxChange"></string-filter-input>
                 <numeric-filter-tab v-else :currentFilter="currentFilter" :activeTab="activeTab"
-                    :handleNumericInputChange="handleNumericInputChange"
-                    :handleIsOpenChange="handleIsOpenChange" :key="activeTab"></numeric-filter-tab>
+                    @update-filter="handleNumericInputChange"
+                    @update-filter-interval="handleIsOpenChange" :key="activeTab"></numeric-filter-tab>
             </ul>
         </div>
     </base-modal>
@@ -27,6 +27,7 @@ import { ref } from 'vue';
 import { IntFilter } from '../../models/table/TableFilter';
 
 const { filter } = defineProps<TableFilterModalProps>();
+const emit = defineEmits(['updateFilter']);
 const tabs = Object.keys(filter);
 const activeTab = ref<string>(tabs[0]);
 const dialog = ref<InstanceType<typeof BaseModal>>();
@@ -46,6 +47,7 @@ function handleNameCheckboxChange(e: Event) {
     const name = (e.target as HTMLInputElement).value;
     const changedName = filter.name.find((n) => n.value === name)!;
     changedName.isChecked = !changedName.isChecked;
+    emit('updateFilter', filter);
 }
 
 function handleNumericInputChange(e: Event) {
@@ -53,11 +55,13 @@ function handleNumericInputChange(e: Event) {
     const value = parseInt(target.value);
     if (target.className === "min") currentFilter.min = value;
     else currentFilter.max = value;
+    emit('updateFilter', filter);
 }
 
 function handleIsOpenChange(e: Event) {
     const target = e.target as HTMLInputElement;
     currentFilter.isOpen = target.checked;
+    emit('updateFilter', filter);
 }
 
 defineExpose({
