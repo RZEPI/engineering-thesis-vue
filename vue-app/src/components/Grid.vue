@@ -1,10 +1,24 @@
 <template>
-  <div class="grid-main">
+  <div class="grid-main"
+  :style='
+    {
+      gridAutoFlow: cssProps.gridAutoFlow?.toString(),
+      gridTemplateColumns: "repeat(auto-fill," + cssProps.gridTemplateColumns?.toString() + "px)",
+      gridAutoRows: cssProps.gridAutoRows?.toString() + "px",
+      gap: cssProps.gap?.toString() + "px",
+    }
+  '
+  >
     <slot></slot>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { CSSProperties } from 'vue';
+
+defineProps<{cssProps : CSSProperties}>()
+
+</script>
 
 <style scoped>
 .grid-main {
