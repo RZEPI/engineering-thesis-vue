@@ -164,39 +164,7 @@ function generateArray() {
 </script>
 
 <style scoped>
-.page-wrapper {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  height: 80vh;
-}
-.page-content {
-  width: 80%;
-  display: grid;
-  grid-template-columns: 20% 80%;
-}
-.v-btn-cont {
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-}
-.v-btn-cont button {
-  font-size: 1.2em;
-  margin-top: 1em;
-  padding: 0.25em;
-  border: 2px solid grey;
-  background-color: white;
-  border-radius: 10px;
-}
-
-button:hover {
-  transition: all 0.3s;
-  background-color: var(--hover-element-color);
-}
-button:active {
-  background-color: var(--active-element-color);
-}
+@import "../styles/shared.css";
 
 .table-container {
   padding: 2em 1em 2em 1em;
