@@ -3,14 +3,19 @@
     <div class="page-content">
       <div :style="{ width: '100%', backgroundColor: 'red' }">
         <div class="windows-container">
-          <grid-button-window title="Aspects"> button </grid-button-window>
+          <grid-button-window title="Aspects">
+            <grid-config-button :key="index" v-for="(el, index) in allAspects" @GBClicked="checkAspect(el.id)" :style="el.selected ? 'none' : { textDecoration: 'line-through' }">
+              {{el.aspect}}
+              {{el.selected}}
+            </grid-config-button>
+          </grid-button-window>
           <grid-button-window title="Grid Options">
-            <grid-config-button @GBClicked="console.log(elements)">
+            <grid-config-button>
               Generate
             </grid-config-button>
-            <grid-config-button> </grid-config-button>
-            <grid-config-slider> </grid-config-slider>
-            <grid-config-slider> </grid-config-slider>
+            <grid-config-button></grid-config-button>
+            <grid-config-slider></grid-config-slider>
+            <grid-config-slider></grid-config-slider>
           </grid-button-window>
         </div>
 
@@ -66,30 +71,34 @@ const _cssProps = ref<CSSProperties>({
 const elements = ref<Array<number>>(getGeneratedElements());
 const numberOfElements = 20;
 
-// const selectedAspects = ref<object[]>([
-//     { id: 1, aspect: "aspect_1_to_2", selected: true },
-//     { id: 2, aspect: "aspect_2_to_1", selected: true },
-//     { id: 3, aspect: "aspect_1_to_1", selected: true },
-//     { id: 4, aspect: "aspect_3_to_1", selected: true },
-//     { id: 5, aspect: "aspect_1_to_3", selected: true }
-// ]);
+const allAspects = ref<{id:number, aspect:string, selected:boolean}[]>([
+    { id: 1, aspect: "aspect_1_to_2", selected: true },
+    { id: 2, aspect: "aspect_2_to_1", selected: true },
+    { id: 3, aspect: "aspect_1_to_1", selected: true },
+    { id: 4, aspect: "aspect_3_to_1", selected: true },
+    { id: 5, aspect: "aspect_1_to_3", selected: true }
+]);
+
+function checkAspect(id: number) {
+  const aspect : {id:number, aspect:string, selected:boolean} = allAspects.value.filter((e)=>{return e.id == id})[0];
+  aspect.selected = !aspect.selected;
+}
 
 function getRandomColor() {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 }
 function getRandomAspect() {
-  // const filteredAspects = selectedAspects.filter((e) => {
-  //   return e.selected == true;
-  // });
+  const filteredAspects = allAspects.value.filter((e) => {
+    return e.selected == true;
+  });
 
-  // if (filteredAspects.length == 0) {
-  //   return styles[selectedAspects[0].aspect];
-  // }
+  if (filteredAspects.length == 0) {
+    return allAspects.value[0].aspect;
+  }
 
-  // const randomIndex = Math.floor(Math.random() * filteredAspects.length);
-  // return styles[filteredAspects[randomIndex].aspect];
-  return "aspect_1_to_1";
+  const randomIndex = Math.floor(Math.random() * filteredAspects.length);
+  return filteredAspects[randomIndex].aspect;
 }
 
 function getGeneratedElements(): Array<number> {
