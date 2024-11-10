@@ -9,9 +9,7 @@
               v-for="(el, index) in allAspects"
               @GBClicked="checkAspect(el.id)"
               :style="{
-                textDecoration: crossedOutAspects.includes(el.id)
-                  ? 'line-through'
-                  : 'none',
+                textDecoration: !el.selected ? 'line-through' : 'none',
               }"
             >
               {{ el.aspect }}
@@ -19,12 +17,50 @@
           </grid-button-window>
 
           <grid-button-window title="Grid options">
-            <grid-config-button @GBClicked="generateNew()">
+            <grid-config-button
+              @GBClicked="
+                () => {
+                  elements = getGeneratedElements();
+                }
+              "
+            >
               Generate
             </grid-config-button>
-            <grid-config-button></grid-config-button>
-            <grid-config-slider></grid-config-slider>
-            <grid-config-slider></grid-config-slider>
+
+            <grid-config-button
+              @GBClicked="
+                () => {
+                  _cssProps.gridAutoFlow =
+                    _cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
+                }
+              "
+            >
+              {{ _cssProps.gridAutoFlow }}
+            </grid-config-button>
+            <grid-config-slider
+              _name="Element size"
+              :_value="itemSize"
+              @GSchange="
+                (e: InputEvent) => {
+                  const target = e.target as HTMLInputElement;
+                  itemSize = e != null ? target.value : '0';
+                  handleSlider();
+                }
+              "
+            >
+            </grid-config-slider>
+            <grid-config-slider
+              _name="Gap size"
+              :_value="gapSize"
+              @GSchange="
+                (e: InputEvent) => {
+                  const target = e.target as HTMLInputElement;
+                  gapSize = e != null ? target.value : '0';
+                  _cssProps.gap = gapSize;
+                }
+              "
+            >
+            </grid-config-slider>
           </grid-button-window>
         </div>
 
@@ -34,36 +70,12 @@
 
         <grid :cssProps="_cssProps">
           <div
-            v-for="(_, index) in elements"
-            :key="index"
-            :class="getRandomAspect() + ' element'"
-            :style="{
-              backgroundColor: 'rgb(' + colorsArray[index].join(', ') + ')',
-              borderColor:
-                'rgb(' +
-                subtractWithSaturation8bit(
-                  60,
-                  colorsArray[index][0],
-                ).toString() +
-                ', ' +
-                subtractWithSaturation8bit(
-                  60,
-                  colorsArray[index][1],
-                ).toString() +
-                ', ' +
-                subtractWithSaturation8bit(
-                  60,
-                  colorsArray[index][2],
-                ).toString() +
-                ')',
-              textAlign: 'center',
-              alignContent: 'center',
-              fontSize: '2rem',
-              color: 'black',
-              overflow: 'hidden',
-            }"
+            v-for="element in elements"
+            :key="element.id"
+            :class="element.class + ' element'"
+            :style="element.style"
           >
-            <span>{{ index }}</span>
+            <span>{{ element.id }}</span>
           </div>
         </grid>
       </div>
@@ -81,37 +93,47 @@ import { CSSProperties, ref } from "vue";
 import { subtractWithSaturation8bit } from "../utils";
 import { colors } from "../static/GridElements";
 
+type GeneratedElement = {
+  id: number;
+  class: string;
+  style: CSSProperties;
+};
+
+const numberOfElements = 20;
+
+const itemSize = ref<string>("100");
+const gapSize = ref<string>("10");
+
 let colorsArray: Array<Array<number>> = [];
+
 const _cssProps = ref<CSSProperties>({
   gridAutoFlow: "dense",
-  gridTemplateColumns: "100",
-  gridAutoRows: "100",
-  gap: "10",
+  gridTemplateColumns: itemSize.value,
+  gridAutoRows: itemSize.value,
+  gap: gapSize.value,
 });
-const elements = ref<Array<number>>(getGeneratedElements());
-const numberOfElements = 20;
-type ElementAspect = { id: number; aspect: string; selected: boolean };
 
-const allAspects: ElementAspect[] = [
+const allAspects = ref<ElementAspect[]>([
   { id: 1, aspect: "aspect_1_to_2", selected: true },
   { id: 2, aspect: "aspect_2_to_1", selected: true },
   { id: 3, aspect: "aspect_1_to_1", selected: true },
   { id: 4, aspect: "aspect_3_to_1", selected: true },
   { id: 5, aspect: "aspect_1_to_3", selected: true },
-];
+]);
 
-const crossedOutAspects = ref<number[]>([]);
+const elements = ref<GeneratedElement[]>(getGeneratedElements());
+
+type ElementAspect = { id: number; aspect: string; selected: boolean };
+
+function handleSlider() {
+  _cssProps.value.gridTemplateColumns = itemSize.value;
+  _cssProps.value.gridAutoRows = itemSize.value;
+}
 
 function checkAspect(id: number) {
-  const aspect = allAspects.find((e) => e.id === id);
+  const aspect = allAspects.value.find((e) => e.id === id);
   if (aspect) {
-    if (crossedOutAspects.value.includes(id)) {
-      crossedOutAspects.value = crossedOutAspects.value.filter(
-        (aspectId) => aspectId !== id,
-      );
-    } else {
-      crossedOutAspects.value.push(id);
-    }
+    aspect.selected = !aspect.selected;
   }
 }
 
@@ -121,35 +143,42 @@ function getRandomColor() {
 }
 
 function getRandomAspect() {
-  console.log("random aspect called");
-
-  let activeAspects = allAspects.filter((aspect) => aspect.selected);
+  let activeAspects = allAspects.value.filter((aspect) => aspect.selected);
 
   if (activeAspects.length == 0) {
-    return allAspects[0].aspect;
+    return allAspects.value[0].aspect;
   }
 
   const randomIndex = Math.floor(Math.random() * activeAspects.length);
-  console.log(activeAspects);
   return activeAspects[randomIndex].aspect;
 }
 
-function generateNew(): void {
-  allAspects.forEach((element) => {
-    element.selected = !crossedOutAspects.value.includes(element.id);
-  });
-
-  elements.value = getGeneratedElements();
-}
-
-function getGeneratedElements(): Array<number> {
+function getGeneratedElements(): GeneratedElement[] {
   colorsArray = [];
-
   for (let i = 0; i < numberOfElements; i++) {
     colorsArray.push(getRandomColor());
   }
 
-  return Array.from({ length: numberOfElements });
+  return Array.from({ length: numberOfElements }, (_, index) => ({
+    id: index,
+    class: getRandomAspect() + " element",
+    style: {
+      backgroundColor: "rgb(" + colorsArray[index].join(", ") + ")",
+      borderColor:
+        "rgb(" +
+        subtractWithSaturation8bit(60, colorsArray[index][0]).toString() +
+        ", " +
+        subtractWithSaturation8bit(60, colorsArray[index][1]).toString() +
+        ", " +
+        subtractWithSaturation8bit(60, colorsArray[index][2]).toString() +
+        ")",
+      textAlign: "center",
+      alignContent: "center",
+      fontSize: "2rem",
+      color: "black",
+      overflow: "hidden",
+    },
+  }));
 }
 </script>
 
