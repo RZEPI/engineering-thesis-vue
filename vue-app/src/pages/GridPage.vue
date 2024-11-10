@@ -1,16 +1,25 @@
 <template>
   <div class="page-wrapper">
     <div class="page-content">
-      <div :style="{ width: '100%', backgroundColor: 'red' }">
+      <div :style="{ width: '100%' }">
         <div class="windows-container">
           <grid-button-window title="Aspects">
-            <grid-config-button :key="index" v-for="(el, index) in allAspects" @GBClicked="checkAspect(el.id)" :style="el.selected ? 'none' : { textDecoration: 'line-through' }">
-              {{el.aspect}}
-              {{el.selected}}
+            <grid-config-button
+              :key="index"
+              v-for="(el, index) in allAspects"
+              @GBClicked="checkAspect(el.id)"
+              :style="{
+                textDecoration: crossedOutAspects.includes(el.id)
+                  ? 'line-through'
+                  : 'none',
+              }"
+            >
+              {{ el.aspect }}
             </grid-config-button>
           </grid-button-window>
-          <grid-button-window title="Grid Options">
-            <grid-config-button>
+
+          <grid-button-window title="Grid options">
+            <grid-config-button @GBClicked="generateNew()">
               Generate
             </grid-config-button>
             <grid-config-button></grid-config-button>
@@ -28,21 +37,32 @@
             v-for="(_, index) in elements"
             :key="index"
             :class="getRandomAspect() + ' element'"
-            :style='{
-              backgroundColor: "rgb(" + colorsArray[index].join(", ") + ")",
-              borderColor: "rgb(" + subtractWithSaturation8bit(60, colorsArray[index][0]).toString() +
-            ", " +
-            subtractWithSaturation8bit(60, colorsArray[index][1]).toString() +
-            ", " +
-            subtractWithSaturation8bit(60, colorsArray[index][2]).toString() +
-            ")",
-            textAlign: "center",
-            alignContent: "center",
-            fontSize: "2rem",
-            color: "black",
-            overflow: "hidden",
-            }'
-            >
+            :style="{
+              backgroundColor: 'rgb(' + colorsArray[index].join(', ') + ')',
+              borderColor:
+                'rgb(' +
+                subtractWithSaturation8bit(
+                  60,
+                  colorsArray[index][0],
+                ).toString() +
+                ', ' +
+                subtractWithSaturation8bit(
+                  60,
+                  colorsArray[index][1],
+                ).toString() +
+                ', ' +
+                subtractWithSaturation8bit(
+                  60,
+                  colorsArray[index][2],
+                ).toString() +
+                ')',
+              textAlign: 'center',
+              alignContent: 'center',
+              fontSize: '2rem',
+              color: 'black',
+              overflow: 'hidden',
+            }"
+          >
             <span>{{ index }}</span>
           </div>
         </grid>
@@ -63,42 +83,63 @@ import { colors } from "../static/GridElements";
 
 let colorsArray: Array<Array<number>> = [];
 const _cssProps = ref<CSSProperties>({
-    gridAutoFlow: "dense",
-    gridTemplateColumns: "100",
-    gridAutoRows: "100",
-    gap: "10",
-})
+  gridAutoFlow: "dense",
+  gridTemplateColumns: "100",
+  gridAutoRows: "100",
+  gap: "10",
+});
 const elements = ref<Array<number>>(getGeneratedElements());
 const numberOfElements = 20;
+type ElementAspect = { id: number; aspect: string; selected: boolean };
 
-const allAspects = ref<{id:number, aspect:string, selected:boolean}[]>([
-    { id: 1, aspect: "aspect_1_to_2", selected: true },
-    { id: 2, aspect: "aspect_2_to_1", selected: true },
-    { id: 3, aspect: "aspect_1_to_1", selected: true },
-    { id: 4, aspect: "aspect_3_to_1", selected: true },
-    { id: 5, aspect: "aspect_1_to_3", selected: true }
-]);
+const allAspects: ElementAspect[] = [
+  { id: 1, aspect: "aspect_1_to_2", selected: true },
+  { id: 2, aspect: "aspect_2_to_1", selected: true },
+  { id: 3, aspect: "aspect_1_to_1", selected: true },
+  { id: 4, aspect: "aspect_3_to_1", selected: true },
+  { id: 5, aspect: "aspect_1_to_3", selected: true },
+];
+
+const crossedOutAspects = ref<number[]>([]);
 
 function checkAspect(id: number) {
-  const aspect : {id:number, aspect:string, selected:boolean} = allAspects.value.filter((e)=>{return e.id == id})[0];
-  aspect.selected = !aspect.selected;
+  const aspect = allAspects.find((e) => e.id === id);
+  if (aspect) {
+    if (crossedOutAspects.value.includes(id)) {
+      crossedOutAspects.value = crossedOutAspects.value.filter(
+        (aspectId) => aspectId !== id,
+      );
+    } else {
+      crossedOutAspects.value.push(id);
+    }
+  }
 }
 
 function getRandomColor() {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 }
-function getRandomAspect() {
-  const filteredAspects = allAspects.value.filter((e) => {
-    return e.selected == true;
-  });
 
-  if (filteredAspects.length == 0) {
-    return allAspects.value[0].aspect;
+function getRandomAspect() {
+  console.log("random aspect called");
+
+  let activeAspects = allAspects.filter((aspect) => aspect.selected);
+
+  if (activeAspects.length == 0) {
+    return allAspects[0].aspect;
   }
 
-  const randomIndex = Math.floor(Math.random() * filteredAspects.length);
-  return filteredAspects[randomIndex].aspect;
+  const randomIndex = Math.floor(Math.random() * activeAspects.length);
+  console.log(activeAspects);
+  return activeAspects[randomIndex].aspect;
+}
+
+function generateNew(): void {
+  allAspects.forEach((element) => {
+    element.selected = !crossedOutAspects.value.includes(element.id);
+  });
+
+  elements.value = getGeneratedElements();
 }
 
 function getGeneratedElements(): Array<number> {
@@ -174,7 +215,7 @@ body {
   background-color: inherit;
 }
 
-.v-btn-window {
+:deep() .v-btn-window {
   padding-top: 1rem;
   background-color: inherit;
   width: fit-content;
@@ -182,7 +223,7 @@ body {
   margin: 10px;
 }
 
-.v-btn-window input[type="range"] {
+:deep() .v-btn-window input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
 
@@ -195,19 +236,19 @@ body {
   --slider-size: 25px;
 }
 
-.v-btn-window input[type="range"]::-webkit-slider-runnable-track {
+:deep() .v-btn-window input[type="range"]::-webkit-slider-runnable-track {
   height: var(--slider-size);
   background: #e2e2e2;
   border-radius: 15px;
 }
 
-.v-btn-window input[type="range"]::-moz-range-track {
+:deep() .v-btn-window input[type="range"]::-moz-range-track {
   height: var(--slider-size);
   background: #ccc;
   border-radius: 15px;
 }
 
-.v-btn-window input[type="range"]::-webkit-slider-thumb {
+:deep() .v-btn-window input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   height: var(--slider-size);
@@ -218,7 +259,7 @@ body {
   box-shadow: -407px 0 0 400px var(--btn-cont-border-color);
 }
 
-.v-btn-window input[type="range"]::-moz-range-thumb {
+:deep() .v-btn-window input[type="range"]::-moz-range-thumb {
   height: var(--slider-size);
   width: var(--slider-size);
   background-color: #fff;
@@ -227,7 +268,7 @@ body {
   box-shadow: -407px 0 0 400px var(--btn-cont-border-color);
 }
 
-.v-btn-window span.title {
+:deep() .v-btn-window span.title {
   font-weight: bold;
   font-size: 1rem;
   padding: 0 0.2rem;
@@ -237,7 +278,7 @@ body {
   background-color: var(--main-background-color);
 }
 
-.v-btn-cont {
+:deep() .v-btn-cont {
   --btn-cont-border-color: rgb(0, 128, 255);
   padding: 1em;
   margin: 0em;
@@ -249,7 +290,7 @@ body {
   border-radius: 15px;
 }
 
-.v-btn-cont button {
+:deep() .v-btn-cont button {
   font-size: 0.9rem;
   margin-bottom: 1em;
   padding: 0.4rem 1rem;
@@ -258,20 +299,20 @@ body {
   border-radius: 10px;
 }
 
-.v-btn-cont button:last-child {
+:deep() .v-btn-cont button:last-child {
   margin-bottom: 0;
 }
 
-button:hover {
+:deep() button:hover {
   transition: all 0.3s;
   background-color: var(--hover-element-color);
 }
 
-button:active {
+:deep() button:active {
   background-color: var(--active-element-color);
 }
 
-.code-listing-wrapper {
+:deep() .code-listing-wrapper {
   width: 100%;
   padding: 2em;
   background-color: rgb(0, 60, 55);
@@ -280,7 +321,7 @@ button:active {
   box-sizing: border-box;
 }
 
-.code-listing {
+:deep() .code-listing {
   width: 100%;
   font-size: 1.2rem;
 }
