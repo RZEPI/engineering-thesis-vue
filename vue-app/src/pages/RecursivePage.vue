@@ -5,60 +5,43 @@
     <div class="input-container">
       <input
         type="number"
-        v-model.number="depthInput"
+        v-model.number="maxDepthInput"
         placeholder="Amount of components"
         min="1"
       />
-      <button @click="generateComponents">Generate Components</button>
+      <button @click="setMaxDepth">Generate Components</button>
     </div>
 
-    <RecursiveComponent
-      v-if="depth > 0"
-      message="This component is generated recursively. Current depth: "
-      :maxDepth="depth"
+    <Recursive
+      v-if="maxDepth > 0"
+      message="This component was created recursively. It's depth is"
+      :depth = "1"
+      :maxDepth="maxDepth"
     />
   </div>
-<div class="gradient"></div>
+  <div class="gradient"></div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
-import RecursiveComponent from "../components/UI/RecursiveComponent.vue";
+<script setup lang="ts">
+import { ref } from "vue";
+import Recursive from "../components/UI/Recursive.vue";
+const maxDepthInput = ref<number | null>(null);
+const maxDepth = ref<number>(0);
 
-export default defineComponent({
-  name: "App",
-  components: {
-    RecursiveComponent,
-  },
-  setup() {
-    const depthInput = ref<number | null>(null);
-    const depth = ref<number>(0);
-
-    const generateComponents = () => {
-      if (depthInput.value && depthInput.value > 0) {
-        depth.value = depthInput.value;
-      } else {
-        alert("Please enter a number greater than 0.");
-      }
-    };
-
-    return {
-      depthInput,
-      depth,
-      generateComponents,
-    };
-  },
-});
+function setMaxDepth(){
+  if(maxDepthInput.value && maxDepthInput.value > 0){
+    maxDepth.value = maxDepthInput.value;
+  }
+}
 </script>
 
 <style scoped>
-.main-container {
+div.main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 5em auto;
   width: 60%;
-  position: relative;
 }
 
 p {
@@ -69,43 +52,45 @@ p {
 
 .input-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 0.5em;
   margin-top: 1em;
-  z-index: 1;
+  padding: 0.5em;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 input[type="number"] {
   padding: 0.5em;
-  font-size: 1.1em;
-  width: 200px;
-  border: 2px solid #41b783;
-  border-radius: 5px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+   width: 220px;
   text-align: center;
 }
 
 button {
   padding: 0.5em 1em;
-  font-size: 1.1em;
+  font-size: 1em;
   border: none;
+  border-radius: 4px;
   background-color: #41b783;
   color: white;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #349a66;
+  background-color: #369e6d;
 }
 
 .gradient {
-  margin-top: 20px;
+  margin-top: -50px;
+  margin-left: -5%;
   height: 100px;
-  width: 100%;
+  width: 110%;
   position: relative;
-  z-index: 0;
   background: rgba(0, 0, 0, 0);
   background: radial-gradient(
     closest-side at 50% 30%,
