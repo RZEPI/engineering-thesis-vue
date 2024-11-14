@@ -3,7 +3,8 @@
   <div class="page-wrapper">
     <div class="page-content">
       <table-actions :action-functions="actionFunctions" :table-content="filteredTableContent"></table-actions>
-      <table-content :open-filter-dialog="openFilterDialog" :table-content="filteredTableContent " :table-fields="tableFields" ></table-content>
+      <table-content :open-filter-dialog="openFilterDialog" :table-content="filteredTableContent"
+        :table-fields="tableFields"></table-content>
     </div>
   </div>
 </template>
@@ -21,24 +22,24 @@ import TableContent from "../components/table/TableContent.vue";
 import TableFilterModal from "../components/table/TableFilterModal.vue";
 import { TableFilter, IntFilter, StringFilter } from "../models/table/TableFilter";
 
-const defaultFilter:TableFilter = {
-    id: { min: undefined, max: undefined, isOpen: false },
-    name: namesTable.map((name) => ({ value: name, isChecked: true })),
-    level: { min: undefined, max: undefined, isOpen: false },
+const defaultFilter: TableFilter = {
+  id: { min: undefined, max: undefined, isOpen: false },
+  name: namesTable.map((name) => ({ value: name, isChecked: true })),
+  level: { min: undefined, max: undefined, isOpen: false },
 };
 
 const tableContent = ref<TableRowData[]>([]);
 const filteredTableContent = ref<TableRowData[]>(tableContent.value);
 const dialog = ref<InstanceType<typeof TableFilterModal>>();
 const filter = ref<TableFilter>(defaultFilter);
-  const tableDummyRow: TableRowData = {
-    id: 0,
-    name: "Name",
-    level: 0,
-  };
-  const tableFields = Object.keys(tableDummyRow).map((key) =>
-    key.toUpperCase(),
-  );
+const tableDummyRow: TableRowData = {
+  id: 0,
+  name: "Name",
+  level: 0,
+};
+const tableFields = Object.keys(tableDummyRow).map((key) =>
+  key.toUpperCase(),
+);
 let key: number = 0;
 const rowCount = tableContent.value.length;
 
@@ -149,68 +150,68 @@ function openFilterDialog() {
   dialog.value?.openModal();
 }
 function checkIfValueInRangeClosed(
-    value: number,
-    filter: IntFilter,
-  ): boolean {
-    if (filter.min !== undefined && filter.min > value) return false;
-    if (filter.max !== undefined && filter.max < value) return false;
+  value: number,
+  filter: IntFilter,
+): boolean {
+  if (filter.min !== undefined && filter.min > value) return false;
+  if (filter.max !== undefined && filter.max < value) return false;
 
-    return true;
+  return true;
+}
+
+function checkIfValueInRangeOpen(value: number, filter: IntFilter): boolean {
+  if (filter.min !== undefined && filter.min >= value) return false;
+  if (filter.max !== undefined && filter.max <= value) return false;
+
+  return true;
+}
+
+function inFilterRange(
+  value: number,
+  filter: IntFilter,
+): boolean {
+  if (filter.isOpen) {
+    return checkIfValueInRangeOpen(value, filter);
+  } else {
+    return checkIfValueInRangeClosed(value, filter);
   }
+}
 
-  function checkIfValueInRangeOpen(value: number, filter: IntFilter): boolean {
-    if (filter.min !== undefined && filter.min >= value) return false;
-    if (filter.max !== undefined && filter.max <= value) return false;
+function inNameFilter(
+  givenName: string,
+  filter: StringFilter[],
+): boolean {
+  return (
+    filter.find((name) => name.value === givenName && name.isChecked) !==
+    undefined
+  );
+}
+function changeFilter(newFilter: TableFilter) {
+  filter.value = newFilter;
+}
 
-    return true;
-  }
+watch(filter.value, (newFilter) => {
+  filteredTableContent.value = tableContent.value.filter((row) => {
+    if (!inFilterRange(row.id, newFilter.id)) return false;
 
-  function checkIfValueIsInFilterRange(
-    value: number,
-    filter: IntFilter,
-  ): boolean {
-    if (filter.isOpen) {
-      return checkIfValueInRangeOpen(value, filter);
-    } else {
-      return checkIfValueInRangeClosed(value, filter);
-    }
-  }
-
-  function checkIfNameIsInFilter(
-    givenName: string,
-    filter: StringFilter[],
-  ): boolean {
-    return (
-      filter.find((name) => name.value === givenName && name.isChecked) !==
-      undefined
-    );
-  }
-  function changeFilter(newFilter: TableFilter) {
-    filter.value = newFilter;
-  }
-
-  watch(filter.value, (newFilter) => {
-    filteredTableContent.value = tableContent.value.filter((row) => {
-    if (!checkIfValueIsInFilterRange(row.id, newFilter.id)) return false;
-
-    if (!checkIfValueIsInFilterRange(row.level, newFilter.level))
+    if (!inFilterRange(row.level, newFilter.level))
       return false;
 
-    if (!checkIfNameIsInFilter(row.name, newFilter.name)) return false;
+    if (!inNameFilter(row.name, newFilter.name)) return false;
 
     return true;
   });
-  });
+});
 
 const actionFunctions: ActionFunctions = {
-    addNRecords,
-    deleteNRecords,
-    deleteEveryNthRecord,
-    updateNthRow,
-    replaceAllRows,
-    swapRows,
-    clearRows,
-  };
+  addNRecords,
+  deleteNRecords,
+  deleteEveryNthRecord,
+  updateNthRow,
+  replaceAllRows,
+  swapRows,
+  clearRows,
+};
 </script>
 
 <style scoped>
@@ -221,6 +222,7 @@ const actionFunctions: ActionFunctions = {
   justify-content: center;
   height: 80vh;
 }
+
 .page-content {
   width: 80%;
   display: grid;

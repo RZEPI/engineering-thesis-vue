@@ -23,7 +23,7 @@ import { TableFilterModalProps } from '../../models/table/TableFilterModalProps'
 import StringFilterInput from './StringFilterInput.vue';
 import NumericFilterTab from './NumericFilterTab.vue';
 import BaseModal from '../UI/BaseModal.vue';
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { IntFilter } from '../../models/table/TableFilter';
 
 const { filter } = defineProps<TableFilterModalProps>();
@@ -32,7 +32,7 @@ const tabs = Object.keys(filter);
 const activeTab = ref<string>(tabs[0]);
 const dialog = ref<InstanceType<typeof BaseModal>>();
 let currentFilter: IntFilter = filter.id;
-watch(() => activeTab.value, () => {
+watchEffect(() => {
     if (activeTab.value === 'id') {
         currentFilter = filter.id;
     }
