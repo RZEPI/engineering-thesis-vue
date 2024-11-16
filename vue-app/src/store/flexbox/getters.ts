@@ -21,10 +21,10 @@ export const getters: Getters = {
 
     return styleObject;
   },
-  getContentList(state) {
-    return state.content;
+  getContentList({content}) {
+    return content;
   },
-  getWrapping(state) {
-    return state.wrapping;
+  getWrapping({wrapping}) {
+    return wrapping;
   },
 };

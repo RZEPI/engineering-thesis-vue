@@ -30,8 +30,7 @@
   </form>
 </template>
 <script setup lang="ts">
-import { useStore as useFlexboxStore } from "../../../store/flexbox";
-import { ActionTypes } from "../../../store/flexbox/actions";
+import { useFlexboxStore } from "../../../store/flexbox";
 import ToggleInput from "./ToggleInput.vue";
 import TheSelect from "./TheSelect.vue";
 import { ContentOptions } from "../../../models/flexbox-generator/ContentOptions";
@@ -46,48 +45,50 @@ const alignItemsOptionsList = Object.values(AlignItemsOptions).filter((value) =>
 );
 const alignContentOptionsList = justifyContentOptionsList;
 const store = useFlexboxStore();
-const wrapping = computed<boolean>(() => store.getters.getWrapping);
+const wrapping = computed<boolean>(() => store.getWrapping);
 
 function toggleDirection(): void {
-  store.dispatch(ActionTypes.TOGGLE_OPTION, "direction");
+  store.toggleDirection();
 }
 
 function toggleWrapping(): void {
-  store.dispatch(ActionTypes.TOGGLE_OPTION, "wrap");
+  store.toggleWrapping();
 }
 
 function selectHandler<T>(
   chosenOption: string,
-  actionType: ActionTypes,
+  actionType: (arg0: T)=>void,
   optionsList: T[],
 ): void {
   const parsedOption = optionsList.find((value) => value === chosenOption);
-  store.dispatch(actionType, parsedOption);
+  if (parsedOption !== undefined) {
+    actionType(parsedOption);
+  }
 }
 
 function selectAlignItemsHandler(chosenOption: string) {
   selectHandler<AlignItemsOptions>(
     chosenOption,
-    ActionTypes.SET_ALIGN_ITEMS,
+    store.setAlignItems,
     alignItemsOptionsList,
   );
 }
 function selectAlignContentHandler(chosenOption: string) {
   selectHandler<ContentOptions>(
     chosenOption,
-    ActionTypes.SET_ALIGN_CONTENT,
+    store.setAlignContent,
     alignContentOptionsList,
   );
 }
 function selectJustifyContentHandler(chosenOption: string) {
   selectHandler<ContentOptions>(
     chosenOption,
-    ActionTypes.SET_JUSTIFY_CONTENT,
+    store.setJustifyContnent,
     justifyContentOptionsList,
   );
 }
 function addContainer() {
-  store.dispatch(ActionTypes.ADD_ELEMENT);
+  store.addElement();
 }
 </script>
 <style scoped>

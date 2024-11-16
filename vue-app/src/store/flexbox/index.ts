@@ -1,12 +1,4 @@
-import { InjectionKey } from "vue";
-import {
-  createStore,
-  useStore as baseUseStore,
-  Store as VuexStore,
-} from "vuex";
-
-import { mutations } from "./mutations";
-import { actions } from "./actions";
+import { defineStore } from "pinia";
 import { getters } from "./getters";
 import { AlignItemsOptions } from "../../models/flexbox-generator/AlignItemsOptions";
 import { ContentOptions } from "../../models/flexbox-generator/ContentOptions";
@@ -23,7 +15,7 @@ export interface State {
 
 const DefaultContent: FlexboxElement[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
-export const state: State = {
+export const initialState: State = {
   wrapping: false,
   direction: false,
   justifyContent: ContentOptions.CENTER,
@@ -32,15 +24,38 @@ export const state: State = {
   content: DefaultContent,
 };
 
-export const key: InjectionKey<VuexStore<State>> = Symbol();
-
-export const store = createStore<State>({
-  state,
+export const useFlexboxStore = defineStore('flexbox', {
+  state():State{
+    return initialState;
+  },
   getters,
-  actions,
-  mutations,
-});
+  actions: {
+    toggleWrapping() {
+      this.wrapping = !this.wrapping;
+    },
+    toggleDirection() {
+      this.direction = !this.direction;
+    },
+    setJustifyContnent(option: ContentOptions) {
+      this.justifyContent = option;
+    },
+    setAlignItems(option:AlignItemsOptions) {
+      this.alignItems = option;
+    },
+    setAlignContent(option:ContentOptions) {
+      this.alignContent = option;
+    },
+    addElement() {
+      const content = this.content;
+      let lastElementId = 0;
 
-export function useStore() {
-  return baseUseStore(key);
-}
+      if (content.length !== 0) lastElementId = content[content.length - 1].id;
+
+      content.push({ id: lastElementId + 1 });
+    },
+    removeElement(elementId:number) {
+      const content = this.content;
+      this.content = content.filter((element) => element.id !== elementId);
+    },
+  },
+});

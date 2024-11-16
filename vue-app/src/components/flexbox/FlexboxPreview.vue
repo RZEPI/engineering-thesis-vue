@@ -12,16 +12,15 @@
 
 <script setup lang="ts">
 import { CSSProperties, computed } from "vue";
-import { useStore as useFlexboxStore } from "../../store/flexbox";
+import { useFlexboxStore } from "../../store/flexbox";
 import { FlexboxElement } from "../../models/flexbox-generator/FlexboxElement";
-import { ActionTypes } from "../../store/flexbox/actions";
 
 const store = useFlexboxStore();
-const content = computed<FlexboxElement[]>(() => store.getters.getContentList);
-const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
+const content = computed<FlexboxElement[]>(() => store.getContentList);
+const flexClasses = computed<CSSProperties>(() => store.getStyleObject);
 
 function removeElement(elementId: number) {
-  store.dispatch(ActionTypes.REMOVE_ELEMENT, elementId);
+  store.removeElement(elementId);
 }
 </script>
 

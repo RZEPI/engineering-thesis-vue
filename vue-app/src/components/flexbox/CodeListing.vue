@@ -26,10 +26,10 @@
 
 <script setup lang="ts">
 import { CSSProperties, computed } from "vue";
-import { useStore as useFlexboxStore } from "../../store/flexbox";
+import { useFlexboxStore } from "../../store/flexbox";
 
 const store = useFlexboxStore();
-const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
+const flexClasses = computed<CSSProperties>(() => store.getStyleObject);
 
 function copyToClipboard() {
   let dataToClipboard: string;
