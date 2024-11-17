@@ -35,7 +35,7 @@ const emit = defineEmits(['updateFilter']);
 const tabs = Object.keys(filter);
 const activeTab = ref<string>(tabs[0]);
 const dialog = ref<InstanceType<typeof BaseModal>>();
-let currentFilter = ref<IntFilter>(filter.id);
+const currentFilter = ref<IntFilter>(filter.id);
 watchEffect(() => {
     if (activeTab.value === 'id') {
         currentFilter.value = filter.id;

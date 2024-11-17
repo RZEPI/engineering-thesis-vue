@@ -15,8 +15,8 @@ export const namesTable: string[] = [
   "Ola",
 ];
 
-export function makeDefaultFilter():TableFilter {
-  const nameFilters: StringFilter[] =  namesTable.map((name) => ({ value: name, isChecked: true }));
+export function makeDefaultFilter(): TableFilter {
+  const nameFilters: StringFilter[] = namesTable.map((name) => ({ value: name, isChecked: true }));
   return {
     id: { min: undefined, max: undefined, isOpen: false },
     name: nameFilters,
@@ -24,8 +24,11 @@ export function makeDefaultFilter():TableFilter {
   };
 };
 
-export const tableDummyRow: TableRowData = {
+const tableDummyRow: TableRowData = {
   id: 0,
   name: "Name",
   level: 0,
 };
+export const tableFields = Object.keys(tableDummyRow).map((key) =>
+  key.toUpperCase(),
+);

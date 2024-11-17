@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { onBeforeMount, ref, reactive, watch } from "vue";
-import { namesTable, numberTable, makeDefaultFilter, tableDummyRow } from "../static/RandomDataTables";
+import { namesTable, numberTable, makeDefaultFilter, tableFields } from "../static/RandomDataTables";
 
 import { ActionFunctions } from "../models/table/TableActionsProps";
 import { TableRowData } from "../models/table/TableRowData";
@@ -26,9 +26,6 @@ const filteredTableContent = reactive<TableRowData[]>([]);
 const dialog = ref<InstanceType<typeof TableFilterModal>>();
 let filter = reactive<TableFilter>({...makeDefaultFilter()});
 
-const tableFields = Object.keys(tableDummyRow).map((key) =>
-  key.toUpperCase(),
-);
 let key: number = 0;
 const rowCount = tableContent.length;
 
