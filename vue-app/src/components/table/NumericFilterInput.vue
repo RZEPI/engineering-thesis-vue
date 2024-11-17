@@ -54,7 +54,7 @@ const label = `${className.charAt(0).toUpperCase()}${className.substring(1)}:`;
     color: red;
     font-size: 1.2em;
 }
-.numeric-input .errorInput{
+.numeric-input .error-input{
     border: 3px solid red;
 }
 
