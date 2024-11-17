@@ -15,6 +15,9 @@
                     @update-filter-interval="handleIsOpenChange" :key="activeTab"></numeric-filter-tab>
             </ul>
         </div>
+        <div class="clear-filter__container">
+            <button class="clear-filter__button" @click="handleClearFilter">Clear filter</button>
+        </div>
     </base-modal>
 </template>
 
@@ -25,21 +28,27 @@ import NumericFilterTab from './NumericFilterTab.vue';
 import BaseModal from '../UI/BaseModal.vue';
 import { ref, watchEffect } from 'vue';
 import { IntFilter } from '../../models/table/TableFilter';
+import { makeDefaultFilter } from '../../static/RandomDataTables';
 
 const { filter } = defineProps<TableFilterModalProps>();
 const emit = defineEmits(['updateFilter']);
 const tabs = Object.keys(filter);
 const activeTab = ref<string>(tabs[0]);
 const dialog = ref<InstanceType<typeof BaseModal>>();
-let currentFilter: IntFilter = filter.id;
+let currentFilter = ref<IntFilter>(filter.id);
 watchEffect(() => {
     if (activeTab.value === 'id') {
-        currentFilter = filter.id;
+        currentFilter.value = filter.id;
     }
     else {
-        currentFilter = filter.level;
+        currentFilter.value = filter.level;
     }
 });
+
+function handleClearFilter() {
+    dialog.value?.closeModal();
+    emit('updateFilter', {...makeDefaultFilter()});
+}
 
 function handleTabClick(tab: string) {
     activeTab.value = tab;
@@ -55,14 +64,14 @@ function handleNameCheckboxChange(e: Event) {
 function handleNumericInputChange(e: Event) {
     const target = e.target as HTMLInputElement;
     const value = parseInt(target.value);
-    if (target.id === "min") currentFilter.min = value;
-    else currentFilter.max = value;
+    if (target.id === "min") currentFilter.value.min = value;
+    else currentFilter.value.max = value;
     emit('updateFilter', filter);
 }
 
 function handleIsOpenChange(e: Event) {
     const target = e.target as HTMLInputElement;
-    currentFilter.isOpen = target.checked;
+    currentFilter.value.isOpen = target.checked;
     emit('updateFilter', filter);
 }
 
@@ -98,7 +107,7 @@ defineExpose({
 
 .filter-choice {
     width: calc(var(--modal-width)- 2 * var(--modal-content-padding));
-    height: calc(var(--modal-height) * (7/8) - 2 * var(--modal-content-padding) - 1em);
+    height: calc(var(--modal-height) * (7/9) - 2 * var(--modal-content-padding) - 1em);
     background-color: var(--main-color);
     margin: 0;
     border-radius: 0 0.6em 0.6em 0.6em;
@@ -106,6 +115,28 @@ defineExpose({
 
 .filter-choice p {
     margin: 0;
+}
+.clear-filter__container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.clear-filter__button
+{
+    font-size: 1.7em;
+    width: 7.5em;
+    height: 2em;
+    background-color: var(--main-color);
+    color: var(--main-text-color);
+    border: none;
+    border-radius: 0.6em;
+    margin: 0.4em 0;
+    cursor: pointer;
+}
+.clear-filter__button:hover
+{
+    filter: brightness(0.9);
 }
 
 .filter-form {

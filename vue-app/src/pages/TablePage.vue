@@ -11,8 +11,7 @@
 
 <script setup lang="ts">
 import { onBeforeMount, ref, reactive, watch } from "vue";
-import { namesTable } from "../static/RandomDataTables";
-import { numberTable } from "../static/RandomDataTables";
+import { namesTable, numberTable, makeDefaultFilter, tableDummyRow } from "../static/RandomDataTables";
 
 import { ActionFunctions } from "../models/table/TableActionsProps";
 import { TableRowData } from "../models/table/TableRowData";
@@ -22,21 +21,11 @@ import TableContent from "../components/table/TableContent.vue";
 import TableFilterModal from "../components/table/TableFilterModal.vue";
 import { TableFilter, IntFilter, StringFilter } from "../models/table/TableFilter";
 
-const defaultFilter: TableFilter = {
-  id: { min: undefined, max: undefined, isOpen: false },
-  name: namesTable.map((name) => ({ value: name, isChecked: true })),
-  level: { min: undefined, max: undefined, isOpen: false },
-};
-
 const tableContent = reactive<TableRowData[]>([]);
 const filteredTableContent = reactive<TableRowData[]>([]);
 const dialog = ref<InstanceType<typeof TableFilterModal>>();
-let filter = reactive<TableFilter>(defaultFilter);
-const tableDummyRow: TableRowData = {
-  id: 0,
-  name: "Name",
-  level: 0,
-};
+let filter = reactive<TableFilter>({...makeDefaultFilter()});
+
 const tableFields = Object.keys(tableDummyRow).map((key) =>
   key.toUpperCase(),
 );
@@ -188,7 +177,7 @@ function inNameFilter(
   );
 }
 function changeFilter(newFilter: TableFilter) {
-  filter = newFilter;
+  Object.assign(filter, newFilter);
 }
 
 watch(filter, (newFilter) => {

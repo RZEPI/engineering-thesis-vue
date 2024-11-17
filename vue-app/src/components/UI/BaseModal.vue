@@ -36,7 +36,7 @@ defineExpose({
 <style scoped>
 * {
     --modal-width: 60vw;
-    --modal-height: 40vh;
+    --modal-height: 45vh;
 }
 
 @media (max-height: 1000px) {
