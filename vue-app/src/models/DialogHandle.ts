@@ -1,3 +1,3 @@
 export type DialogHandle = {
-    open: () => void;
-}
+  open: () => void;
+};

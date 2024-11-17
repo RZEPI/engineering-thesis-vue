@@ -1,17 +1,32 @@
 <template>
-  <table-filter-modal v-model:filter="filter" ref="dialog" @update-filter="changeFilter" />
+  <table-filter-modal
+    v-model:filter="filter"
+    ref="dialog"
+    @update-filter="changeFilter"
+  />
   <div class="page-wrapper">
     <div class="page-content">
-      <table-actions :action-functions="actionFunctions" :table-content="filteredTableContent"></table-actions>
-      <table-content :open-filter-dialog="openFilterDialog" :table-content="filteredTableContent"
-        :table-fields="tableFields"></table-content>
+      <table-actions
+        :action-functions="actionFunctions"
+        :table-content="filteredTableContent"
+      ></table-actions>
+      <table-content
+        :open-filter-dialog="openFilterDialog"
+        :table-content="filteredTableContent"
+        :table-fields="tableFields"
+      ></table-content>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeMount, ref, reactive, watch } from "vue";
-import { namesTable, numberTable, makeDefaultFilter, tableFields } from "../static/RandomDataTables";
+import {
+  namesTable,
+  numberTable,
+  makeDefaultFilter,
+  tableFields,
+} from "../static/RandomDataTables";
 
 import { ActionFunctions } from "../models/table/TableActionsProps";
 import { TableRowData } from "../models/table/TableRowData";
@@ -19,12 +34,16 @@ import { TableRowData } from "../models/table/TableRowData";
 import TableActions from "../components/table/TableActions.vue";
 import TableContent from "../components/table/TableContent.vue";
 import TableFilterModal from "../components/table/TableFilterModal.vue";
-import { TableFilter, IntFilter, StringFilter } from "../models/table/TableFilter";
+import {
+  TableFilter,
+  IntFilter,
+  StringFilter,
+} from "../models/table/TableFilter";
 
 const tableContent = reactive<TableRowData[]>([]);
 const filteredTableContent = reactive<TableRowData[]>([]);
 const dialog = ref<InstanceType<typeof TableFilterModal>>();
-let filter = reactive<TableFilter>({...makeDefaultFilter()});
+let filter = reactive<TableFilter>({ ...makeDefaultFilter() });
 
 let key: number = 0;
 const rowCount = tableContent.length;
@@ -136,10 +155,7 @@ function generateArray() {
 function openFilterDialog() {
   dialog.value?.openModal();
 }
-function checkIfValueInRangeClosed(
-  value: number,
-  filter: IntFilter,
-): boolean {
+function checkIfValueInRangeClosed(value: number, filter: IntFilter): boolean {
   if (filter.min !== undefined && filter.min > value) return false;
   if (filter.max !== undefined && filter.max < value) return false;
 
@@ -153,10 +169,7 @@ function checkIfValueInRangeOpen(value: number, filter: IntFilter): boolean {
   return true;
 }
 
-function inFilterRange(
-  value: number,
-  filter: IntFilter,
-): boolean {
+function inFilterRange(value: number, filter: IntFilter): boolean {
   if (filter.isOpen) {
     return checkIfValueInRangeOpen(value, filter);
   } else {
@@ -164,10 +177,7 @@ function inFilterRange(
   }
 }
 
-function inNameFilter(
-  givenName: string,
-  filter: StringFilter[],
-): boolean {
+function inNameFilter(givenName: string, filter: StringFilter[]): boolean {
   return (
     filter.find((name) => name.value === givenName && name.isChecked) !==
     undefined
@@ -181,15 +191,18 @@ watch(filter, (newFilter) => {
   const filteredContent = tableContent.filter((row) => {
     if (!inFilterRange(row.id, newFilter.id)) return false;
 
-    if (!inFilterRange(row.level, newFilter.level))
-      return false;
+    if (!inFilterRange(row.level, newFilter.level)) return false;
 
     if (!inNameFilter(row.name, newFilter.name)) return false;
 
     return true;
   });
 
-  filteredTableContent.splice(0, filteredTableContent.length, ...filteredContent);
+  filteredTableContent.splice(
+    0,
+    filteredTableContent.length,
+    ...filteredContent,
+  );
 });
 
 const actionFunctions: ActionFunctions = {

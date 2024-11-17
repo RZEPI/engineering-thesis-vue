@@ -1,22 +1,20 @@
 <template>
-    <div class="v-btn-cont">
-        <button @click="handleAddRecordsClick">
-            Add {{RECORDS_TO_CREATE}}
-        </button>
-        <button @click="handleDeleteRecordsClick">
-            Delete {{RECORDS_TO_DELETE}}
-        </button>
-        <button @click="handleDeleteEveryNthRecordClick">
-            Delete {{NTH_TO_DELETE}}th
-        </button>
-        <button @click="handleUpdateNthRowClick">
-            Update {{NTH_TO_UPDATE}}th
-        </button>
-        <button @click="handleReplaceAllRowsClick">Replace all</button>
-        <button @click="handleSwapRowsClick">Swap</button>
-        <button @click="handleClearRowsClick">Clear all</button>
-        <span>rows: {{rowCount}}</span>
-    </div>
+  <div class="v-btn-cont">
+    <button @click="handleAddRecordsClick">Add {{ RECORDS_TO_CREATE }}</button>
+    <button @click="handleDeleteRecordsClick">
+      Delete {{ RECORDS_TO_DELETE }}
+    </button>
+    <button @click="handleDeleteEveryNthRecordClick">
+      Delete {{ NTH_TO_DELETE }}th
+    </button>
+    <button @click="handleUpdateNthRowClick">
+      Update {{ NTH_TO_UPDATE }}th
+    </button>
+    <button @click="handleReplaceAllRowsClick">Replace all</button>
+    <button @click="handleSwapRowsClick">Swap</button>
+    <button @click="handleClearRowsClick">Clear all</button>
+    <span>rows: {{ rowCount }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -29,35 +27,34 @@ const NTH_TO_DELETE: number = 2;
 const NTH_TO_UPDATE: number = 2;
 
 function handleAddRecordsClick() {
-    actionFunctions.addNRecords(RECORDS_TO_CREATE);
+  actionFunctions.addNRecords(RECORDS_TO_CREATE);
 }
 
 function handleDeleteRecordsClick() {
-    actionFunctions.deleteNRecords(RECORDS_TO_DELETE);
+  actionFunctions.deleteNRecords(RECORDS_TO_DELETE);
 }
 
 function handleDeleteEveryNthRecordClick() {
-    actionFunctions.deleteEveryNthRecord(NTH_TO_DELETE);
+  actionFunctions.deleteEveryNthRecord(NTH_TO_DELETE);
 }
 
 function handleUpdateNthRowClick() {
-    actionFunctions.updateNthRow(NTH_TO_UPDATE);
+  actionFunctions.updateNthRow(NTH_TO_UPDATE);
 }
 
 function handleReplaceAllRowsClick() {
-    actionFunctions.replaceAllRows();
+  actionFunctions.replaceAllRows();
 }
 
 function handleSwapRowsClick() {
-    actionFunctions.swapRows();
+  actionFunctions.swapRows();
 }
 
 function handleClearRowsClick() {
-    actionFunctions.clearRows();
+  actionFunctions.clearRows();
 }
 
 const rowCount: number = tableContent.length;
-
 </script>
 
 <style scoped>

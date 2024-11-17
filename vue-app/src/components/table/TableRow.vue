@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { TableRowProps } from "../../models/table/TableRowProps";
-const {rowData} = defineProps<TableRowProps>();
+const { rowData } = defineProps<TableRowProps>();
 const focus = ref<boolean>(false);
 
 function onClick() {
@@ -18,25 +18,24 @@ function onClick() {
 </script>
 <style scoped>
 .table-row {
-    background-color: var(--main-color);
-    width: 100%;
-    display: grid;
-    grid-template-columns: [id] 20% [name] 40% [level] 40%;
-  }
-  .table-cell {
-    height: 1em;
-    padding: 0.3em 0.3em 0.3em 0.75em;
-    border: 1px solid var(--hover-element-color);
-    font-weight: bold;
-    font-size: 1rem;
-  }
+  background-color: var(--main-color);
+  width: 100%;
+  display: grid;
+  grid-template-columns: [id] 20% [name] 40% [level] 40%;
+}
+.table-cell {
+  height: 1em;
+  padding: 0.3em 0.3em 0.3em 0.75em;
+  border: 1px solid var(--hover-element-color);
+  font-weight: bold;
+  font-size: 1rem;
+}
 
-  .table-row.active {
-    background-color: yellow;
-  }
+.table-row.active {
+  background-color: yellow;
+}
 
-  .table-row:hover {
-    background-color: var(--hover-element-color);
-  }
-
+.table-row:hover {
+  background-color: var(--hover-element-color);
+}
 </style>

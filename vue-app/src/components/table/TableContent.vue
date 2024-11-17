@@ -1,29 +1,31 @@
 <template>
-    <div class="table-container">
-      <div class="table">
-        <div class="table-header">
-        <div v-for="field in tableFields" :key="field">{{field}}</div>
-          <img :src="filter" alt="filter" @click="handleFilterClick" />
-        </div>
-        <table-row
-          :key="row.id"
-          v-for="row in tableContent"
-          :rowData="row"></table-row>
+  <div class="table-container">
+    <div class="table">
+      <div class="table-header">
+        <div v-for="field in tableFields" :key="field">{{ field }}</div>
+        <img :src="filter" alt="filter" @click="handleFilterClick" />
       </div>
+      <table-row
+        :key="row.id"
+        v-for="row in tableContent"
+        :rowData="row"
+      ></table-row>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import TableRow from './TableRow.vue';
-import { TableContentProps } from '../../models/table/TableContentProps';
+import TableRow from "./TableRow.vue";
+import { TableContentProps } from "../../models/table/TableContentProps";
 
-import filter from '../../assets/filter.png';
+import filter from "../../assets/filter.png";
 
-const { tableContent, tableFields, openFilterDialog } = defineProps<TableContentProps>();
+const { tableContent, tableFields, openFilterDialog } =
+  defineProps<TableContentProps>();
 
-  function handleFilterClick() {
-    openFilterDialog();
-  }
+function handleFilterClick() {
+  openFilterDialog();
+}
 </script>
 
 <style scoped>
