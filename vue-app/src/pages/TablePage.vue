@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref, watch } from "vue";
+import { onBeforeMount, ref, reactive, watch } from "vue";
 import { namesTable } from "../static/RandomDataTables";
 import { numberTable } from "../static/RandomDataTables";
 
@@ -28,10 +28,10 @@ const defaultFilter: TableFilter = {
   level: { min: undefined, max: undefined, isOpen: false },
 };
 
-const tableContent = ref<TableRowData[]>([]);
-const filteredTableContent = ref<TableRowData[]>(tableContent.value);
+const tableContent = reactive<TableRowData[]>([]);
+const filteredTableContent = reactive<TableRowData[]>([]);
 const dialog = ref<InstanceType<typeof TableFilterModal>>();
-const filter = ref<TableFilter>(defaultFilter);
+let filter = reactive<TableFilter>(defaultFilter);
 const tableDummyRow: TableRowData = {
   id: 0,
   name: "Name",
@@ -41,7 +41,7 @@ const tableFields = Object.keys(tableDummyRow).map((key) =>
   key.toUpperCase(),
 );
 let key: number = 0;
-const rowCount = tableContent.value.length;
+const rowCount = tableContent.length;
 
 onBeforeMount(generateArray);
 
@@ -62,34 +62,34 @@ function addNRecords(n: number) {
     });
   }
 
-  tableContent.value.unshift(...tmpArray);
+  tableContent.unshift(...tmpArray);
 }
 
 function deleteNRecords(n: number) {
-  tableContent.value.splice(0, n);
+  tableContent.splice(0, n);
 }
 
 function deleteEveryNthRecord(n: number) {
-  const tmpArray: TableRowData[] = [...tableContent.value];
+  const tmpArray: TableRowData[] = [...tableContent];
 
   for (let i = 0; i < tmpArray.length; i += n) {
     tmpArray.splice(i--, 1);
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function updateNthRow(n: number) {
-  const tmpArray: TableRowData[] = [...tableContent.value];
+  const tmpArray: TableRowData[] = [...tableContent];
 
   for (let i = 0; i < rowCount; i += n) {
     tmpArray[i] = {
-      ...tableContent.value[i],
+      ...tableContent[i],
       name: "Changed Name " + i,
     };
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function replaceAllRows() {
@@ -103,16 +103,16 @@ function replaceAllRows() {
     });
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function swapRows() {
   const index1 = Math.floor(Math.random() * rowCount);
   const index2 = Math.floor(Math.random() * rowCount);
 
-  const tmpRow: TableRowData = tableContent.value[index1];
-  tableContent.value[index1] = tableContent.value[index2];
-  tableContent.value[index2] = tmpRow;
+  const tmpRow: TableRowData = tableContent[index1];
+  tableContent[index1] = tableContent[index2];
+  tableContent[index2] = tmpRow;
 }
 
 function clearRows() {
@@ -120,13 +120,13 @@ function clearRows() {
 
   for (let i = 0; i < rowCount; i++) {
     tmpArray.push({
-      id: tableContent.value[i].id,
+      id: tableContent[i].id,
       name: "",
       level: 0,
     });
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function generateArray() {
@@ -143,7 +143,8 @@ function generateArray() {
     });
   }
 
-  tableContent.value.unshift(...generatedArray);
+  tableContent.unshift(...generatedArray);
+  filteredTableContent.unshift(...generatedArray);
 }
 
 function openFilterDialog() {
@@ -187,11 +188,11 @@ function inNameFilter(
   );
 }
 function changeFilter(newFilter: TableFilter) {
-  filter.value = newFilter;
+  filter = newFilter;
 }
 
-watch(filter.value, (newFilter) => {
-  filteredTableContent.value = tableContent.value.filter((row) => {
+watch(filter, (newFilter) => {
+  const filteredContent = tableContent.filter((row) => {
     if (!inFilterRange(row.id, newFilter.id)) return false;
 
     if (!inFilterRange(row.level, newFilter.level))
@@ -201,6 +202,8 @@ watch(filter.value, (newFilter) => {
 
     return true;
   });
+
+  filteredTableContent.splice(0, filteredTableContent.length, ...filteredContent);
 });
 
 const actionFunctions: ActionFunctions = {

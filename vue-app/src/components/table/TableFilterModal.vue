@@ -55,7 +55,7 @@ function handleNameCheckboxChange(e: Event) {
 function handleNumericInputChange(e: Event) {
     const target = e.target as HTMLInputElement;
     const value = parseInt(target.value);
-    if (target.className === "min") currentFilter.min = value;
+    if (target.id === "min") currentFilter.min = value;
     else currentFilter.max = value;
     emit('updateFilter', filter);
 }
