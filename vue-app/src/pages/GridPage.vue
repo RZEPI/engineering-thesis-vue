@@ -40,25 +40,13 @@
             <grid-config-slider
               _name="Element size"
               :_value="itemSize"
-              @GSchange="
-                (e: InputEvent) => {
-                  const target = e.target as HTMLInputElement;
-                  itemSize = e != null ? target.value : '0';
-                  handleSlider();
-                }
-              "
+              @GSchange="(e) => changeElementSize(e)"
             >
             </grid-config-slider>
             <grid-config-slider
               _name="Gap size"
               :_value="gapSize"
-              @GSchange="
-                (e: InputEvent) => {
-                  const target = e.target as HTMLInputElement;
-                  gapSize = e != null ? target.value : '0';
-                  _cssProps.gap = gapSize;
-                }
-              "
+              @GSchange="(e) => changeGapSize(e)"
             >
             </grid-config-slider>
           </grid-button-window>
@@ -124,6 +112,18 @@ const allAspects = ref<ElementAspect[]>([
 const elements = ref<GeneratedElement[]>(getGeneratedElements());
 
 type ElementAspect = { id: number; aspect: string; selected: boolean };
+
+function changeElementSize(e: InputEvent) {
+  const target = e.target as HTMLInputElement;
+  itemSize.value = e != null ? target.value : "0";
+  handleSlider();
+}
+
+function changeGapSize(e: InputEvent) {
+  const target = e.target as HTMLInputElement;
+  gapSize.value = e != null ? target.value : "0";
+  _cssProps.value.gap = gapSize.value;
+}
 
 function handleSlider() {
   _cssProps.value.gridTemplateColumns = itemSize.value;
