@@ -7,7 +7,7 @@
             <grid-config-button
               :key="index"
               v-for="(el, index) in allAspects"
-              @GBClicked="checkAspect(el.id)"
+              @Clicked="checkAspect(el.id)"
               :style="{
                 textDecoration: !el.selected ? 'line-through' : 'none',
               }"
@@ -18,7 +18,7 @@
 
           <grid-button-window title="Grid options">
             <grid-config-button
-              @GBClicked="
+              @Clicked="
                 () => {
                   elements = getGeneratedElements();
                 }
@@ -28,7 +28,7 @@
             </grid-config-button>
 
             <grid-config-button
-              @GBClicked="
+              @Clicked="
                 () => {
                   _cssProps.gridAutoFlow =
                     _cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
