@@ -30,12 +30,12 @@
             <grid-config-button
               @Clicked="
                 () => {
-                  _cssProps.gridAutoFlow =
-                    _cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
+                  cssProps.gridAutoFlow =
+                    cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
                 }
               "
             >
-              {{ _cssProps.gridAutoFlow }}
+              {{ cssProps.gridAutoFlow }}
             </grid-config-button>
             <grid-config-slider
               _name="Element size"
@@ -53,18 +53,17 @@
         </div>
 
         <div class="code-listing-wrapper">
-          <code-listing :cssProps="_cssProps"> </code-listing>
+          <code-listing :cssProps="cssProps"> </code-listing>
         </div>
 
-        <grid :cssProps="_cssProps">
-          <div
+        <grid :cssProps="cssProps">
+          <grid-element
             v-for="element in elements"
-            :key="element.id"
-            :class="element.class + ' element'"
-            :style="element.style"
+            :id="element.id"
+            :aspectClass="element.aspectClass"
+            :color="element.color"
           >
-            <span>{{ element.id }}</span>
-          </div>
+          </grid-element>
         </grid>
       </div>
     </div>
@@ -78,16 +77,11 @@ import CodeListing from "../components/CodeListing.vue";
 import GridConfigSlider from "../components/GridConfigSlider.vue";
 import GridButtonWindow from "../components/GridButtonWindow.vue";
 import { CSSProperties, ref } from "vue";
-import { subtractWithSaturation8bit } from "../utils";
 import { colors } from "../static/GridElements";
 import { AspectState } from "../models/AspectState";
-
-type GeneratedElement = {
-  id: number;
-  class: string;
-  style: CSSProperties;
-};
-
+import { GridInitialElementsAspects } from "../static/GridInitialElementsAspects";
+import { GridElementModel } from "../models/GridElementModel";
+import GridElement from "../components/GridElement.vue";
 const numberOfElements = 20;
 
 const itemSize = ref<string>("100");
@@ -95,22 +89,16 @@ const gapSize = ref<string>("10");
 
 let colorsArray: Array<Array<number>> = [];
 
-const _cssProps = ref<CSSProperties>({
+const cssProps = ref<CSSProperties>({
   gridAutoFlow: "dense",
   gridTemplateColumns: itemSize.value,
   gridAutoRows: itemSize.value,
   gap: gapSize.value,
 });
 
-const allAspects = ref<AspectState[]>([
-  { id: 1, aspectClass: "aspect_1_to_2", aspectText: "1 to 2", selected: true },
-  { id: 2, aspectClass: "aspect_2_to_1", aspectText: "2 to 1", selected: true },
-  { id: 3, aspectClass: "aspect_1_to_1", aspectText: "1 to 1", selected: true },
-  { id: 4, aspectClass: "aspect_3_to_1", aspectText: "3 to 1", selected: true },
-  { id: 5, aspectClass: "aspect_1_to_3", aspectText: "1 to 3", selected: true },
-]);
+const allAspects = ref<AspectState[]>(GridInitialElementsAspects);
 
-const elements = ref<GeneratedElement[]>(getGeneratedElements());
+const elements = ref<GridElementModel[]>(getGeneratedElements());
 
 function changeElementSize(e: InputEvent) {
   const target = e.target as HTMLInputElement;
@@ -121,12 +109,12 @@ function changeElementSize(e: InputEvent) {
 function changeGapSize(e: InputEvent) {
   const target = e.target as HTMLInputElement;
   gapSize.value = e != null ? target.value : "0";
-  _cssProps.value.gap = gapSize.value;
+  cssProps.value.gap = gapSize.value;
 }
 
 function handleSlider() {
-  _cssProps.value.gridTemplateColumns = itemSize.value;
-  _cssProps.value.gridAutoRows = itemSize.value;
+  cssProps.value.gridTemplateColumns = itemSize.value;
+  cssProps.value.gridAutoRows = itemSize.value;
 }
 
 function checkAspect(id: number) {
@@ -152,7 +140,7 @@ function getRandomAspect() {
   return activeAspects[randomIndex].aspectClass;
 }
 
-function getGeneratedElements(): GeneratedElement[] {
+function getGeneratedElements(): GridElementModel[] {
   colorsArray = [];
   for (let i = 0; i < numberOfElements; i++) {
     colorsArray.push(getRandomColor());
@@ -160,23 +148,8 @@ function getGeneratedElements(): GeneratedElement[] {
 
   return Array.from({ length: numberOfElements }, (_, index) => ({
     id: index,
-    class: getRandomAspect() + " element",
-    style: {
-      backgroundColor: "rgb(" + colorsArray[index].join(", ") + ")",
-      borderColor:
-        "rgb(" +
-        subtractWithSaturation8bit(60, colorsArray[index][0]).toString() +
-        ", " +
-        subtractWithSaturation8bit(60, colorsArray[index][1]).toString() +
-        ", " +
-        subtractWithSaturation8bit(60, colorsArray[index][2]).toString() +
-        ")",
-      textAlign: "center",
-      alignContent: "center",
-      fontSize: "2rem",
-      color: "black",
-      overflow: "hidden",
-    },
+    aspectClass: getRandomAspect(),
+    color: colorsArray[index],
   }));
 }
 </script>
