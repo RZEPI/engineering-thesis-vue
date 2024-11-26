@@ -12,7 +12,7 @@
                 textDecoration: !el.selected ? 'line-through' : 'none',
               }"
             >
-              {{ el.aspect }}
+              {{ el.aspectText }}
             </grid-config-button>
           </grid-button-window>
 
@@ -80,6 +80,7 @@ import GridButtonWindow from "../components/GridButtonWindow.vue";
 import { CSSProperties, ref } from "vue";
 import { subtractWithSaturation8bit } from "../utils";
 import { colors } from "../static/GridElements";
+import { AspectState } from "../models/AspectState";
 
 type GeneratedElement = {
   id: number;
@@ -101,17 +102,15 @@ const _cssProps = ref<CSSProperties>({
   gap: gapSize.value,
 });
 
-const allAspects = ref<ElementAspect[]>([
-  { id: 1, aspect: "aspect_1_to_2", selected: true },
-  { id: 2, aspect: "aspect_2_to_1", selected: true },
-  { id: 3, aspect: "aspect_1_to_1", selected: true },
-  { id: 4, aspect: "aspect_3_to_1", selected: true },
-  { id: 5, aspect: "aspect_1_to_3", selected: true },
+const allAspects = ref<AspectState[]>([
+  { id: 1, aspectClass: "aspect_1_to_2", aspectText: "1 to 2", selected: true },
+  { id: 2, aspectClass: "aspect_2_to_1", aspectText: "2 to 1", selected: true },
+  { id: 3, aspectClass: "aspect_1_to_1", aspectText: "1 to 1", selected: true },
+  { id: 4, aspectClass: "aspect_3_to_1", aspectText: "3 to 1", selected: true },
+  { id: 5, aspectClass: "aspect_1_to_3", aspectText: "1 to 3", selected: true },
 ]);
 
 const elements = ref<GeneratedElement[]>(getGeneratedElements());
-
-type ElementAspect = { id: number; aspect: string; selected: boolean };
 
 function changeElementSize(e: InputEvent) {
   const target = e.target as HTMLInputElement;
@@ -146,11 +145,11 @@ function getRandomAspect() {
   let activeAspects = allAspects.value.filter((aspect) => aspect.selected);
 
   if (activeAspects.length == 0) {
-    return allAspects.value[0].aspect;
+    return allAspects.value[0].aspectClass;
   }
 
   const randomIndex = Math.floor(Math.random() * activeAspects.length);
-  return activeAspects[randomIndex].aspect;
+  return activeAspects[randomIndex].aspectClass;
 }
 
 function getGeneratedElements(): GeneratedElement[] {
