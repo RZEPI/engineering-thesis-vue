@@ -1,19 +1,19 @@
 <template>
-  <label>{{ _name }}</label>
+  <label>{{ name }}</label>
   <input
     type="range"
     min="1"
     max="300"
     name="{{_name}}"
-    :value="_value"
+    :value="value"
     @input="emit('change', $event)"
   />
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  _value: string | number | undefined;
-  _name: string;
+  value: string | number | undefined;
+  name: string;
 }>();
 
 const emit = defineEmits(["change"]);

@@ -38,14 +38,14 @@
               {{ cssProps.gridAutoFlow }}
             </grid-config-button>
             <grid-config-slider
-              _name="Element size"
-              :_value="itemSize"
+              name="Element size"
+              :value="itemSize"
               @change="(e) => changeElementSize(e)"
             >
             </grid-config-slider>
             <grid-config-slider
-              _name="Gap size"
-              :_value="gapSize"
+              name="Gap size"
+              :value="gapSize"
               @change="(e) => changeGapSize(e)"
             >
             </grid-config-slider>
