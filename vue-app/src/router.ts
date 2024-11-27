@@ -8,8 +8,8 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: HomePage },
-    { path: "/Table", component: TablePage },
-    { path: "/Grid", component: GridPage },
+    { path: "/table", component: TablePage },
+    { path: "/grid", component: GridPage },
     { path: "/:notFound(.*)", component: NotFound },
   ],
   linkActiveClass: "active",

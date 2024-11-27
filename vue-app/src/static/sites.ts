@@ -7,10 +7,10 @@ export const sites: Array<SidebarLinkProps> = [
   },
   {
     label: "Table",
-    link: "/Table",
+    link: "/table",
   },
   {
     label: "Grid",
-    link: "/Grid",
+    link: "/grid",
   },
 ];
