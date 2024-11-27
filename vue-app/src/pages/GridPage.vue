@@ -168,8 +168,6 @@ body {
 }
 
 .page-wrapper {
-  position: absolute;
-  top: 0px;
   z-index: -1;
   padding-top: 10px;
   box-sizing: border-box;
@@ -181,7 +179,6 @@ body {
 }
 
 .page-content {
-  padding-top: 2em;
   width: 60%;
   display: flex;
   flex-wrap: wrap;
