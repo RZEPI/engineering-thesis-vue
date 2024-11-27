@@ -7,7 +7,7 @@
             <grid-config-button
               :key="index"
               v-for="(el, index) in allAspects"
-              @Clicked="checkAspect(el.id)"
+              @Clicked="chooseAspect(el.id)"
               :style="{
                 textDecoration: !el.selected ? 'line-through' : 'none',
               }"
@@ -117,7 +117,7 @@ function handleSlider() {
   cssProps.value.gridAutoRows = itemSize.value;
 }
 
-function checkAspect(id: number) {
+function chooseAspect(id: number) {
   const aspect = allAspects.value.find((e) => e.id === id);
   if (aspect) {
     aspect.selected = !aspect.selected;
