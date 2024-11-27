@@ -6,7 +6,7 @@
     max="300"
     name="{{_name}}"
     :value="_value"
-    @input="emit('GSchange', $event)"
+    @input="emit('change', $event)"
   />
 </template>
 
@@ -16,5 +16,5 @@ defineProps<{
   _name: string;
 }>();
 
-const emit = defineEmits(["GSchange"]);
+const emit = defineEmits(["change"]);
 </script>
