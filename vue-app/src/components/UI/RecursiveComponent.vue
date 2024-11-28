@@ -1,6 +1,8 @@
 <template>
     <div class="recursive-component">
-        <p>{{ props.message }} {{ props.depth }}</p>
+        <p :style="{ color: getColor(props.depth) }">
+            {{ props.message }} {{ props.depth }}
+        </p>
         <RecursiveComponent
         v-if="props.depth < props.maxDepth"
         :message = "props.message"
@@ -12,9 +14,16 @@
 
 <script setup lang="ts">
 import type { RecursiveProps } from "../../models/RecursiveProps"
-import { defineProps} from "vue";
 import RecursiveComponent from "./RecursiveComponent.vue"
 const props = defineProps<RecursiveProps>();
+
+const getColor = (depth : number): string => {
+    const hue = 146 + (depth * 3);
+    const saturation = 172 + (depth * 3);
+    const lightness = 50;
+
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  };
 </script>
 
 <style scoped>
