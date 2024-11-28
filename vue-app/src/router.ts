@@ -8,7 +8,7 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: HomePage },
-    { path: "/Recursive-Rendering", component: RecursivePage },
+    { path: "/recursive-rendering", component: RecursivePage },
     { path: "/Table", component: TablePage },
     { path: "/:notFound(.*)", component: NotFound },
   ],
