@@ -6,7 +6,7 @@
       <input
         type="number"
         v-model.number="maxDepthInput"
-        placeholder="Amount of components"
+        placeholder="0"
         min="0"
       />
       <button @click="setMaxDepth">Generate Components</button>
@@ -18,8 +18,9 @@
       :depth = "1"
       :maxDepth="maxDepth">
     </RecursiveComponent>
+ <div class="gradient"></div>
   </div>
-  <div class="gradient"></div>
+
 </template>
 
 <script setup lang="ts">
@@ -86,7 +87,7 @@ button:hover {
 }
 
 .gradient {
-  margin-top: -50px;
+  margin-top: -10px;
   margin-left: -5%;
   height: 100px;
   width: 110%;
