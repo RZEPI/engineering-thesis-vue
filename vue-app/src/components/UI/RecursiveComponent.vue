@@ -20,6 +20,6 @@ const props = defineProps<RecursiveProps>();
 <style scoped>
 .recursive-component {
   text-align: center;
-  font-size: 1.05em;
+  font-size: 30px;
 }
 </style>
