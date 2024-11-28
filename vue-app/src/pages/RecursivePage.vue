@@ -7,24 +7,24 @@
         type="number"
         v-model.number="maxDepthInput"
         placeholder="Amount of components"
-        min="1"
+        min="0"
       />
       <button @click="setMaxDepth">Generate Components</button>
     </div>
 
-    <Recursive
+    <RecursiveComponent
       v-if="maxDepth > 0"
       message="This component was created recursively. It's depth is"
       :depth = "1"
-      :maxDepth="maxDepth"
-    />
+      :maxDepth="maxDepth">
+    </RecursiveComponent>
   </div>
   <div class="gradient"></div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Recursive from "../components/UI/Recursive.vue";
+import RecursiveComponent from "../components/UI/RecursiveComponent.vue";
 const maxDepthInput = ref<number | null>(null);
 const maxDepth = ref<number>(0);
 
@@ -66,7 +66,7 @@ input[type="number"] {
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
-   width: 220px;
+  width: 220px;
   text-align: center;
 }
 

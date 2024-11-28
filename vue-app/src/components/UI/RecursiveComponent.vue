@@ -1,7 +1,7 @@
 <template>
     <div class="recursive-component">
         <p>{{ props.message }} {{ props.depth }}</p>
-        <Recursive
+        <RecursiveComponent
         v-if="props.depth < props.maxDepth"
         :message = "props.message"
         :depth = "props.depth + 1"
@@ -12,14 +12,9 @@
 
 <script setup lang="ts">
 import type { RecursiveProps } from "../../models/RecursiveProps"
-import { defineProps, defineComponent } from "vue";
-import Recursive from "./Recursive.vue"
+import { defineProps} from "vue";
+import RecursiveComponent from "./RecursiveComponent.vue"
 const props = defineProps<RecursiveProps>();
-defineComponent({
-    components: {
-      Recursive,
-    },
-  });
 </script>
 
 <style scoped>
