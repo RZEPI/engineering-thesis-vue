@@ -9,10 +9,19 @@
 </template>
 
 <script setup lang="ts">
+import { defineAsyncComponent } from "vue";
 import BaseLayout from "../components/UI/BaseLayout.vue";
-import FlexboxPreview from "../components/flexbox/FlexboxPreview.vue";
 import FlexboxForm from "../components/flexbox/form/FlexboxForm.vue";
 import CodeListing from "../components/flexbox/CodeListing.vue";
+import LoadingFallback from "../components/UI/LoadingFallback.vue";
+
+const FlexboxPreview = defineAsyncComponent({
+  loader: () =>
+    import("../components/flexbox/FlexboxPreview.vue"),
+    loadingComponent: LoadingFallback,
+    delay: 0,
+}
+);
 </script>
 
 <style scoped>
@@ -34,5 +43,4 @@ import CodeListing from "../components/flexbox/CodeListing.vue";
     height: 70vh;
   }
 }
-
 </style>

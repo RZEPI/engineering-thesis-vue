@@ -4,6 +4,7 @@
       v-for="element in content"
       :key="element.id"
       @click="removeElement(element.id)"
+      :style="{ backgroundColor: element.color }"
     >
       <p>{{ element.id }}</p>
     </div>

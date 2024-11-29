@@ -11,6 +11,9 @@ import { getters } from "./getters";
 import { AlignItemsOptions } from "../../models/flexbox-generator/AlignItemsOptions";
 import { ContentOptions } from "../../models/flexbox-generator/ContentOptions";
 import { FlexboxElement } from "../../models/flexbox-generator/FlexboxElement";
+import { drawColor } from "../../util/utils";
+
+const INIT_AMONT_OF_ELEMENTS = 100000;
 
 export interface State {
   wrapping: boolean;
@@ -21,7 +24,10 @@ export interface State {
   content: FlexboxElement[];
 }
 
-const DefaultContent: FlexboxElement[] = [{ id: 1 }, { id: 2 }, { id: 3 }];
+const DefaultContent: FlexboxElement[] = Array.from({ length: INIT_AMONT_OF_ELEMENTS }, (_, i) => ({
+  id: i,
+  color: drawColor(),
+}));
 
 export const state: State = {
   wrapping: false,

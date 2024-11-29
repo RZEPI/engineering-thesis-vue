@@ -1,6 +1,7 @@
 import { MutationTree } from "vuex";
 import { AlignItemsOptions } from "../../models/flexbox-generator/AlignItemsOptions";
 import { ContentOptions } from "../../models/flexbox-generator/ContentOptions";
+import { drawColor } from "../../util/utils";
 
 import { State } from ".";
 export enum MutationTypes {
@@ -45,7 +46,7 @@ export const mutations: MutationTree<State> & Mutations = {
 
     if (content.length !== 0) lastElementId = content[content.length - 1].id;
 
-    content.push({ id: lastElementId + 1 });
+    content.push({ id: lastElementId + 1, color: drawColor() });
   },
   [MutationTypes.REMOVE_ELEMENT](state, payload) {
     const content = state.content;
