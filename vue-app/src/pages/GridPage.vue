@@ -1,71 +1,69 @@
 <template>
   <div class="page-wrapper">
     <div class="page-content">
-      <div :style="{ width: '100%' }">
-        <div class="windows-container">
-          <grid-button-window title="Aspects">
-            <grid-config-button
-              :key="index"
-              v-for="(el, index) in allAspects"
-              @Clicked="chooseAspect(el.id)"
-              :style="{
-                textDecoration: !el.selected ? 'line-through' : 'none',
-              }"
-            >
-              {{ el.aspectText }}
-            </grid-config-button>
-          </grid-button-window>
-
-          <grid-button-window title="Grid options">
-            <grid-config-button
-              @Clicked="
-                () => {
-                  elements = getGeneratedElements();
-                }
-              "
-            >
-              Generate
-            </grid-config-button>
-
-            <grid-config-button
-              @Clicked="
-                () => {
-                  cssProps.gridAutoFlow =
-                    cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
-                }
-              "
-            >
-              {{ cssProps.gridAutoFlow }}
-            </grid-config-button>
-            <grid-config-slider
-              name="Element size"
-              :value="itemSize"
-              @change="(e) => changeElementSize(e)"
-            >
-            </grid-config-slider>
-            <grid-config-slider
-              name="Gap size"
-              :value="gapSize"
-              @change="(e) => changeGapSize(e)"
-            >
-            </grid-config-slider>
-          </grid-button-window>
-        </div>
-
-        <div class="code-listing-wrapper">
-          <code-listing :cssProps="cssProps"> </code-listing>
-        </div>
-
-        <grid :cssProps="cssProps">
-          <grid-element
-            v-for="element in elements"
-            :id="element.id"
-            :aspectClass="element.aspectClass"
-            :color="element.color"
+      <div class="windows-container">
+        <grid-button-window title="Aspects">
+          <grid-config-button
+            :key="index"
+            v-for="(el, index) in allAspects"
+            @Clicked="chooseAspect(el.id)"
+            :style="{
+              textDecoration: !el.selected ? 'line-through' : 'none',
+            }"
           >
-          </grid-element>
-        </grid>
+            {{ el.aspectText }}
+          </grid-config-button>
+        </grid-button-window>
+
+        <grid-button-window title="Grid options">
+          <grid-config-button
+            @Clicked="
+              () => {
+                elements = getGeneratedElements();
+              }
+            "
+          >
+            Generate
+          </grid-config-button>
+
+          <grid-config-button
+            @Clicked="
+              () => {
+                cssProps.gridAutoFlow =
+                  cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
+              }
+            "
+          >
+            {{ cssProps.gridAutoFlow }}
+          </grid-config-button>
+          <grid-config-slider
+            name="Element size"
+            :value="itemSize"
+            @change="(e) => changeElementSize(e)"
+          >
+          </grid-config-slider>
+          <grid-config-slider
+            name="Gap size"
+            :value="gapSize"
+            @change="(e) => changeGapSize(e)"
+          >
+          </grid-config-slider>
+        </grid-button-window>
       </div>
+
+      <div class="code-listing-wrapper">
+        <code-listing :cssProps="cssProps"> </code-listing>
+      </div>
+
+      <grid :cssProps="cssProps">
+        <grid-element
+          v-for="element in elements"
+          :id="element.id"
+          :aspectClass="element.aspectClass"
+          :color="element.color"
+        >
+        </grid-element>
+      </grid>
     </div>
   </div>
 </template>
@@ -156,21 +154,16 @@ function getGeneratedElements(): GridElementModel[] {
 
 <style scoped>
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 body {
   --element-size: 100px;
 }
 
-.page-content > div > div {
-  margin-top: 25px;
-}
-
 .page-wrapper {
   z-index: -1;
   padding-top: 10px;
-  box-sizing: border-box;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -180,11 +173,17 @@ body {
 
 .page-content {
   width: 60%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  display: block;
   background-color: inherit;
   align-items: center;
+}
+
+.page-content > * {
+  width: 100%;
+}
+
+.page-content > div {
+  margin-top: 25px;
 }
 
 .grid-main {

@@ -4,7 +4,7 @@
     type="range"
     min="1"
     max="300"
-    name="{{_name}}"
+    name="{{ name }}"
     :value="value"
     @input="emit('change', $event)"
   />
