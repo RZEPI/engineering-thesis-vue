@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "types": ["vitest/globals"]
   },
   "files": [],
   "references": [
