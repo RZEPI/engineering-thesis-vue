@@ -4,7 +4,7 @@ export const sites: Array<SidebarLinkProps> = [
   {
     label: "Home",
     link: "/",
-    description: "Home page, nothing special. description of features in this project.",
+    description: "Home page, nothing special. Description of features in this project.",
   },
   {
     label: "Table",

@@ -2,11 +2,11 @@
     <div class="container">
         <h1>{{ site.label }}</h1>
         <div class="site-description">
-            <button :class="{inactive: isFirst}" @click="onPreviousClick"><</button>
+            <button :class="{inactive: isFirst}" @click="onPreviousClick">&lt;</button>
             <p>
                 {{ site.description }}
             </p>
-             <button :class="{inactive: isLast}" @click="onNextClick">></button>
+             <button :class="{inactive: isLast}" @click="onNextClick">&gt;</button>
         </div>
         <router-link :to="site.link"> Go </router-link>
     </div>
