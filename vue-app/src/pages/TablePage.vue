@@ -45,7 +45,7 @@ import { computed, ComputedRef, onBeforeMount, ref } from "vue";
 import { namesTable } from "../static/RandomDataTables";
 import { numberTable } from "../static/RandomDataTables";
 import TableRow from "../components/UI/TableRow.vue";
-import { TableRowData } from "../models/PerfTestArrayRow";
+import { TableRowData } from "../models/table/TableRowData";
 
 const RECORDS_TO_CREATE: number = 3000;
 const RECORDS_TO_DELETE: number = 1000;

@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SidebarLinkProps } from "../../models/SidebarLink.ts";
+import type { SidebarLinkProps } from "../../models/SidebarLinkProps.ts";
 
 defineProps<SidebarLinkProps>();
 </script>
