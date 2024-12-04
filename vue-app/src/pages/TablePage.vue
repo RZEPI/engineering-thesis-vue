@@ -81,14 +81,13 @@ function deleteEveryNthRecord(n: number) {
   for (let i = 0; i < tmpArray.length; i += n) {
     tmpArray.splice(i--, 1);
   }
-
   tableContent.splice(0, rowCount.value, ...tmpArray);
 }
 
 function updateNthRow(n: number) {
   const tmpArray: TableRowData[] = [...tableContent];
 
-  for (let i = 0; i < rowCount.value; i += n) {
+  for (let i = 0; i < rowCount; i += n) {
     tmpArray[i] = {
       ...tableContent[i],
       name: "Changed Name " + tableContent[i].name,
@@ -101,7 +100,7 @@ function updateNthRow(n: number) {
 function replaceAllRows() {
   const tmpArray: TableRowData[] = [];
 
-  for (let i = 0; i < rowCount.value; i++) {
+  for (let i = 0; i < rowCount; i++) {
     tmpArray.push({
       id: key++,
       name: "Replaced " + tableContent[i].name,
@@ -113,8 +112,8 @@ function replaceAllRows() {
 }
 
 function swapRows() {
-  const index1 = Math.floor(Math.random() * rowCount.value);
-  const index2 = Math.floor(Math.random() * rowCount.value);
+  const index1 = Math.floor(Math.random() * rowCount);
+  const index2 = Math.floor(Math.random() * rowCount);
 
   const tmpRow: TableRowData = tableContent[index1];
   tableContent[index1] = tableContent[index2];
@@ -124,7 +123,7 @@ function swapRows() {
 function clearRows() {
   const tmpArray: TableRowData[] = [];
 
-  for (let i = 0; i < rowCount.value; i++) {
+  for (let i = 0; i < rowCount; i++) {
     tmpArray.push({
       id: tableContent[i].id,
       name: "",
