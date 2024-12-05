@@ -198,11 +198,10 @@ watch([filter, tableContent], ([newFilter, newTable]) => {
     return true;
   });
 
-  filteredTableContent.splice(
-    0,
-    filteredTableContent.length,
-    ...filteredContent,
-  );
+  filteredTableContent.length = 0;
+  for (let i = 0; i < filteredContent.length; i++) {
+    filteredTableContent.push(filteredContent[i]);
+}
 });
 
 const actionFunctions: ActionFunctions = {
