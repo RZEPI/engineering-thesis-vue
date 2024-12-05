@@ -21,7 +21,7 @@ defineProps({
 .component {
   margin: 10px 0;
   padding: 20px;
-  background-color: #42b983;
+  background-color: var(--main-color);
   color: white;
   border-radius: 8px;
   text-align: center;
