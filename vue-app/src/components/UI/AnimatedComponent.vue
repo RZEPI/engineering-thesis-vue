@@ -31,11 +31,11 @@ defineProps({
 }
 
 .component.right {
-  transform: translateX(calc(100vw - 10vw - 5.4em));
+  transform: translateX(85vw);
 }
 
 .move-enter-from {
-  transform: translateX(-calc(100vw - 10vw - 5.4em));
+  transform: translateX(-85vw);
 }
 
 .move-enter-to,
@@ -44,7 +44,7 @@ defineProps({
 }
 
 .move-leave-to {
-  transform: translateX(calc(100vw - 10vw - 5.4em));
+  transform: translateX(85vw);
 }
 
 .move-enter-active,
