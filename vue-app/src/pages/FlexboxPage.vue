@@ -1,5 +1,5 @@
 <template>
-  <base-layout title="Flexbox Generator">
+  <base-layout title="Flexbox Testing">
     <div class="main-container">
       <flexbox-preview></flexbox-preview>
       <flexbox-form></flexbox-form>
@@ -26,7 +26,7 @@ const FlexboxPreview = defineAsyncComponent({
 
 <style scoped>
 .main-container {
-  --flex-element-size: 6em;
+  --flex-element-size: 0.4em;
   display: grid;
   grid-template-areas:
     "preview preview form"
