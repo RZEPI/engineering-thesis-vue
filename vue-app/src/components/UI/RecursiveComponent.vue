@@ -18,8 +18,8 @@ import RecursiveComponent from "./RecursiveComponent.vue"
 const props = defineProps<RecursiveProps>();
 
 const getColor = (depth : number): string => {
-    const hue = 146 + (depth * 3);
-    const saturation = 172 + (depth * 3);
+    const hue = (146 + (depth * 3)) % 255;
+    const saturation = (172 + (depth * 3)) % 255;
     const lightness = 50;
 
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
@@ -29,6 +29,6 @@ const getColor = (depth : number): string => {
 <style scoped>
 .recursive-component {
   text-align: center;
-  font-size: 30px;
+  font-size: 1.7rem;
 }
 </style>
