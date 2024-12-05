@@ -8,7 +8,9 @@
             </p>
              <button :class="{inactive: isLast}" @click="onNextClick">&gt;</button>
         </div>
-        <router-link :to="site.link"> Go </router-link>
+        <div class="goto-button__container">
+            <router-link :to="site.link" v-if="!isFirst"> Go </router-link>
+        </div>
     </div>
 </template>
 
@@ -18,11 +20,9 @@ import { FeatureDescriptionProps } from '../../models/FeatureDescriptionProps';
 const { site, isFirst, isLast } = defineProps<FeatureDescriptionProps>();
 const emit = defineEmits(['next', 'previous']);
 function onPreviousClick() {
-    if(isFirst) return;
     emit('previous');
 }
 function onNextClick() {
-    if(isLast) return;
     emit('next');
 }
 
@@ -47,11 +47,18 @@ function onNextClick() {
     font-size: 2.6em;
     margin-top: 0.6em;
 }
-.container a {
+
+.goto-button__container
+{
+    width: 100%;
+    height: 6vh;
+    display: flex;
+}
+.goto-button__container a {
+    margin-left: auto;
+    margin-right: 4em;
+    margin-bottom: auto;
     padding:0.4em 2em;
-    margin: auto 3em 2em auto;
-    margin-top: auto;
-    margin-left:auto;
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
@@ -60,7 +67,7 @@ function onNextClick() {
     background-color: var(--main-color);
     color: var(--main-text-color);
 }
-.container a:hover{
+.goto-button__container a:hover{
     background-color: var(--hover-element-color);
 }
 
@@ -104,10 +111,16 @@ function onNextClick() {
     border-left: 1px solid black !important;
     border-right: 0px !important;
 }
-@media (max-height: 700px) {
+@media (max-height: 800px) {
     .container {
         margin-top: 0;
         height: 60vh;
+    }
+
+    .goto-button__container a {
+        margin-top: -1.4em;
+        font-size: 1.6em;
+        padding: 0.3em 1.2em;
     }
 }
 </style>
