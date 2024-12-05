@@ -1,63 +1,52 @@
 <template>
+  <table-filter-modal
+    v-model:filter="filter"
+    ref="dialog"
+    @update-filter="changeFilter"
+  />
   <div class="page-wrapper">
     <div class="page-content">
-      <div class="v-btn-cont">
-        <button @click="addNRecords(RECORDS_TO_CREATE)">
-          Add {{ RECORDS_TO_CREATE }}
-        </button>
-        <button @click="deleteNRecords(RECORDS_TO_DELETE)">
-          Delete {{ RECORDS_TO_DELETE }}
-        </button>
-        <button @click="deleteEveryNthRecord(NTH_TO_DELETE)">
-          Delete {{ NTH_TO_DELETE }}th
-        </button>
-        <button @click="updateNthRow(NTH_TO_UPDATE)">
-          Update {{ NTH_TO_UPDATE }}th
-        </button>
-        <button @click="replaceAllRows">Replace all</button>
-        <button @click="swapRows">Swap</button>
-        <button @click="clearRows">Clear all</button>
-        <span>rows: {{ rowCount }}</span>
-      </div>
-
-      <div class="table-container">
-        <div class="table">
-          <div class="table-header">
-            <div>Id</div>
-            <div>Name</div>
-            <div>Level</div>
-          </div>
-          <table-row
-            class="table-row"
-            :key="tuple.id"
-            v-for="tuple in tableContent"
-            :tuple="tuple"
-          >
-          </table-row>
-        </div>
-      </div>
+      <table-actions
+        :action-functions="actionFunctions"
+        :table-content="filteredTableContent"
+      ></table-actions>
+      <table-content
+        :open-filter-dialog="openFilterDialog"
+        :table-content="filteredTableContent"
+        :table-fields="tableFields"
+      ></table-content>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, onBeforeMount, ref } from "vue";
-import { namesTable } from "../static/RandomDataTables";
-import { numberTable } from "../static/RandomDataTables";
-import TableRow from "../components/UI/TableRow.vue";
-import { TableRowData } from "../models/PerfTestArrayRow";
+import { onBeforeMount, ref, reactive, watch } from "vue";
+import {
+  namesTable,
+  numberTable,
+  makeDefaultFilter,
+  tableFields,
+} from "../static/RandomDataTables";
 
-const RECORDS_TO_CREATE: number = 3000;
-const RECORDS_TO_DELETE: number = 1000;
-const NTH_TO_DELETE: number = 2;
-const NTH_TO_UPDATE: number = 2;
+import { ActionFunctions } from "../models/table/TableActionsProps";
+import { TableRowData } from "../models/table/TableRowData";
 
-const tableContent = ref<TableRowData[]>([]);
-const rowCount: ComputedRef<number> = computed(() => {
-  return tableContent.value.length;
-});
+import TableActions from "../components/table/TableActions.vue";
+import TableContent from "../components/table/TableContent.vue";
+import TableFilterModal from "../components/table/TableFilterModal.vue";
+import {
+  TableFilter,
+  IntFilter,
+  StringFilter,
+} from "../models/table/TableFilter";
+
+const tableContent = reactive<TableRowData[]>([]);
+const filteredTableContent = reactive<TableRowData[]>([]);
+const dialog = ref<InstanceType<typeof TableFilterModal>>();
+let filter = reactive<TableFilter>({ ...makeDefaultFilter() });
 
 let key: number = 0;
+const rowCount = tableContent.length;
 
 onBeforeMount(generateArray);
 
@@ -78,40 +67,40 @@ function addNRecords(n: number) {
     });
   }
 
-  tableContent.value.unshift(...tmpArray);
+  tableContent.unshift(...tmpArray);
 }
 
 function deleteNRecords(n: number) {
-  tableContent.value.splice(0, n);
+  tableContent.splice(0, n);
 }
 
 function deleteEveryNthRecord(n: number) {
-  const tmpArray: TableRowData[] = [...tableContent.value];
+  const tmpArray: TableRowData[] = [...tableContent];
 
   for (let i = 0; i < tmpArray.length; i += n) {
     tmpArray.splice(i--, 1);
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function updateNthRow(n: number) {
-  const tmpArray: TableRowData[] = [...tableContent.value];
+  const tmpArray: TableRowData[] = [...tableContent];
 
-  for (let i = 0; i < rowCount.value; i += n) {
+  for (let i = 0; i < rowCount; i += n) {
     tmpArray[i] = {
-      ...tableContent.value[i],
+      ...tableContent[i],
       name: "Changed Name " + i,
     };
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function replaceAllRows() {
   const tmpArray: TableRowData[] = [];
 
-  for (let i = 0; i < rowCount.value; i++) {
+  for (let i = 0; i < rowCount; i++) {
     tmpArray.push({
       id: key++,
       name: "Replaced " + i,
@@ -119,30 +108,30 @@ function replaceAllRows() {
     });
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function swapRows() {
-  const index1 = Math.floor(Math.random() * rowCount.value);
-  const index2 = Math.floor(Math.random() * rowCount.value);
+  const index1 = Math.floor(Math.random() * rowCount);
+  const index2 = Math.floor(Math.random() * rowCount);
 
-  const tmpRow: TableRowData = tableContent.value[index1];
-  tableContent.value[index1] = tableContent.value[index2];
-  tableContent.value[index2] = tmpRow;
+  const tmpRow: TableRowData = tableContent[index1];
+  tableContent[index1] = tableContent[index2];
+  tableContent[index2] = tmpRow;
 }
 
 function clearRows() {
   const tmpArray: TableRowData[] = [];
 
-  for (let i = 0; i < rowCount.value; i++) {
+  for (let i = 0; i < rowCount; i++) {
     tmpArray.push({
-      id: tableContent.value[i].id,
+      id: tableContent[i].id,
       name: "",
       level: 0,
     });
   }
 
-  tableContent.value = tmpArray;
+  tableContent.splice(0, rowCount, ...tmpArray);
 }
 
 function generateArray() {
@@ -159,8 +148,72 @@ function generateArray() {
     });
   }
 
-  tableContent.value.unshift(...generatedArray);
+  tableContent.unshift(...generatedArray);
+  filteredTableContent.unshift(...generatedArray);
 }
+
+function openFilterDialog() {
+  dialog.value?.openModal();
+}
+function checkIfValueInRangeClosed(value: number, filter: IntFilter): boolean {
+  if (filter.min !== undefined && filter.min > value) return false;
+  if (filter.max !== undefined && filter.max < value) return false;
+
+  return true;
+}
+
+function checkIfValueInRangeOpen(value: number, filter: IntFilter): boolean {
+  if (filter.min !== undefined && filter.min >= value) return false;
+  if (filter.max !== undefined && filter.max <= value) return false;
+
+  return true;
+}
+
+function inFilterRange(value: number, filter: IntFilter): boolean {
+  if (filter.isOpen) {
+    return checkIfValueInRangeOpen(value, filter);
+  } else {
+    return checkIfValueInRangeClosed(value, filter);
+  }
+}
+
+function inNameFilter(givenName: string, filter: StringFilter[]): boolean {
+  return (
+    filter.find((name) => name.value === givenName && name.isChecked) !==
+    undefined
+  );
+}
+function changeFilter(newFilter: TableFilter) {
+  Object.assign(filter, newFilter);
+}
+
+watch(filter, (newFilter) => {
+  const filteredContent = tableContent.filter((row) => {
+    if (!inFilterRange(row.id, newFilter.id)) return false;
+
+    if (!inFilterRange(row.level, newFilter.level)) return false;
+
+    if (!inNameFilter(row.name, newFilter.name)) return false;
+
+    return true;
+  });
+
+  filteredTableContent.splice(
+    0,
+    filteredTableContent.length,
+    ...filteredContent,
+  );
+});
+
+const actionFunctions: ActionFunctions = {
+  addNRecords,
+  deleteNRecords,
+  deleteEveryNthRecord,
+  updateNthRow,
+  replaceAllRows,
+  swapRows,
+  clearRows,
+};
 </script>
 
 <style scoped>
@@ -171,72 +224,10 @@ function generateArray() {
   justify-content: center;
   height: 80vh;
 }
+
 .page-content {
   width: 80%;
   display: grid;
   grid-template-columns: 20% 80%;
-}
-.v-btn-cont {
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-}
-.v-btn-cont button {
-  font-size: 1.2em;
-  margin-top: 1em;
-  padding: 0.25em;
-  border: 2px solid grey;
-  background-color: white;
-  border-radius: 10px;
-}
-
-button:hover {
-  transition: all 0.3s;
-  background-color: var(--hover-element-color);
-}
-button:active {
-  background-color: var(--active-element-color);
-}
-
-.table-container {
-  padding: 2em 1em 2em 1em;
-  max-height: 80vh;
-}
-
-.table {
-  max-height: 100%;
-  box-sizing: content-box;
-  border: 10px solid var(--hover-element-color);
-  border-radius: 20px;
-  overflow: hidden;
-  overflow-y: scroll;
-}
-
-.table-header {
-  display: grid;
-  grid-template-columns: [id] 20% [name] 40% [level] 40%;
-  background-color: var(--hover-element-color);
-  width: 100%;
-  padding: 0.25em 0em 0.25em 0em;
-}
-
-.table-header div {
-  padding-left: 0.75em;
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-:deep(.table-row) {
-  background-color: var(--main-color);
-  width: 100%;
-  display: grid;
-  grid-template-columns: [id] 20% [name] 40% [level] 40%;
-}
-:deep(.table-cell) {
-  height: 1em;
-  padding: 0.3em 0.3em 0.3em 0.75em;
-  border: 1px solid var(--hover-element-color);
-  font-weight: bold;
-  font-size: 1rem;
 }
 </style>
