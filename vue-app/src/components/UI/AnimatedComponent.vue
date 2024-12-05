@@ -8,42 +8,43 @@
 defineProps({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   isRight: {
     type: Boolean,
-    required: true
-  }
+    required: true,
+  },
 });
 </script>
 
 <style scoped>
 .component {
-  margin: 10px 0;
-  padding: 20px;
+  margin: 0.7em;
+  padding: 1.5em;
   background-color: var(--main-color);
   color: white;
-  border-radius: 8px;
+  border-radius: 1em;
   text-align: center;
-  width: 150px;
+  width: 10vw;
   transform: translateX(0);
   transition: transform 0.5s;
 }
 
 .component.right {
-  transform: translateX(1200px); 
+  transform: translateX(calc(100vw - 10vw - 5.4em));
 }
 
 .move-enter-from {
-  transform: translateX(-1200px);
+  transform: translateX(-calc(100vw - 10vw - 5.4em));
 }
 
-.move-enter-to, .move-leave-from {
+.move-enter-to,
+.move-leave-from {
   transform: translateX(0);
 }
 
 .move-leave-to {
-  transform: translateX(1200px);
+  transform: translateX(calc(100vw - 10vw - 5.4em));
 }
 
 .move-enter-active,

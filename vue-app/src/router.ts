@@ -10,7 +10,7 @@ export default createRouter({
     { path: "/", component: HomePage },
     { path: "/Table", component: TablePage },
     { path: "/:notFound(.*)", component: NotFound },
-    { path: "/Animation", component: AnimationPage },
+    { path: "/animation", component: AnimationPage },
   ],
   linkActiveClass: "active",
 });

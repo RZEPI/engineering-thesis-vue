@@ -13,7 +13,7 @@
     <transition-group name="move" tag="div" class="component-list">
       <AnimatedComponent
         v-for="index in componentCount"
-        :key="index"z
+        :key="index"
         :name="'Component ' + index"
         :isRight="isRight"
       />
@@ -22,10 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import AnimatedComponent from '../components/UI/AnimatedComponent.vue';
+import { ref } from "vue";
+import AnimatedComponent from "../components/UI/AnimatedComponent.vue";
 
-const componentCount = ref(8);
+const componentCount = ref(5);
 const tempComponentCount = ref(componentCount.value);
 const isRight = ref(false);
 
@@ -42,7 +42,7 @@ const updateComponentCount = () => {
 <style scoped>
 .component-list {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: flex-start;
 }
 </style>
