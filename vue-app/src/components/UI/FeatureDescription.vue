@@ -104,4 +104,10 @@ function onNextClick() {
     border-left: 1px solid black !important;
     border-right: 0px !important;
 }
+@media (max-height: 700px) {
+    .container {
+        margin-top: 0;
+        height: 60vh;
+    }
+}
 </style>

@@ -49,4 +49,10 @@ p {
     rgba(65, 183, 131, 0) 100%
   );
 }
+
+@media (max-height: 700px) {
+  .main-container {
+    margin-top: 4em;
+  }
+}
 </style>
