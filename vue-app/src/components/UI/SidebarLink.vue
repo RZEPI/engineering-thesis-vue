@@ -39,4 +39,14 @@ li:hover {
   background-color: var(--hover-element-color);
   box-sizing: border-box;
 }
+li img{
+  align-self: center;
+  height: calc(3vh - 0.3em);
+}
+
+@media (max-height: 700px) {
+  li img {
+    height: calc(7vh - 0.3em);
+  }
+}
 </style>
