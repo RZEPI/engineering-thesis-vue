@@ -1,39 +1,12 @@
 <template>
-  <div class="code-listing">
+  <div class="code-listing__container">
     &#123;
-    <br />
-    <span
-      :style="{
-        paddingLeft: '2em',
-      }"
-    >
-      grid-auto-flow: {{ cssProps.gridAutoFlow }};
-    </span>
-    <br />
-    <span
-      :style="{
-        paddingLeft: '2em',
-      }"
-    >
-      grid-template-columns: {{ cssProps.gridTemplateColumns }};
-    </span>
-    <br />
-    <span
-      :style="{
-        paddingLeft: '2em',
-      }"
-    >
-      grid-auto-rows: {{ cssProps.gridAutoRows }};
-    </span>
-    <br />
-    <span
-      :style="{
-        paddingLeft: '2em',
-      }"
-    >
-      gap: {{ cssProps.gap }};</span
-    >
-    <br />
+    <div
+        v-for="(propertyKey, propertyValue) in cssProps"
+        :key="propertyKey">
+        <span class="property">&emsp;&emsp;{{ propertyValue }}:</span>
+        <span class="value">&nbsp;&nbsp;{{ propertyKey }}</span>;
+    </div>
     &#125;
   </div>
 </template>
