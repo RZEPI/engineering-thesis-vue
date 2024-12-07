@@ -4,7 +4,11 @@ export const sites: Array<SidebarLinkProps> = [
   {
     label: "Home",
     link: "/",
-    imageSrc:"home.svg",
+    imageSrc: "home.svg"
+  },
+  {
+    label: "Flexbox",
+    link: "/flexbox",
   },
   {
     label: "Table",

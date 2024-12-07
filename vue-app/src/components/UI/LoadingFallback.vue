@@ -1,0 +1,19 @@
+<template>
+    <div className="loading-fallback">
+        <p>Loading...</p>
+    </div>
+</template>
+
+<style scoped>
+.loading-fallback {
+    grid-area: preview;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+</style>
