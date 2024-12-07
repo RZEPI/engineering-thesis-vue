@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, CSSProperties } from "vue";
 import { GridElementModel } from "../models/GridElementModel";
-import { subtractWithSaturation8bit } from "../utils";
+import { subtractWithSaturation8bit } from "../util/utils";
 
 const styles = computed<CSSProperties>(() => ({
   backgroundColor: "rgb(" + props.color.join(", ") + ")",
