@@ -4,7 +4,7 @@ export const sites: Array<SidebarLinkProps> = [
   {
     label: "Home",
     link: "/",
-    imageSrc: "home.svg"
+    imageSrc: "home.svg",
   },
   {
     label: "Flexbox",
@@ -12,6 +12,10 @@ export const sites: Array<SidebarLinkProps> = [
   },
   {
     label: "Table",
-    link: "/Table",
+    link: "/table",
+  },
+  {
+    label: "Grid",
+    link: "/grid",
   },
 ];

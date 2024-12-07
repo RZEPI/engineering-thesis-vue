@@ -4,40 +4,36 @@
       <span>Code listing</span>
       <div @click="copyToClipboard">
         <img
-          src="../../assets/clipboard-outline-svgrepo-com.svg"
+          src="../assets/clipboard-outline-svgrepo-com.svg"
           alt="Clipboard sign"
         />
       </div>
     </header>
-    <ul class="code-listing">
-      <li>{</li>
-      <li
-        v-for="(propertyKey, propertyValue) in flexClasses"
-        :key="propertyKey"
-      >
-        <span class="property">&emsp;&emsp;{{ propertyValue }}:</span>
-        <span class="value">&nbsp;&nbsp;{{ propertyKey }}</span
+    <div class="code-listing">
+      <span class="gold-bracket">{</span>
+      <div v-for="entry in parsedEntries" :key="entry.propertyKey">
+        <span class="property">&emsp;&emsp;{{ entry.propertyKey }}:</span>
+        <span class="value">&nbsp;&nbsp;{{ entry.propertyValue }}</span
         >;
-      </li>
-      <li>}</li>
-    </ul>
+      </div>
+      <span class="gold-bracket">}</span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { CSSProperties, computed } from "vue";
-import { useStore as useFlexboxStore } from "../../store/flexbox";
-
-const store = useFlexboxStore();
-const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
+import { computed, CSSProperties } from "vue";
+import { parseCssEntries } from "../util/utils";
+const props = defineProps<{ cssProps: CSSProperties }>();
+const parsedEntries = computed<
+  { propertyKey: string; propertyValue: string }[]
+>(() => parseCssEntries(props.cssProps as CSSProperties));
 
 function copyToClipboard() {
   let dataToClipboard: string;
   dataToClipboard = "{\n";
-  for (const [propertyKey, propertyValue] of Object.entries(
-    flexClasses.value,
-  )) {
-    dataToClipboard += `\t${propertyKey}: ${propertyValue};\n`;
+  for (const entry of parsedEntries.value) {
+    dataToClipboard += `\t${entry.propertyKey}: ${entry.propertyValue};\n`;
   }
   dataToClipboard += "}";
 
@@ -45,7 +41,7 @@ function copyToClipboard() {
 }
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .code-listing__container {
   --listing-background-color: #1f1f1f;
   width: 40vw;
@@ -89,13 +85,12 @@ header div img {
 
 .code-listing {
   font-weight: 600;
-  padding: 0 3em 1em 3em;
+  padding: 1em 3em 1em 3em;
   font-size: 1.7em;
   list-style-type: none;
 }
 
-.code-listing > li:last-child,
-.code-listing > li:first-child {
+.gold-bracket {
   color: #c2c20e;
 }
 

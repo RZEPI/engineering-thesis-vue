@@ -4,24 +4,26 @@
       <flexbox-preview></flexbox-preview>
       <flexbox-form></flexbox-form>
     </div>
-    <code-listing></code-listing>
+    <code-listing :css-props="flexClasses"></code-listing>
   </base-layout>
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue";
+import { computed, CSSProperties, defineAsyncComponent } from "vue";
 import BaseLayout from "../components/UI/BaseLayout.vue";
 import FlexboxForm from "../components/flexbox/form/FlexboxForm.vue";
-import CodeListing from "../components/flexbox/CodeListing.vue";
+import CodeListing from "../components/CodeListing.vue";
 import LoadingFallback from "../components/UI/LoadingFallback.vue";
+import { useStore as useFlexboxStore } from "../store/flexbox";
+
+const store = useFlexboxStore();
+const flexClasses = computed<CSSProperties>(() => store.getters.getStyleObject);
 
 const FlexboxPreview = defineAsyncComponent({
-  loader: () =>
-    import("../components/flexbox/FlexboxPreview.vue"),
-    loadingComponent: LoadingFallback,
-    delay: 0,
-}
-);
+  loader: () => import("../components/flexbox/FlexboxPreview.vue"),
+  loadingComponent: LoadingFallback,
+  delay: 0,
+});
 </script>
 
 <style scoped>

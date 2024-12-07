@@ -110,9 +110,9 @@ button {
   padding: 0.8em;
 }
 
-@media (max-height: 1300px){
-  button{
-    margin: 1em
+@media (max-height: 1300px) {
+  button {
+    margin: 1em;
   }
 }
 </style>

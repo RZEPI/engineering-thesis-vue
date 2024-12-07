@@ -10,8 +10,13 @@
   <transition name="sidebar" mode="out-in">
     <nav v-if="isExpanded">
       <ul>
-        <sidebar-link v-for="link in links" :key="link.label" :image-src="link.imageSrc" :label="link.label"
-          :link="link.link"></sidebar-link>
+        <sidebar-link
+          v-for="link in links"
+          :key="link.label"
+          :image-src="link.imageSrc"
+          :label="link.label"
+          :link="link.link"
+        ></sidebar-link>
       </ul>
     </nav>
   </transition>
