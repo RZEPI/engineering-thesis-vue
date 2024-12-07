@@ -51,9 +51,7 @@
         </grid-button-window>
       </div>
 
-      <div class="code-listing-wrapper">
-        <code-listing :cssProps="cssProps"> </code-listing>
-      </div>
+      <code-listing :cssProps="cssProps"> </code-listing>
 
       <grid :cssProps="cssProps">
         <grid-element
@@ -308,7 +306,7 @@ body {
 :deep() button:active {
   background-color: var(--active-element-color);
 }
-
+/* 
 :deep() .code-listing-wrapper {
   width: 100%;
   padding: 2em;
@@ -321,7 +319,7 @@ body {
 :deep() .code-listing {
   width: 100%;
   font-size: 1.2rem;
-}
+} */
 
 .aspect_1_to_2 {
   grid-column: span 2;
