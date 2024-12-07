@@ -47,7 +47,7 @@ function toggleExpand() {
 
 .sidebar-enter-to,
 .sidebar-leave-from {
-  width: 35%;
+  width: 35vw;
 }
 
 .sidebar-enter-active {

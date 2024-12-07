@@ -53,10 +53,21 @@ li:hover {
   box-sizing: border-box;
 }
 
+li img{
+  align-self: center;
+  height: calc(3vh - 0.3em);
+}
+
 span {
   min-width: 20vw;
 }
+
 img {
   height: calc(3vh - 0.3em);
+
+@media (max-height: 700px) {
+  li img {
+    height: calc(7vh - 0.3em);
+  }
 }
 </style>
