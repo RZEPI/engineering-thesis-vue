@@ -16,12 +16,10 @@ import CodeListing from "../components/flexbox/CodeListing.vue";
 import LoadingFallback from "../components/UI/LoadingFallback.vue";
 
 const FlexboxPreview = defineAsyncComponent({
-  loader: () =>
-    import("../components/flexbox/FlexboxPreview.vue"),
-    loadingComponent: LoadingFallback,
-    delay: 0,
-}
-);
+  loader: () => import("../components/flexbox/FlexboxPreview.vue"),
+  loadingComponent: LoadingFallback,
+  delay: 0,
+});
 </script>
 
 <style scoped>

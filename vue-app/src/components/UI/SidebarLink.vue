@@ -16,9 +16,11 @@ import type { SidebarLinkProps } from "../../models/SidebarLink.ts";
 const props = defineProps<SidebarLinkProps>();
 const loadedImage = ref<string | undefined>(undefined);
 if (props.imageSrc) {
-  import(`../../assets/${props.imageSrc}`).then((imageModule)=>{
-    loadedImage.value = imageModule.default;
-  }).catch(() =>{});
+  import(`../../assets/${props.imageSrc}`)
+    .then((imageModule) => {
+      loadedImage.value = imageModule.default;
+    })
+    .catch(() => {});
 }
 </script>
 
@@ -54,8 +56,7 @@ li:hover {
 span {
   min-width: 20vw;
 }
-img
-{
+img {
   height: calc(3vh - 0.3em);
 }
 </style>

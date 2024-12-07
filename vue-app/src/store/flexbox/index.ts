@@ -24,10 +24,13 @@ export interface State {
   content: FlexboxElement[];
 }
 
-const DefaultContent: FlexboxElement[] = Array.from({ length: INIT_AMONT_OF_ELEMENTS }, (_, i) => ({
-  id: i,
-  color: drawColor(),
-}));
+const DefaultContent: FlexboxElement[] = Array.from(
+  { length: INIT_AMONT_OF_ELEMENTS },
+  (_, i) => ({
+    id: i,
+    color: drawColor(),
+  }),
+);
 
 export const state: State = {
   wrapping: false,
