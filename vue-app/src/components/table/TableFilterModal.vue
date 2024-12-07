@@ -121,7 +121,7 @@ defineExpose({
 }
 
 .filter-choice {
-  width: calc(var(--modal-width)- 2 * var(--modal-content-padding));
+  width: calc(var(--modal-width) - 2 * var(--modal-content-padding));
   height: calc(
     var(--modal-height) * (7 / 9) - 2 * var(--modal-content-padding) - 1em
   );
