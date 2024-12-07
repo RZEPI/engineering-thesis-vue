@@ -13,7 +13,7 @@ import { ContentOptions } from "../../models/flexbox-generator/ContentOptions";
 import { FlexboxElement } from "../../models/flexbox-generator/FlexboxElement";
 import { drawColor } from "../../util/utils";
 
-const INIT_AMONT_OF_ELEMENTS = 100000;
+const INIT_AMONT_OF_ELEMENTS = 200;
 
 export interface State {
   wrapping: boolean;
