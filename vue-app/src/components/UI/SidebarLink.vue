@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { SidebarLinkProps } from "../../models/SidebarLink.ts";
+import type { SidebarLinkProps } from "../../models/SidebarLinkProps.ts";
 
 const props = defineProps<SidebarLinkProps>();
 const loadedImage = ref<string | undefined>(undefined);
@@ -64,7 +64,7 @@ span {
 
 img {
   height: calc(3vh - 0.3em);
-
+}
 @media (max-height: 700px) {
   li img {
     height: calc(7vh - 0.3em);
