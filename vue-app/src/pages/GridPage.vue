@@ -20,9 +20,7 @@
             Generate
           </grid-config-button>
 
-          <grid-config-button
-            @Clicked="changeGridAutoFlow()"
-          >
+          <grid-config-button @Clicked="changeGridAutoFlow()">
             {{ cssProps.gridAutoFlow }}
           </grid-config-button>
           <grid-config-slider
@@ -98,7 +96,8 @@ function changeGapSize(e: InputEvent) {
 }
 
 function changeGridAutoFlow() {
-  cssProps.value.gridAutoFlow = cssProps.value.gridAutoFlow == 'dense' ? 'row' : 'dense';
+  cssProps.value.gridAutoFlow =
+    cssProps.value.gridAutoFlow == "dense" ? "row" : "dense";
 }
 
 function handleSlider() {

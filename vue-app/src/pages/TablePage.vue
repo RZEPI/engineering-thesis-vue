@@ -179,8 +179,10 @@ function inFilterRange(value: number, filter: IntFilter): boolean {
 
 function inNameFilter(givenName: string, filter: StringFilter[]): boolean {
   return (
-    filter.find((name) => (givenName.includes(name.value) && name.isChecked) || givenName === "") !==
-    undefined
+    filter.find(
+      (name) =>
+        (givenName.includes(name.value) && name.isChecked) || givenName === "",
+    ) !== undefined
   );
 }
 function changeFilter(newFilter: TableFilter) {
@@ -201,7 +203,7 @@ watch([filter, tableContent], ([newFilter, newTable]) => {
   filteredTableContent.length = 0;
   for (let i = 0; i < filteredContent.length; i++) {
     filteredTableContent.push(filteredContent[i]);
-}
+  }
 });
 
 const actionFunctions: ActionFunctions = {
