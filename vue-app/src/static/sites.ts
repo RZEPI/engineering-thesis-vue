@@ -19,7 +19,11 @@ export const sites: Array<Site> = [
   },
   {
     label: "Table",
-    link: "/Table",
+    link: "/table",
     description: "Table page, page responsible for testing rendering of big amounts of data. It also displays filtering modal.",
+  },
+  {
+    label: "RecRndr",
+    link: "/recursive-rendering",
   },
 ];
