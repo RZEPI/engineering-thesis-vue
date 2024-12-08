@@ -18,7 +18,7 @@
       :depth = "1"
       :maxDepth="maxDepth">
     </RecursiveComponent>
- <div class="gradient"></div>
+    <div class="gradient"></div>
   </div>
 
 </template>
@@ -31,6 +31,9 @@ const maxDepth = ref<number>(0);
 
 function setMaxDepth(){
   if(maxDepthInput.value && maxDepthInput.value > 0){
+    if (maxDepthInput.value > 393) {
+      maxDepthInput.value = 393;
+    }
     maxDepth.value = maxDepthInput.value;
   }
 }
