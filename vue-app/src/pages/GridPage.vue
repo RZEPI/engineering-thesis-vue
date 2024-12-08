@@ -16,24 +16,11 @@
         </grid-button-window>
 
         <grid-button-window title="Grid options">
-          <grid-config-button
-            @Clicked="
-              () => {
-                elements = getGeneratedElements();
-              }
-            "
-          >
+          <grid-config-button @Clicked="handleGenerateElements()">
             Generate
           </grid-config-button>
 
-          <grid-config-button
-            @Clicked="
-              () => {
-                cssProps.gridAutoFlow =
-                  cssProps.gridAutoFlow == 'dense' ? 'row' : 'dense';
-              }
-            "
-          >
+          <grid-config-button @Clicked="changeGridAutoFlow()">
             {{ cssProps.gridAutoFlow }}
           </grid-config-button>
           <grid-config-slider
@@ -108,9 +95,17 @@ function changeGapSize(e: InputEvent) {
   cssProps.value.gap = gapSize.value;
 }
 
+function changeGridAutoFlow() {
+  cssProps.value.gridAutoFlow =
+    cssProps.value.gridAutoFlow == "dense" ? "row" : "dense";
+}
+
 function handleSlider() {
   cssProps.value.gridTemplateColumns = itemSize.value;
   cssProps.value.gridAutoRows = itemSize.value;
+}
+function handleGenerateElements() {
+  elements.value = getGeneratedElements();
 }
 
 function chooseAspect(id: number) {
@@ -306,20 +301,6 @@ body {
 :deep() button:active {
   background-color: var(--active-element-color);
 }
-/* 
-:deep() .code-listing-wrapper {
-  width: 100%;
-  padding: 2em;
-  background-color: rgb(0, 60, 55);
-  border: 2px solid black;
-  border-radius: 15px;
-  box-sizing: border-box;
-}
-
-:deep() .code-listing {
-  width: 100%;
-  font-size: 1.2rem;
-} */
 
 .aspect_1_to_2 {
   grid-column: span 2;

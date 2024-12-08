@@ -55,7 +55,7 @@ function handleClearRowsClick() {
   actionFunctions.clearRows();
 }
 
-const rowCount = computed<number>(()=> tableContent.length);
+const rowCount = computed<number>(() => tableContent.length);
 </script>
 
 <style scoped>

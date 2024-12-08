@@ -1,14 +1,20 @@
 <template>
   <div class="main-container">
-    <feature-description :site="sites[siteIdx]" :isFirst="isFirst" :isLast="isLast" @next="handleNext" @previous="handlePrevious"/>
+    <feature-description
+      :site="sites[siteIdx]"
+      :isFirst="isFirst"
+      :isLast="isLast"
+      @next="handleNext"
+      @previous="handlePrevious"
+    />
     <div class="gradient"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import FeatureDescription from "../components/UI/FeatureDescription.vue";
-import {sites} from "../static/sites";
-import {ref, computed} from "vue";
+import { sites } from "../static/sites";
+import { ref, computed } from "vue";
 const siteIdx = ref(0);
 const isFirst = computed(() => siteIdx.value === 0);
 const isLast = computed(() => siteIdx.value === sites.length - 1);
@@ -21,7 +27,6 @@ function handlePrevious() {
   if (isFirst.value) return;
   siteIdx.value--;
 }
-
 </script>
 
 <style scoped>
