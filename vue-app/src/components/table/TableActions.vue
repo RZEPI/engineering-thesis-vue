@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { TableActionsProps } from "../../models/table/TableActionsProps";
 const { actionFunctions, tableContent } = defineProps<TableActionsProps>();
 
@@ -54,7 +55,7 @@ function handleClearRowsClick() {
   actionFunctions.clearRows();
 }
 
-const rowCount: number = tableContent.length;
+const rowCount = computed<number>(() => tableContent.length);
 </script>
 
 <style scoped>
