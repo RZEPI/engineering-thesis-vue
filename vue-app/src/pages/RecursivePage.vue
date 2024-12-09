@@ -48,12 +48,6 @@ div.main-container {
   width: 60%;
 }
 
-p {
-  text-align: center;
-  font-size: 2.2em;
-  margin-bottom: 1em;
-}
-
 .input-container {
   display: flex;
   align-items: center;
