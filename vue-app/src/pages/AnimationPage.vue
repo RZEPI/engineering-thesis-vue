@@ -1,15 +1,16 @@
 <template>
-  <div className="animation-control">
-    <label for="component-count">Number of Components: </label>
-    <input
-      type="number"
-      id="component-count"
-      v-model.number="tempComponentCount"
-      @change="updateComponentCount"
-    />
+  <base-layout title="Animated Components">
+    <div className="animation-control">
+      <label for="component-count">Number of Components: </label>
+      <input
+        type="number"
+        id="component-count"
+        v-model.number="tempComponentCount"
+        @change="updateComponentCount"
+      />
 
-    <button @click="toggleMovement">Animate</button>
-
+      <button @click="toggleMovement">Animate</button>
+    </div>
     <transition-group name="move" tag="div" class="component-list">
       <AnimatedComponent
         v-for="index in componentCount"
@@ -18,12 +19,13 @@
         :isRight="isRight"
       />
     </transition-group>
-  </div>
+  </base-layout>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import AnimatedComponent from "../components/animation/AnimatedComponent.vue";
+import BaseLayout from "../components/UI/BaseLayout.vue";
 
 const componentCount = ref(5);
 const tempComponentCount = ref(componentCount.value);
@@ -44,6 +46,7 @@ const updateComponentCount = () => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100vw;
 }
 
 .animation-control button {
@@ -53,6 +56,10 @@ const updateComponentCount = () => {
   font-size: 1em;
   border-radius: 1em;
   padding: 0.7em;
+}
+
+.animation-control button:hover {
+  background-color: var(--hover-element-color);
 }
 
 .animation-control label {
