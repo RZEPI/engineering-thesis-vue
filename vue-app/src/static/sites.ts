@@ -25,5 +25,6 @@ export const sites: Array<Site> = [
   {
     label: "RecRndr",
     link: "/recursive-rendering",
+    description: "Page responsible for testing recursive rendering of components.",
   },
 ];
