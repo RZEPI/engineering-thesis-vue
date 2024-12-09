@@ -29,6 +29,6 @@ const getColor = (depth: number): string => {
 <style scoped>
 .recursive-component {
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 1.76rem;
 }
 </style>
