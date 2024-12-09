@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { TableRowData } from "../../models/PerfTestArrayRow";
+import { TableRowData } from "../../models/table/TableRowData";
 defineProps<{
   tuple: TableRowData;
 }>();

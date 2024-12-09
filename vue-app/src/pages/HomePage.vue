@@ -1,14 +1,33 @@
 <template>
   <div class="main-container">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat
-      magna sit amet nibh ornare, vitae efficitur lorem molestie. Duis sagittis
-      mi risus, ut gravida mi placerat aliquet. Maecenas in pellentesque augue,
-      elementum bibendum risus.
-    </p>
+    <feature-description
+      :site="sites[siteIdx]"
+      :isFirst="isFirst"
+      :isLast="isLast"
+      @next="handleNext"
+      @previous="handlePrevious"
+    />
     <div class="gradient"></div>
   </div>
 </template>
+
+<script setup lang="ts">
+import FeatureDescription from "../components/UI/FeatureDescription.vue";
+import { sites } from "../static/sites";
+import { ref, computed } from "vue";
+const siteIdx = ref(0);
+const isFirst = computed(() => siteIdx.value === 0);
+const isLast = computed(() => siteIdx.value === sites.length - 1);
+
+function handleNext() {
+  if (isLast.value) return;
+  siteIdx.value++;
+}
+function handlePrevious() {
+  if (isFirst.value) return;
+  siteIdx.value--;
+}
+</script>
 
 <style scoped>
 div.main-container {
@@ -34,5 +53,11 @@ p {
     rgba(65, 183, 131, 0.2) 0%,
     rgba(65, 183, 131, 0) 100%
   );
+}
+
+@media (max-height: 700px) {
+  .main-container {
+    margin-top: 4em;
+  }
 }
 </style>

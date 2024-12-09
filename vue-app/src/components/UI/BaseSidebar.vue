@@ -44,9 +44,10 @@ function toggleExpand() {
 .sidebar-leave-to {
   width: 0;
 }
+
 .sidebar-enter-to,
 .sidebar-leave-from {
-  width: 35%;
+  width: 35vw;
 }
 
 .sidebar-enter-active {
@@ -66,10 +67,12 @@ nav {
   float: left;
   left: 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 header {
   width: var(--sidebar-width);
   position: fixed;
@@ -77,6 +80,7 @@ header {
   top: 0;
   height: 4.5vh;
 }
+
 .burger-button {
   transition: transform 0.3s ease-out;
   display: flex;
@@ -87,6 +91,7 @@ header {
   height: 80%;
   cursor: pointer;
 }
+
 .burger-button span {
   background-color: var(--main-background-color);
   width: 2.5em;
