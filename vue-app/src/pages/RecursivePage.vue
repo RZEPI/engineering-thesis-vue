@@ -1,36 +1,36 @@
 <template>
-  <div class="main-container">
-    <p>Recursive Component Generation Test</p>
+  <base-layout title="Recursive Rendering">
+    <div className="recursive-page">
+      <div className="input-container">
+        <input
+          type="number"
+          v-model.number="maxDepthInput"
+          placeholder="0"
+          min="0"
+        />
+        <button @click="setMaxDepth">Generate Components</button>
+      </div>
 
-    <div class="input-container">
-      <input
-        type="number"
-        v-model.number="maxDepthInput"
-        placeholder="0"
-        min="0"
-      />
-      <button @click="setMaxDepth">Generate Components</button>
+      <RecursiveComponent
+        v-if="maxDepth > 0"
+        message="This component was created recursively. It's depth is"
+        :depth="1"
+        :maxDepth="maxDepth"
+      ></RecursiveComponent>
+      <div class="gradient"></div>
     </div>
-
-    <RecursiveComponent
-      v-if="maxDepth > 0"
-      message="This component was created recursively. It's depth is"
-      :depth = "1"
-      :maxDepth="maxDepth">
-    </RecursiveComponent>
-    <div class="gradient"></div>
-  </div>
-
+  </base-layout>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import RecursiveComponent from "../components/UI/RecursiveComponent.vue";
+import RecursiveComponent from "../components/recursive/RecursiveComponent.vue";
+import BaseLayout from "../components/UI/BaseLayout.vue";
 const maxDepthInput = ref<number | null>(null);
 const maxDepth = ref<number>(0);
 
-function setMaxDepth(){
-  if(maxDepthInput.value && maxDepthInput.value > 0){
+function setMaxDepth() {
+  if (maxDepthInput.value && maxDepthInput.value > 0) {
     if (maxDepthInput.value > 393) {
       maxDepthInput.value = 393;
     }
@@ -65,31 +65,31 @@ p {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-input[type="number"] {
+.recursive-page input[type="number"] {
   padding: 0.5em;
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 220px;
+  width: 25vw;
   text-align: center;
 }
 
-button {
+.recursive-page button {
   padding: 0.5em 1em;
   font-size: 1em;
   border: none;
   border-radius: 4px;
-  background-color: #41b783;
+  background-color: var(--main-color);
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #369e6d;
+.recursive-page button:hover {
+  background-color: var(--hover-element-color);
 }
 
-.gradient {
+.recursive-page .gradient {
   margin-top: -10px;
   margin-left: -5%;
   height: 100px;
