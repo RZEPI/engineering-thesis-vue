@@ -9,8 +9,8 @@ export default createRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/Table", component: TablePage },
-    { path: "/:notFound(.*)", component: NotFound },
     { path: "/animation", component: AnimationPage },
+    { path: "/:notFound(.*)", component: NotFound },
   ],
   linkActiveClass: "active",
 });

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div className="animation-control">
     <label for="component-count">Number of Components: </label>
     <input
       type="number"
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import AnimatedComponent from "../components/UI/AnimatedComponent.vue";
+import AnimatedComponent from "../components/animation/AnimatedComponent.vue";
 
 const componentCount = ref(5);
 const tempComponentCount = ref(componentCount.value);
@@ -46,7 +46,7 @@ const updateComponentCount = () => {
   align-items: flex-start;
 }
 
-button {
+.animation-control button {
   margin: 1em;
   color: var(--main-text-color);
   background-color: var(--main-color);
@@ -55,12 +55,12 @@ button {
   padding: 0.7em;
 }
 
-label {
+.animation-control label {
   color: var(--main-text-color);
   font-size: 1.3em;
 }
 
-input {
+.animation-control input {
   color: var(--main-text-color);
   background-color: var(--main-background-color);
   border-radius: 0.5em;

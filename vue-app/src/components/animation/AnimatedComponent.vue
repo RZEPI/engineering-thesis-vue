@@ -5,16 +5,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  isRight: {
-    type: Boolean,
-    required: true,
-  },
-});
+import { AnimatedComponentProps } from "../../models/animation/AnimatedComponentProps";
+
+const { name, isRight } = defineProps<AnimatedComponentProps>();
 </script>
 
 <style scoped>
