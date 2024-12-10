@@ -54,7 +54,7 @@ li:hover {
   box-sizing: border-box;
 }
 
-li img{
+li img {
   align-self: center;
   height: calc(3vh - 0.3em);
 }
