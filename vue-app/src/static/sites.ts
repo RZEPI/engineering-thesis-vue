@@ -26,7 +26,7 @@ export const sites: Array<Site> = [
       "Table page, page responsible for testing rendering of big amounts of data. It also displays filtering modal.",
   },
   {
-    label: "RecursiveRendering",
+    label: "Recursive Rendering",
     link: "/recursive-rendering",
     description: 
       "Page responsible for testing recursive rendering of components.",
