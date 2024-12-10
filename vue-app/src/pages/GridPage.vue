@@ -26,13 +26,13 @@
           <grid-config-slider
             name="Element size"
             :value="itemSize"
-            @change="(e) => changeElementSize(e)"
+            @change="changeElementSize"
           >
           </grid-config-slider>
           <grid-config-slider
             name="Gap size"
             :value="gapSize"
-            @change="(e) => changeGapSize(e)"
+            @change="changeGapSize"
           >
           </grid-config-slider>
         </grid-button-window>
