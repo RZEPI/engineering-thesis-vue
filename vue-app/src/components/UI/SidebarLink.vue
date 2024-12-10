@@ -27,13 +27,14 @@ if (props.imageSrc) {
 <style scoped>
 a {
   text-decoration: none;
+  text-align: center;
   color: var(--main-background-color);
   font-weight: 600;
   width: 100%;
   font-size: 2em;
   padding: 0.3em 0;
   display: grid;
-  grid-template-columns: 1fr 2fr 4fr 1fr;
+  grid-template-columns: 1fr 1fr 4fr 2fr;
 }
 
 li {
@@ -62,10 +63,10 @@ span {
   min-width: 20vw;
 }
 
-img {
-  height: calc(3vh - 0.3em);
-}
 @media (max-height: 700px) {
+  li{
+    max-height: unset;
+  }
   li img {
     height: calc(7vh - 0.3em);
   }
