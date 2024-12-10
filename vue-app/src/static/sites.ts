@@ -21,9 +21,15 @@ export const sites: Array<Site> = [
   },
   {
     label: "Table",
-    link: "/Table",
-    description:
+    link: "/table",
+    description: 
       "Table page, page responsible for testing rendering of big amounts of data. It also displays filtering modal.",
+  },
+  {
+    label: "RecursiveRendering",
+    link: "/recursive-rendering",
+    description: 
+      "Page responsible for testing recursive rendering of components.",
   },
   {
     label: "Animation",
