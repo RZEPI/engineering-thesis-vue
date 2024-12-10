@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound.vue";
 import RecursivePage from "./pages/RecursivePage.vue";
 import GridPage from "./pages/GridPage.vue";
 import FlexboxPage from "./pages/FlexboxPage.vue";
+import AnimationPage from "./pages/AnimationPage.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -14,6 +15,7 @@ export default createRouter({
     { path: "/recursive-rendering", component: RecursivePage },
     { path: "/grid", component: GridPage },
     { path: "/flexbox", component: FlexboxPage },
+    { path: "/animation", component: AnimationPage },
     { path: "/:notFound(.*)", component: NotFound },
   ],
   linkActiveClass: "active",

@@ -31,4 +31,10 @@ export const sites: Array<Site> = [
     description: 
       "Page responsible for testing recursive rendering of components.",
   },
+  {
+    label: "Animation",
+    link: "/Animation",
+    description:
+      "Page responsible for testing animations, focuses on evaluating the performance and visual fluidity.",
+  },
 ];
