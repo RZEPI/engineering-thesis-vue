@@ -8,12 +8,12 @@ describe("RecursiveComponent.vue", () => {
     const wrapper = mount(RecursiveComponent, {
       props: {
         message: "",
-        depth: 0,
+        depth: 1,
         maxDepth: 4,
       },
     });
-    const instances: VueWrapper[] =
-      wrapper.findAllComponents(RecursiveComponent);
+
+    const instances = wrapper.findAll('[role="recursivecomponent"]');
     expect(instances.length).toBe(4);
   });
 });
