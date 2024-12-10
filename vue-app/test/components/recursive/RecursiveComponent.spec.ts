@@ -4,15 +4,16 @@ import RecursiveComponent from "../../../src/components/recursive/RecursiveCompo
 import { VueWrapper } from "@vue/test-utils";
 
 describe("RecursiveComponent.vue", () => {
-    it("Renders 4 instances of Recursive Component", () => {
-        const wrapper = mount(RecursiveComponent, {
-            props:{
-                message: "",
-                depth: 0,
-                maxDepth: 4,
-            },
-        });
-        const instances: VueWrapper[] = wrapper.findAllComponents(RecursiveComponent);
-        expect(instances.length).toBe(4);
-    })
+  it("Renders 4 instances of Recursive Component", () => {
+    const wrapper = mount(RecursiveComponent, {
+      props: {
+        message: "",
+        depth: 0,
+        maxDepth: 4,
+      },
+    });
+    const instances: VueWrapper[] =
+      wrapper.findAllComponents(RecursiveComponent);
+    expect(instances.length).toBe(4);
+  });
 });
