@@ -25,4 +25,10 @@ export const sites: Array<Site> = [
     description:
       "Table page, page responsible for testing rendering of big amounts of data. It also displays filtering modal.",
   },
+  {
+    label: "Animation",
+    link: "/Animation",
+    description:
+      "Page responsible for testing animations, focuses on evaluating the performance and visual fluidity.",
+  },
 ];
