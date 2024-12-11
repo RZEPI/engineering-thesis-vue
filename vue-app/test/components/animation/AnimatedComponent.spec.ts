@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import AnimatedComponent from "../../../src/components/animation/AnimatedComponent.vue";
 
 describe("AnimatedComponent", () => {

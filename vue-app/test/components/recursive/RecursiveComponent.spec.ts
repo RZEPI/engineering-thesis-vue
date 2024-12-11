@@ -12,6 +12,8 @@ describe("RecursiveComponent.vue", () => {
         maxDepth: 4,
       },
     });
+    
+
 
     const instances = wrapper.findAll('[role="recursivecomponent"]');
     expect(instances.length).toBe(4);

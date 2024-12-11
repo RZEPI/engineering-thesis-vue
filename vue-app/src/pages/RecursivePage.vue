@@ -28,11 +28,11 @@ import RecursiveComponent from "../components/recursive/RecursiveComponent.vue";
 import BaseLayout from "../components/UI/BaseLayout.vue";
 const maxDepthInput = ref<number | null>(null);
 const maxDepth = ref<number>(0);
-
+const MAX_DEPTH: number = 392;
 function setMaxDepth() {
   if (maxDepthInput.value && maxDepthInput.value > 0) {
-    if (maxDepthInput.value > 393) {
-      maxDepthInput.value = 393;
+    if (maxDepthInput.value > MAX_DEPTH) {
+      maxDepthInput.value = MAX_DEPTH;
     }
     maxDepth.value = maxDepthInput.value;
   }
