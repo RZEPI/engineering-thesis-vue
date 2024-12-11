@@ -1,5 +1,5 @@
 <template>
-  <div class="recursive-component">
+  <div class="recursive-component" role="recursivecomponent">
     <p :style="{ color: getColor(props.depth) }">
       {{ props.message }} {{ props.depth }}
     </p>
