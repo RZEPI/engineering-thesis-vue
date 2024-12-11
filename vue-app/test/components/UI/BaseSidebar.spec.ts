@@ -11,7 +11,10 @@ describe("BaseSidebar.vue", () => {
   it("Should render Navbar after pressing the button", () => {
     const wrapper = shallowMount(BaseSidebar);
 
-    wrapper.find(".burger-button").trigger("click");
+    const burgerButton = wrapper.find(".burger-button");
+    expect(burgerButton.exists()).toBe(true);
+
+    burgerButton.trigger("click");
 
     wrapper.vm.$nextTick(() => {
       expect(wrapper.find("nav").exists()).toBe(true);

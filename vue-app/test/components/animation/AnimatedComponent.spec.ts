@@ -3,7 +3,7 @@ import { mount } from "@vue/test-utils";
 import AnimatedComponent from "../../../src/components/animation/AnimatedComponent.vue";
 
 describe("AnimatedComponent", () => {
-  it("renders with the correct name", () => {
+  it("Renders with the correct name", () => {
     const wrapper = mount(AnimatedComponent, {
       props: {
         name: "Animated Component",
@@ -12,7 +12,7 @@ describe("AnimatedComponent", () => {
     });
     expect(wrapper.text()).toContain("Animated Component");
   });
-  it("applies the 'right' class when isRight is true", () => {
+  it("Renders component on the right when isRight is true", () => {
     const wrapper = mount(AnimatedComponent, {
       props: {
         name: "Test Component",
@@ -20,10 +20,13 @@ describe("AnimatedComponent", () => {
       },
     });
 
-    expect(wrapper.classes()).toContain("right");
+    wrapper.vm.$nextTick(() => {
+      const component = wrapper.find(".right");
+      expect(component.exists()).toBe(true);
+    });
   });
 
-  it("does not apply the 'right' class when isRight is false", () => {
+  it("Renders component on the left when isRight is false", () => {
     const wrapper = mount(AnimatedComponent, {
       props: {
         name: "Test Component",
@@ -31,6 +34,9 @@ describe("AnimatedComponent", () => {
       },
     });
 
-    expect(wrapper.classes()).not.toContain("right");
+    wrapper.vm.$nextTick(() => {
+      const component = wrapper.find(".right");
+      expect(component.exists()).not.toBe(true);
+    });
   });
 });
