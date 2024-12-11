@@ -3,7 +3,7 @@ import { mount } from "@vue/test-utils";
 import AnimatedComponent from "../../../src/components/animation/AnimatedComponent.vue";
 
 describe("AnimatedComponent", () => {
-  it("Renders with the correct name", () => {
+  it("Should render with the correct name", () => {
     const wrapper = mount(AnimatedComponent, {
       props: {
         name: "Animated Component",
@@ -12,7 +12,7 @@ describe("AnimatedComponent", () => {
     });
     expect(wrapper.text()).toContain("Animated Component");
   });
-  it("Renders component on the right when isRight is true", () => {
+  it("Should render component on the right when isRight is true", () => {
     const wrapper = mount(AnimatedComponent, {
       props: {
         name: "Test Component",
@@ -26,7 +26,7 @@ describe("AnimatedComponent", () => {
     });
   });
 
-  it("Renders component on the left when isRight is false", () => {
+  it("Should render component on the left when isRight is false", () => {
     const wrapper = mount(AnimatedComponent, {
       props: {
         name: "Test Component",

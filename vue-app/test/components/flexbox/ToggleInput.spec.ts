@@ -3,7 +3,7 @@ import { mount } from "@vue/test-utils";
 import ToggleInput from "../../../src/components/flexbox/form/ToggleInput.vue";
 
 describe("ToggleInput", () => {
-  it("Emits the toggleFunc event when ToggleSwitch is clicked", async () => {
+  it("Should emit the toggleFunc event when ToggleSwitch is clicked", async () => {
     const mockEmit = vi.fn();
     const wrapper = mount(ToggleInput, {
       props: {

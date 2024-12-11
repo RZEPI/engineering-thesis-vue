@@ -4,7 +4,7 @@ import RecursiveComponent from "../../../src/components/recursive/RecursiveCompo
 import { VueWrapper } from "@vue/test-utils";
 
 describe("RecursiveComponent.vue", () => {
-  it("Renders 4 instances of Recursive Component", () => {
+  it("Should render 4 instances of Recursive Component", () => {
     const wrapper = mount(RecursiveComponent, {
       props: {
         message: "",
