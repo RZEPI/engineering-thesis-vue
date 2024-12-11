@@ -28,14 +28,8 @@
         </div>
         <div class="cache-control">
           <h3>Result:</h3>
-          <p v-if="result !== null">Calculated value of Pi: {{ result }}</p>
-          <p v-else>
-            {{
-              calculate
-                ? "Calculating..."
-                : 'Click "Calculate" to see the result.'
-            }}
-          </p>
+          <p v-if="result !== null">Calculated value of π: {{ result }}</p>
+          <p v-else>Click "Calculate" to see the result.</p>
         </div>
       </div>
     </div>
@@ -48,7 +42,7 @@ import BaseLayout from "../components/UI/BaseLayout.vue";
 
 const calculate = ref(false);
 const result = ref<number | null>(null);
-const iterations = ref(0);
+const iterations = ref(100);
 const inputIterations = ref(100);
 
 const memoizedResult = computed(() => {
@@ -70,7 +64,6 @@ function calculatePi(iterations: number) {
 
 function handleCalculate() {
   calculate.value = true;
-  console.log(calculate.value);
   iterations.value = inputIterations.value;
   result.value = memoizedResult.value;
 }
@@ -104,6 +97,9 @@ function handleReset() {
   margin-right: 1vw;
   padding: 0.3em;
   font-size: 1em;
+  color: var(--main-text-color);
+  background-color: var(--main-background-color);
+  border-radius: 0.5em;
 }
 
 .cache-control button {
@@ -113,6 +109,9 @@ function handleReset() {
   border-radius: 1em;
   background-color: var(--main-color);
   color: var(--main-text-color);
+}
+.cache-control button:hover {
+  background-color: var(--hover-element-color);
 }
 
 .cache-control h2,
