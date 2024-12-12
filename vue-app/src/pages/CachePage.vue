@@ -24,7 +24,7 @@
           <h3>Iterations (in millions):</h3>
           <input v-model="inputIterations" type="number" :min="1" />
           <button @click="handleCalculate">Calculate</button>
-          <button @click="handleReset">Reset</button>
+          <button @click="handleClear">Clear</button>
         </div>
         <div class="cache-control">
           <h3>Result:</h3>
@@ -68,7 +68,7 @@ function handleCalculate() {
   result.value = memoizedResult.value;
 }
 
-function handleReset() {
+function handleClear() {
   calculate.value = false;
   result.value = null;
 }
