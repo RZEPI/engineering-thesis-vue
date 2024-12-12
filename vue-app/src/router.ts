@@ -6,6 +6,7 @@ import RecursivePage from "./pages/RecursivePage.vue";
 import GridPage from "./pages/GridPage.vue";
 import FlexboxPage from "./pages/FlexboxPage.vue";
 import AnimationPage from "./pages/AnimationPage.vue";
+import CachePage from "./pages/CachePage.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -16,6 +17,7 @@ export default createRouter({
     { path: "/grid", component: GridPage },
     { path: "/flexbox", component: FlexboxPage },
     { path: "/animation", component: AnimationPage },
+    { path: "/cache", component: CachePage },
     { path: "/:notFound(.*)", component: NotFound },
   ],
   linkActiveClass: "active",
