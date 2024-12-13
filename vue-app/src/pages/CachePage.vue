@@ -40,14 +40,9 @@
 import { ref, computed } from "vue";
 import BaseLayout from "../components/UI/BaseLayout.vue";
 
-const calculate = ref(false);
 const result = ref<number | null>(null);
 const iterations = ref(100);
 const inputIterations = ref(100);
-
-const memoizedResult = computed(() => {
-  return calculatePi(iterations.value * 1000000);
-});
 
 function calculatePi(iterations: number) {
   let insideCircle = 0;
@@ -62,14 +57,22 @@ function calculatePi(iterations: number) {
   return (insideCircle / iterations) * 4;
 }
 
+const memoizedResult = computed(() => {
+  console.time("calculationTime");
+  const calcResult = calculatePi(iterations.value * 1000000);
+  console.timeEnd("calculationTime");
+  return calcResult;
+});
+
 function handleCalculate() {
-  calculate.value = true;
   iterations.value = inputIterations.value;
+  setTimeout(() => {}, 3000);
+  console.time("referenceTime");
   result.value = memoizedResult.value;
+  console.timeEnd("referenceTime");
 }
 
 function handleClear() {
-  calculate.value = false;
   result.value = null;
 }
 </script>
