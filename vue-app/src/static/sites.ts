@@ -17,18 +17,19 @@ export const sites: Array<Site> = [
   {
     label: "Grid",
     link: "/grid",
-    description: "<TODO>",
+    description:
+      "Page responsible for testing grid proprties. It uses state management via props.",
   },
   {
     label: "Table",
     link: "/table",
-    description: 
+    description:
       "Table page, page responsible for testing rendering of big amounts of data. It also displays filtering modal.",
   },
   {
     label: "Recursive Rendering",
     link: "/recursive-rendering",
-    description: 
+    description:
       "Page responsible for testing recursive rendering of components.",
   },
   {
