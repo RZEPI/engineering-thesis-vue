@@ -7,6 +7,7 @@
         id="component-count"
         v-model.number="tempComponentCount"
         @change="updateComponentCount"
+        :min="1"
       />
 
       <button @click="toggleMovement">Animate</button>
@@ -31,14 +32,13 @@ const componentCount = ref(5);
 const tempComponentCount = ref(componentCount.value);
 const isRight = ref(false);
 
-const toggleMovement = () => {
+function toggleMovement() {
   isRight.value = !isRight.value;
-};
+}
 
-const updateComponentCount = () => {
-  if (tempComponentCount.value < 1) tempComponentCount.value = 1;
+function updateComponentCount() {
   componentCount.value = tempComponentCount.value;
-};
+}
 </script>
 
 <style scoped>
