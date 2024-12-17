@@ -64,7 +64,7 @@ span {
 }
 
 @media (max-height: 700px) {
-  li{
+  li {
     max-height: unset;
   }
   li img {

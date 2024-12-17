@@ -54,17 +54,17 @@
 </template>
 
 <script setup lang="ts">
-import Grid from "../components/Grid.vue";
+import Grid from "../components/grid/Grid.vue";
 import GridConfigButton from "../components/UI/GridButton.vue";
 import CodeListing from "../components/CodeListing.vue";
-import GridConfigSlider from "../components/GridConfigSlider.vue";
-import GridButtonWindow from "../components/GridButtonWindow.vue";
+import GridConfigSlider from "../components/grid/GridConfigSlider.vue";
+import GridButtonWindow from "../components/grid/GridButtonWindow.vue";
 import { CSSProperties, ref } from "vue";
 import { colors } from "../static/GridElements";
 import { AspectState } from "../models/AspectState";
 import { GridInitialElementsAspects } from "../static/GridInitialElementsAspects";
 import { GridElementModel } from "../models/GridElementModel";
-import GridElement from "../components/GridElement.vue";
+import GridElement from "../components/grid/GridElement.vue";
 const numberOfElements = 20;
 
 const itemSize = ref<string>("100");
